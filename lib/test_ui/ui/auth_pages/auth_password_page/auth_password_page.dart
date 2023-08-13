@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import 'package:quick_meet/ui/password_recovery_pages/password_recovery_phone_page.dart';
+import 'package:quick_meet/test_ui/ui/password_recovery_pages/password_recovery_phone_page.dart';
 
 class AuthPasswordPage extends StatefulWidget {
   const AuthPasswordPage({super.key});

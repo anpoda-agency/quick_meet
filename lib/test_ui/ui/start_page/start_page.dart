@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:quick_meet/ui/reg_pages/reg_phone_page.dart';
+import 'package:quick_meet/test_ui/ui/reg_pages/reg_phone_page.dart';
 
 class StartPage extends StatefulWidget {
   const StartPage({super.key});
