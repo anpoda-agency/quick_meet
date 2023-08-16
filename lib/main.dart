@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:quick_meet/di/service_locator.dart';
 import 'package:quick_meet/test_ui/ui/auth_pages/auth_password_page/auth_password_page.dart';
 import 'package:quick_meet/test_ui/ui/auth_pages/auth_sms_pages/auth_sms_page.dart';
 import 'package:quick_meet/test_ui/ui/auth_pages/auth_sms_pages/auth_sms_code_page.dart';
@@ -18,6 +19,7 @@ import 'package:quick_meet/test_ui/ui/reg_pages/reg_sms_code_page.dart';
 import 'package:quick_meet/test_ui/ui/start_page/start_page.dart';
 
 void main() {
+  setup();
   runApp(const MyApp());
 }
 
