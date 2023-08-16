@@ -9,7 +9,6 @@ part of 'code_send_activation_request.dart';
 CodeSendActivationRequest _$CodeSendActivationRequestFromJson(
         Map<String, dynamic> json) =>
     CodeSendActivationRequest(
-      code: json['code'] == null ? '' : FromJsonBase.jsonToString(json['code']),
       source: json['source'] == null
           ? ''
           : FromJsonBase.jsonToString(json['source']),
@@ -24,7 +23,6 @@ CodeSendActivationRequest _$CodeSendActivationRequestFromJson(
 Map<String, dynamic> _$CodeSendActivationRequestToJson(
         CodeSendActivationRequest instance) =>
     <String, dynamic>{
-      'code': instance.code,
       'source': instance.source,
       'verificationStep': instance.verificationStep,
       'verificationType': instance.verificationType,
