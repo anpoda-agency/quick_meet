@@ -6,8 +6,6 @@ part 'code_send_activation_request.g.dart';
 
 @JsonSerializable()
 class CodeSendActivationRequest {
-  @JsonKey(name: 'code', fromJson: FromJsonBase.jsonToString)
-  final String code;
   @JsonKey(name: 'source', fromJson: FromJsonBase.jsonToString)
   final String source;
   @JsonKey(name: 'verificationStep', fromJson: FromJsonBase.jsonToString)
@@ -16,7 +14,6 @@ class CodeSendActivationRequest {
   final String verificationType;
 
   const CodeSendActivationRequest({
-    this.code = '',
     this.source = '',
     this.verificationStep = '',
     this.verificationType = '',
@@ -27,13 +24,11 @@ class CodeSendActivationRequest {
   Map<String, dynamic> toJson() => _$CodeSendActivationRequestToJson(this);
 
   CodeSendActivationRequest copyWith({
-    String? code,
     String? source,
     String? verificationStep,
     String? verificationType,
   }) {
     return CodeSendActivationRequest(
-      code: code ?? this.code,
       source: source ?? this.source,
       verificationStep: verificationStep ?? this.verificationStep,
       verificationType: verificationType ?? this.verificationType,
