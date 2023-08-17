@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:quick_meet/features/core_widgets/auth_custom_button.dart';
 import 'package:quick_meet/test_ui/ui/reg_pages/reg_phone_page.dart';
 
 class StartPage extends StatefulWidget {
@@ -64,64 +65,22 @@ class _StartPageState extends State<StartPage> {
               ),
             ),
           ),
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 87),
-            child: SizedBox(
-              width: MediaQuery.of(context).size.width,
-              height: 50,
-              child: ElevatedButton(
-                onPressed: () {
-                  Navigator.pushNamed(context, '/auth_sms_page');
-                },
-                style: ElevatedButton.styleFrom(
-                  primary: Colors.white,
-                  shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(18)),
-                ),
-                child: const Text(
-                  'по смс',
-                  style: TextStyle(
-                    color: Colors.black,
-                    fontSize: 20,
-                    fontFamily: 'SF Pro Text',
-                    fontWeight: FontWeight.w300,
-                    letterSpacing: 1,
-                  ),
-                ),
-              ),
-            ),
+          AuthCustomButton(
+            onPressed: () {
+              Navigator.pushNamed(context, '/auth_sms_page');
+            },
+            title: 'по смс',
+            backgroundColor: Colors.white,
           ),
           // const SizedBox(
           //   height: 20,
           // ),
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 87),
-            child: SizedBox(
-              width: MediaQuery.of(context).size.width,
-              height: 50,
-              child: ElevatedButton(
-                onPressed: () {
-                  Navigator.pushNamed(
-                      context, //'/reg_phone_page'
-                      '/auth_password_page');
-                },
-                style: ElevatedButton.styleFrom(
-                  primary: Colors.white,
-                  shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(18)),
-                ),
-                child: const Text(
-                  'с паролем',
-                  style: TextStyle(
-                    color: Colors.black,
-                    fontSize: 20,
-                    fontFamily: 'SF Pro Text',
-                    fontWeight: FontWeight.w300,
-                    letterSpacing: 1,
-                  ),
-                ),
-              ),
-            ),
+          AuthCustomButton(
+            onPressed: () {
+              Navigator.pushNamed(context, '/auth_password_page');
+            },
+            title: 'с паролем',
+            backgroundColor: Colors.white,
           ),
           Container(
             width: 355,
@@ -170,3 +129,35 @@ class _StartPageState extends State<StartPage> {
     );
   }
 }
+
+
+
+          /* Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 87),
+            child: SizedBox(
+              width: MediaQuery.of(context).size.width,
+              height: 50,
+              child: ElevatedButton(
+                onPressed: () {
+                  Navigator.pushNamed(
+                      context, //'/reg_phone_page'
+                      '/auth_password_page');
+                },
+                style: ElevatedButton.styleFrom(
+                  primary: Colors.white,
+                  shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(18)),
+                ),
+                child: const Text(
+                  'с паролем',
+                  style: TextStyle(
+                    color: Colors.black,
+                    fontSize: 20,
+                    fontFamily: 'SF Pro Text',
+                    fontWeight: FontWeight.w300,
+                    letterSpacing: 1,
+                  ),
+                ),
+              ),
+            ),
+          ), */
