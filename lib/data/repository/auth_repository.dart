@@ -15,8 +15,7 @@ class AuthRepository {
 
   AuthRepository({required this.authApi});
 
-  Future<AuthVerificationLoginResponse> codeSend(
-      {required String phone}) async {
+  Future<AuthVerificationLoginResponse> codeSend({required String phone}) async {
     try {
       final response = await authApi.verificationLogin(phone: phone);
       return AuthVerificationLoginResponse.fromJson(response.data);
@@ -46,8 +45,7 @@ class AuthRepository {
     }
   }
 
-  Future<AuthRegisterResponse> register(
-      {required AuthRegisterRequest request}) async {
+  Future<AuthRegisterResponse> register({required AuthRegisterRequest request}) async {
     try {
       final response = await authApi.register(request: request);
       return AuthRegisterResponse.fromJson(response.data);
@@ -57,8 +55,7 @@ class AuthRepository {
     }
   }
 
-  Future<AuthResetPasswordResponse> resetPassword(
-      {required AuthResetPasswordRequest request}) async {
+  Future<AuthResetPasswordResponse> resetPassword({required AuthResetPasswordRequest request}) async {
     try {
       final response = await authApi.resetPassword(request: request);
       return AuthResetPasswordResponse.fromJson(response.data);

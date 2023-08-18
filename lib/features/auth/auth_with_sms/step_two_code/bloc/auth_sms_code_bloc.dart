@@ -35,7 +35,6 @@ class AuthSmsCodeBloc extends Bloc<AuthSmsCodeEvent, AuthSmsCodeState> {
     } else {
       code = state.pageState.request.code + event.value;
     }
-    print(code);
     var model = state.pageState.request.copyWith(code: code);
     emit(AuthSmsCodeUp(state.pageState.copyWith(request: model)));
   }

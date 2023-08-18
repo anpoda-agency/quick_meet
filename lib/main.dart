@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:quick_meet/di/service_locator.dart';
 import 'package:quick_meet/features/auth/auth_with_sms/step_one_phone/ui/auth_sms_page.dart';
-import 'package:quick_meet/test_ui/ui/auth_pages/auth_password_page/auth_password_page.dart';
+import 'package:quick_meet/features/auth/auth_with_password/ui/auth_password_page.dart';
 import 'package:quick_meet/features/auth/auth_with_sms/step_two_code/ui/auth_sms_code_page.dart';
 import 'package:quick_meet/test_ui/ui/create_meet_pages/create_meet_page.dart';
 import 'package:quick_meet/test_ui/ui/main_pages/main_page.dart';
