@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:quick_meet/features/core_widgets/auth_custom_button.dart';
 
 class AuthSmsPage extends StatefulWidget {
   const AuthSmsPage({super.key});
@@ -139,35 +140,12 @@ class _AuthSmsPageState extends State<AuthSmsPage> {
               const SizedBox(
                 height: 29,
               ),
-              Container(
-                width: 285,
-                height: 50,
-                decoration: ShapeDecoration(
-                  color: Color(0xFFF5F5F5),
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(18),
-                  ),
-                ),
-                child: ElevatedButton(
-                    onPressed: () {
-                      Navigator.pushNamed(context, '/auth_sms_code_page');
-                    },
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: Color(0xFFF5F5F5),
-                      shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(18)),
-                    ),
-                    child: const Text(
-                      'Получить код',
-                      textAlign: TextAlign.center,
-                      style: TextStyle(
-                        color: Colors.black,
-                        fontSize: 20,
-                        fontFamily: 'Comfortaa',
-                        fontWeight: FontWeight.w400,
-                        letterSpacing: 1,
-                      ),
-                    )),
+              AuthCustomButton(
+                onPressed: () {
+                  Navigator.pushNamed(context, '/auth_sms_code_page');
+                },
+                title: 'Получить код',
+                backgroundColor: Color(0xFFF5F5F5),
               ),
               const SizedBox(
                 height: 20,
