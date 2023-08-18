@@ -1,6 +1,5 @@
 abstract class AppConstants {
   static const String icons = 'images/icons/';
-  // static const String domain = '84.201.161.194:8080/api/v1';
 
   static const bool makeCurl = true;
   static const bool writeLogs = false;
@@ -10,7 +9,7 @@ abstract class AppConstants {
   static const bool makeCurlClipboard = false;
 
   // base url
-  static const String baseUrl = "https://84.201.161.194:8080/api/v1";
+  static const String baseUrl = "http://158.160.30.78:8080/api/v1";
 
   //activation-code-controller urls
   static const String sendUrl = "/auth/code/send";

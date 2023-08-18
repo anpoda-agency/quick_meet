@@ -11,20 +11,20 @@ class ActivationCodeRepository {
 
   ActivationCodeRepository({required this.activationCodeApi});
 
-  Future<CodeConfirmNumberResponse> codeSend({required CodeConfirmNumberRequest request}) async {
+  Future<CodeSendActivationResponse> codeSend({required CodeSendActivationRequest request}) async {
     try {
       final response = await activationCodeApi.codeSend(request: request);
-      return CodeConfirmNumberResponse.fromJson(response.data);
+      return CodeSendActivationResponse.fromJson(response.data);
     } on DioException catch (e) {
       final errorMessage = DioExceptions.fromDioError(e).toString();
       throw errorMessage;
     }
   }
 
-  Future<CodeSendActivationResponse> codeConfirm({required CodeSendActivationRequest request}) async {
+  Future<CodeConfirmNumberResponse> codeConfirm({required CodeConfirmNumberRequest request}) async {
     try {
       final response = await activationCodeApi.codeConfirm(request: request);
-      return CodeSendActivationResponse.fromJson(response.data);
+      return CodeConfirmNumberResponse.fromJson(response.data);
     } on DioException catch (e) {
       final errorMessage = DioExceptions.fromDioError(e).toString();
       throw errorMessage;

@@ -9,7 +9,7 @@ class ActivationCodeApi {
 
   ActivationCodeApi({required this.dioClient});
 
-  Future<Response> codeSend({required CodeConfirmNumberRequest request}) async {
+  Future<Response> codeSend({required CodeSendActivationRequest request}) async {
     try {
       final Response response = await dioClient.post(
         AppConstants.sendUrl,
@@ -21,7 +21,7 @@ class ActivationCodeApi {
     }
   }
 
-  Future<Response> codeConfirm({required CodeSendActivationRequest request}) async {
+  Future<Response> codeConfirm({required CodeConfirmNumberRequest request}) async {
     try {
       final Response response = await dioClient.post(
         AppConstants.confirmUrl,

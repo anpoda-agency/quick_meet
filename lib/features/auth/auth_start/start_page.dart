@@ -22,8 +22,7 @@ class _StartPageState extends State<StartPage> {
             decoration: const ShapeDecoration(
               color: Color(0xFF6B4EFF),
               shape: RoundedRectangleBorder(
-                borderRadius:
-                    BorderRadius.only(bottomRight: Radius.circular(30)),
+                borderRadius: BorderRadius.only(bottomRight: Radius.circular(30)),
               ),
               shadows: [
                 BoxShadow(
@@ -34,12 +33,6 @@ class _StartPageState extends State<StartPage> {
                 ),
               ],
             ),
-          ),
-          ElevatedButton(
-            onPressed: () {
-              Navigator.pushNamed(context, '/main_page');
-            },
-            child: Text('Go Main'),
           ),
           const Text(
             'Войти',
@@ -75,8 +68,7 @@ class _StartPageState extends State<StartPage> {
                 },
                 style: ElevatedButton.styleFrom(
                   primary: Colors.white,
-                  shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(18)),
+                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(18)),
                 ),
                 child: const Text(
                   'по смс',
@@ -107,8 +99,7 @@ class _StartPageState extends State<StartPage> {
                 },
                 style: ElevatedButton.styleFrom(
                   primary: Colors.white,
-                  shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(18)),
+                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(18)),
                 ),
                 child: const Text(
                   'с паролем',

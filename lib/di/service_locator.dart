@@ -7,8 +7,8 @@ import 'package:quick_meet/data/repository/activation_code_repository.dart';
 final getIt = GetIt.instance;
 
 Future<void> setup() async {
-  getIt.registerSingleton(Dio());
-  getIt.registerSingleton(DioClient(getIt<Dio>()));
+  getIt.registerSingleton<Dio>(Dio());
+  getIt.registerSingleton<DioClient>(DioClient(getIt<Dio>()));
 
   getIt.registerSingleton(ActivationCodeApi(dioClient: getIt<DioClient>()));
   getIt.registerSingleton(ActivationCodeRepository(activationCodeApi: getIt.get<ActivationCodeApi>()));
