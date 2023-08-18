@@ -42,7 +42,7 @@ class _AuthSmsPageState extends State<AuthSmsPage> {
                         height: 61,
                       ),
                       SizedBox(
-                        width: 341,
+                        width: 285,
                         child: Text(
                           state.pageState.errMsg,
                           textAlign: TextAlign.center,
@@ -69,8 +69,6 @@ class _AuthSmsPageState extends State<AuthSmsPage> {
                         ),
                         child: ElevatedButton(
                             onPressed: () {
-                              //Navigator.pushNamed(
-                              //    context, '/auth_sms_code_page');
                               Navigator.of(context).pop();
                             },
                             style: ElevatedButton.styleFrom(
@@ -94,6 +92,9 @@ class _AuthSmsPageState extends State<AuthSmsPage> {
                 ),
               ),
             );
+          }
+          if (state is AuthWithSmsAllowedToPush) {
+            Navigator.pushNamed(context, '/auth_sms_code_page', arguments: state.pageState.request.source);
           }
         },
         builder: (context, state) {

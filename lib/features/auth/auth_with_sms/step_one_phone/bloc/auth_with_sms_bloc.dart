@@ -38,7 +38,7 @@ class AuthWithSmsBloc extends Bloc<AuthWithSmsEvent, AuthWithSmsState> {
         errMsg: res.message,
       )));
     } else {
-      emit(AuthWithSmsUp(state.pageState.copyWith(response: res)));
+      emit(AuthWithSmsAllowedToPush(state.pageState.copyWith(response: res)));
     }
   }
 

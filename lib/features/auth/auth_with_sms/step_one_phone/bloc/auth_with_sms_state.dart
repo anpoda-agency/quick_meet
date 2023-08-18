@@ -14,6 +14,10 @@ class AuthWithSmsUp extends AuthWithSmsState {
   const AuthWithSmsUp(PageState pageState) : super(pageState);
 }
 
+class AuthWithSmsAllowedToPush extends AuthWithSmsState {
+  const AuthWithSmsAllowedToPush(PageState pageState) : super(pageState);
+}
+
 class AuthWithSmsError extends AuthWithSmsState {
   const AuthWithSmsError(PageState pageState) : super(pageState);
 }
