@@ -14,4 +14,12 @@ abstract class AppConstants {
   //activation-code-controller urls
   static const String sendUrl = "/auth/code/send";
   static const String confirmUrl = "/auth/code/confirm";
+
+  //auth-controller urls
+  static const String verificationLoginUrl = "/auth/verification-login";
+  static const String loginUrl = "/auth/login";
+  static const String refreshTokenUrl = "/auth/refresh/";
+  static const String regsiterUrl = "/auth/register";
+  static const String resetPasswordUrl = "/auth/resetPassword";
+  //static const String updatePasswordUrl = "/auth/updatePassword"; //does not exist in mvp
 }
