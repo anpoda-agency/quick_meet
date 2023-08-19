@@ -68,7 +68,10 @@ class _AuthSmsCodePageState extends State<AuthSmsCodePage> {
                 onPressed: () {
                   //Navigator.pushNamed(context, '/auth_sms_code_page');
                   // пока пусть по нажатию кнопки будет поп ап об ошибке выскакивать
-                  const PopUpCustomWidget();
+                  PopUpCustomWidget(
+                    popUpMessage: 'Text',
+                    mainButtonTitle: 'Text',
+                  ); // затестить как это работает
                 },
                 style: ElevatedButton.styleFrom(
                   backgroundColor: Color(0xFFF5F5F5),
