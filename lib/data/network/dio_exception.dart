@@ -40,15 +40,19 @@ class DioExceptions implements Exception {
   String _handleError(int? statusCode, dynamic error) {
     switch (statusCode) {
       case 400:
-        return 'Bad request';
+        // return 'Bad request';
+        return error['message'];
       case 401:
-        return 'Unauthorized';
+        // return 'Unauthorized';
+        return error['message'];
       case 403:
-        return 'Forbidden';
+        // return 'Forbidden';
+        return error['message'];
       case 404:
         return error['message'];
       case 500:
-        return 'Internal server error';
+        // return 'Internal server error';
+        return error['message'];
       case 502:
         return 'Bad gateway';
       default:

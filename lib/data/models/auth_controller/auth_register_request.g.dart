@@ -22,9 +22,7 @@ AuthRegisterRequest _$AuthRegisterRequestFromJson(Map<String, dynamic> json) =>
       firstName: json['firstName'] == null
           ? ''
           : FromJsonBase.jsonToString(json['firstName']),
-      lastName: json['lastName'] == null
-          ? ''
-          : FromJsonBase.jsonToString(json['lastName']),
+      lastName: FromJsonBase.jsonToString(json['lastName']),
       password: json['password'] == null
           ? ''
           : FromJsonBase.jsonToString(json['password']),

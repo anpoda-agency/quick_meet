@@ -15,7 +15,7 @@ class AuthRepository {
 
   AuthRepository({required this.authApi});
 
-  Future<AuthVerificationLoginResponse> codeSend({required String phone}) async {
+  Future<AuthVerificationLoginResponse> verificationLogin({required String phone}) async {
     try {
       final response = await authApi.verificationLogin(phone: phone);
       return AuthVerificationLoginResponse.fromJson(response.data);

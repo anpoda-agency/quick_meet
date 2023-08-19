@@ -18,11 +18,10 @@ class AuthApi {
       value = '%2B$phone';
     }
     try {
-      final Response response = await dioClient.post(
-          AppConstants.verificationLoginUrl,
-          queryParameters: {'phone': value}
-          // body: {},
-          );
+      final Response response =
+          await dioClient.post(AppConstants.verificationLoginUrl, queryParameters: {'phone': value}
+              // body: {},
+              );
       return response;
     } catch (e) {
       rethrow;
@@ -55,10 +54,12 @@ class AuthApi {
   }
 
   Future<Response> register({required AuthRegisterRequest request}) async {
+    var body = request.toJson();
+    body.removeWhere((key, value) => value == null);
     try {
       final Response response = await dioClient.post(
         AppConstants.regsiterUrl,
-        body: request.toJson(),
+        body: body,
       );
       return response;
     } catch (e) {
@@ -66,8 +67,7 @@ class AuthApi {
     }
   }
 
-  Future<Response> resetPassword(
-      {required AuthResetPasswordRequest request}) async {
+  Future<Response> resetPassword({required AuthResetPasswordRequest request}) async {
     try {
       final Response response = await dioClient.post(
         AppConstants.resetPasswordUrl,

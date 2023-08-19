@@ -18,7 +18,7 @@ class AuthRegisterRequest {
   @JsonKey(name: 'firstName', fromJson: FromJsonBase.jsonToString)
   final String firstName;
   @JsonKey(name: 'lastName', fromJson: FromJsonBase.jsonToString)
-  final String lastName;
+  final String? lastName;
   @JsonKey(name: 'password', fromJson: FromJsonBase.jsonToString)
   final String password;
   @JsonKey(name: 'phoneNumber', fromJson: FromJsonBase.jsonToString)
@@ -32,14 +32,13 @@ class AuthRegisterRequest {
     this.cityName = '',
     this.email = '',
     this.firstName = '',
-    this.lastName = '',
+    this.lastName,
     this.password = '',
     this.phoneNumber = '',
     this.secondName = '',
   });
 
-  factory AuthRegisterRequest.fromJson(Map<String, dynamic> json) =>
-      _$AuthRegisterRequestFromJson(json);
+  factory AuthRegisterRequest.fromJson(Map<String, dynamic> json) => _$AuthRegisterRequestFromJson(json);
   Map<String, dynamic> toJson() => _$AuthRegisterRequestToJson(this);
 
   AuthRegisterRequest copyWith({

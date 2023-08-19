@@ -13,10 +13,10 @@ import 'package:quick_meet/test_ui/ui/main_pages/profile_pages/profile_page.dart
 import 'package:quick_meet/test_ui/ui/password_recovery_pages/password_recovery_enter_page.dart';
 import 'package:quick_meet/test_ui/ui/password_recovery_pages/password_recovery_phone_page.dart';
 import 'package:quick_meet/test_ui/ui/password_recovery_pages/password_recovery_sms_code_page.dart';
-import 'package:quick_meet/test_ui/ui/reg_pages/reg_final_page.dart';
-import 'package:quick_meet/test_ui/ui/reg_pages/reg_password_page.dart';
-import 'package:quick_meet/test_ui/ui/reg_pages/reg_phone_page.dart';
-import 'package:quick_meet/test_ui/ui/reg_pages/reg_sms_code_page.dart';
+import 'package:quick_meet/features/registration/step_four_fields/ui/reg_final_page.dart';
+import 'package:quick_meet/features/registration/step_three_password/reg_password_page.dart';
+import 'package:quick_meet/features/registration/step_one_phone/ui/reg_phone_page.dart';
+import 'package:quick_meet/features/registration/step_two_code/ui/reg_sms_code_page.dart';
 import 'package:quick_meet/features/auth/auth_start/start_page.dart';
 
 void main() {
