@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get_it/get_it.dart';
 import 'package:quick_meet/data/repository/activation_code_repository.dart';
 import 'package:quick_meet/features/auth/auth_with_sms/step_one_phone/bloc/auth_with_sms_bloc.dart';
+import 'package:quick_meet/features/core_widgets/auth_logo_area.dart';
 
 class AuthSmsPage extends StatefulWidget {
   const AuthSmsPage({super.key});
@@ -16,7 +17,8 @@ class _AuthSmsPageState extends State<AuthSmsPage> {
   Widget build(BuildContext context) {
     return BlocProvider(
       create: (context) => AuthWithSmsBloc(
-        activationCodeRepository: context.read<GetIt>().get<ActivationCodeRepository>(),
+        activationCodeRepository:
+            context.read<GetIt>().get<ActivationCodeRepository>(),
         pageState: const PageState(),
       ),
       child: BlocConsumer<AuthWithSmsBloc, AuthWithSmsState>(
@@ -73,7 +75,8 @@ class _AuthSmsPageState extends State<AuthSmsPage> {
                             },
                             style: ElevatedButton.styleFrom(
                               backgroundColor: const Color(0xFFF5F5F5),
-                              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(18)),
+                              shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(18)),
                             ),
                             child: const Text(
                               'Закрыть',
@@ -94,7 +97,8 @@ class _AuthSmsPageState extends State<AuthSmsPage> {
             );
           }
           if (state is AuthWithSmsAllowedToPush) {
-            Navigator.pushNamed(context, '/auth_sms_code_page', arguments: state.pageState.request.source);
+            Navigator.pushNamed(context, '/auth_sms_code_page',
+                arguments: state.pageState.request.source);
           }
         },
         builder: (context, state) {
@@ -109,23 +113,8 @@ class _AuthSmsPageState extends State<AuthSmsPage> {
                   Stack(
                     alignment: AlignmentDirectional.bottomCenter,
                     children: <Widget>[
-                      Container(
-                        width: MediaQuery.of(context).size.width,
-                        height: 351,
-                        decoration: const ShapeDecoration(
-                          color: Color(0xFF6B4EFF),
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.only(bottomRight: Radius.circular(30)),
-                          ),
-                          shadows: [
-                            BoxShadow(
-                              color: Color(0x19000000),
-                              blurRadius: 15,
-                              offset: Offset(0, 4),
-                              spreadRadius: 0,
-                            )
-                          ],
-                        ),
+                      const AuthLogoAreaWidget(
+                        heightRatioRelativeScreen: 0.35,
                       ),
                       Column(
                         children: [
@@ -160,16 +149,54 @@ class _AuthSmsPageState extends State<AuthSmsPage> {
                               textAlign: TextAlign.center,
                             ),
                           ),
+                          // НИЖЕ КОД КОТОРЫЙ НАЛЕЗАЕТ ДРУГ НА ДРУГА
+                          /* SizedBox(
+                            width: 170,  
+                            height: 0.2,
+                            child: Align(
+                              alignment: Alignment
+                                  .bottomCenter, //Alignment.bottomRight,
+                              child: Padding(
+                                padding: const EdgeInsets.fromLTRB(0, 0, 0, 0),
+                                child: Container(
+                                  width: MediaQuery.of(context).size.width,
+                                  // margin: EdgeInsets.only(
+                                  //     right: MediaQuery.of(context).size.width /
+                                  //         6),
+                                  //MediaQuery.of(context).size.width / 3),
+                                  decoration: const ShapeDecoration(
+                                    shape: RoundedRectangleBorder(
+                                      side: BorderSide(
+                                        width: 0.6,
+                                        strokeAlign:
+                                            BorderSide.strokeAlignCenter,
+                                        color: Colors.white,
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ), */
+                          // Дивайдер сломал мне мозг сука
                           Align(
-                            alignment: Alignment.bottomRight,
-                            child: Container(
-                              width: 282,
-                              decoration: const ShapeDecoration(
-                                shape: RoundedRectangleBorder(
-                                  side: BorderSide(
-                                    width: 0.20,
-                                    strokeAlign: BorderSide.strokeAlignCenter,
-                                    color: Colors.white,
+                            alignment:
+                                Alignment.bottomCenter, //Alignment.bottomRight,
+                            child: Padding(
+                              padding: const EdgeInsets.fromLTRB(0, 0, 0, 0),
+                              child: Container(
+                                width: MediaQuery.of(context).size.width,
+                                margin: EdgeInsets.only(
+                                    left: MediaQuery.of(context).size.width /
+                                        3.5),
+                                //MediaQuery.of(context).size.width / 3),
+                                decoration: const ShapeDecoration(
+                                  shape: RoundedRectangleBorder(
+                                    side: BorderSide(
+                                      width: 0.20,
+                                      strokeAlign: BorderSide.strokeAlignCenter,
+                                      color: Colors.white,
+                                    ),
                                   ),
                                 ),
                               ),
@@ -208,15 +235,19 @@ class _AuthSmsPageState extends State<AuthSmsPage> {
                         height: 50,
                         child: TextField(
                           keyboardType: TextInputType.phone,
-                          onChanged: (value) => context.read<AuthWithSmsBloc>().add(AuthWithSmsEnterPhone(value)),
+                          onChanged: (value) => context
+                              .read<AuthWithSmsBloc>()
+                              .add(AuthWithSmsEnterPhone(value)),
                           decoration: InputDecoration(
                             enabledBorder: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(18),
-                              borderSide: const BorderSide(width: 0.50, color: Color(0xFF6B4EFF)),
+                              borderSide: const BorderSide(
+                                  width: 0.50, color: Color(0xFF6B4EFF)),
                             ),
                             focusedBorder: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(18),
-                              borderSide: const BorderSide(width: 0.50, color: Color(0xFF6B4EFF)),
+                              borderSide: const BorderSide(
+                                  width: 0.50, color: Color(0xFF6B4EFF)),
                             ),
                           ),
                         ),
@@ -236,11 +267,14 @@ class _AuthSmsPageState extends State<AuthSmsPage> {
                         child: ElevatedButton(
                             onPressed: () {
                               // Navigator.pushNamed(context, '/auth_sms_code_page');
-                              context.read<AuthWithSmsBloc>().add(AuthWithSmsSendPhone());
+                              context
+                                  .read<AuthWithSmsBloc>()
+                                  .add(AuthWithSmsSendPhone());
                             },
                             style: ElevatedButton.styleFrom(
                               backgroundColor: const Color(0xFFF5F5F5),
-                              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(18)),
+                              shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(18)),
                             ),
                             child: const Text(
                               'Получить код',
