@@ -2,28 +2,28 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get_it/get_it.dart';
 import 'package:quick_meet/data/repository/auth_repository.dart';
-import 'package:quick_meet/features/auth/auth_with_password/bloc/auth_password_bloc.dart';
+import 'package:quick_meet/features/reset_password/step_three/bloc/recovery_final_bloc.dart';
 
-import 'package:quick_meet/features/reset_password/step_one/ui/password_recovery_phone_page.dart';
-
-class AuthPasswordPage extends StatefulWidget {
-  const AuthPasswordPage({super.key});
+class PasswordRecoveryEnterPage extends StatefulWidget {
+  const PasswordRecoveryEnterPage({super.key});
 
   @override
-  State<AuthPasswordPage> createState() => _AuthPasswordPageState();
+  State<PasswordRecoveryEnterPage> createState() => _PasswordRecoveryEnterPageState();
 }
 
-class _AuthPasswordPageState extends State<AuthPasswordPage> {
+class _PasswordRecoveryEnterPageState extends State<PasswordRecoveryEnterPage> {
   @override
   Widget build(BuildContext context) {
+    final args = ModalRoute.of(context)!.settings.arguments as String;
     return BlocProvider(
-      create: (context) => AuthPasswordBloc(
+      create: (context) => RecoveryFinalBloc(
         authRepository: context.read<GetIt>().get<AuthRepository>(),
+        phone: args,
         pageState: const PageState(),
       ),
-      child: BlocConsumer<AuthPasswordBloc, AuthPasswordState>(
+      child: BlocConsumer<RecoveryFinalBloc, RecoveryFinalState>(
         listener: (context, state) {
-          if (state is AuthPasswordAllowedToPush) {
+          if (state is RecoveryFinalAllowedToPush) {
             showDialog(
               context: context,
               builder: (context) => AlertDialog(
@@ -46,7 +46,7 @@ class _AuthPasswordPageState extends State<AuthPasswordPage> {
                       SizedBox(
                         width: 285,
                         child: Text(
-                          'Hello, ${state.pageState.response.user.firstName}!',
+                          'Hi, ${state.pageState.response.user.firstName}!',
                           textAlign: TextAlign.center,
                           style: const TextStyle(
                             color: Colors.white,
@@ -95,7 +95,7 @@ class _AuthPasswordPageState extends State<AuthPasswordPage> {
               ),
             );
           }
-          if (state is AuthPasswordError) {
+          if (state is RecoveryFinalError) {
             showDialog(
               context: context,
               builder: (context) => AlertDialog(
@@ -182,7 +182,7 @@ class _AuthPasswordPageState extends State<AuthPasswordPage> {
                     children: <Widget>[
                       Container(
                         width: MediaQuery.of(context).size.width,
-                        height: MediaQuery.of(context).size.height * 0.35,
+                        height: 351,
                         decoration: const ShapeDecoration(
                           color: Color(0xFF6B4EFF),
                           shape: RoundedRectangleBorder(
@@ -201,13 +201,13 @@ class _AuthPasswordPageState extends State<AuthPasswordPage> {
                       Column(
                         children: [
                           const SizedBox(
-                            width: 200,
+                            width: 350,
                             height: 100,
                             child: Text.rich(
                               TextSpan(
                                 children: [
                                   TextSpan(
-                                    text: 'Войти в\n',
+                                    text: 'Сбросить пароль в\n',
                                     style: TextStyle(
                                       color: Color(0xFFD9D9D9),
                                       fontSize: 32,
@@ -261,7 +261,7 @@ class _AuthPasswordPageState extends State<AuthPasswordPage> {
                       const SizedBox(
                         width: 271,
                         child: Text(
-                          'Номер телефона',
+                          'Новый пароль',
                           style: TextStyle(
                             color: Color(0xFF505050),
                             fontSize: 16,
@@ -278,9 +278,10 @@ class _AuthPasswordPageState extends State<AuthPasswordPage> {
                         width: 285,
                         height: 50,
                         child: TextField(
-                          onChanged: (value) => context.read<AuthPasswordBloc>().add(AuthPasswordInputNumber(value)),
-                          keyboardType: TextInputType.phone,
+                          onChanged: (value) =>
+                              context.read<RecoveryFinalBloc>().add(RecoveryFinalInputPassword(value)),
                           decoration: InputDecoration(
+                            errorText: state.pageState.passwordIsShort ? 'Не менее 6 символов' : null,
                             enabledBorder: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(18),
                               borderSide: const BorderSide(width: 0.50, color: Color(0xFF6B4EFF)),
@@ -298,7 +299,7 @@ class _AuthPasswordPageState extends State<AuthPasswordPage> {
                       const SizedBox(
                         width: 271,
                         child: Text(
-                          'Пароль',
+                          'Повторите пароль',
                           style: TextStyle(
                             color: Color(0xFF505050),
                             fontSize: 16,
@@ -315,8 +316,10 @@ class _AuthPasswordPageState extends State<AuthPasswordPage> {
                         width: 285,
                         height: 50,
                         child: TextField(
-                          onChanged: (value) => context.read<AuthPasswordBloc>().add(AuthPasswordInputPassword(value)),
+                          onChanged: (value) =>
+                              context.read<RecoveryFinalBloc>().add(RecoveryFinalConfirmPassword(value)),
                           decoration: InputDecoration(
+                            errorText: state.pageState.confirmPasswordError ? 'Пароли не совпадают' : null,
                             enabledBorder: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(18),
                               borderSide: const BorderSide(width: 0.50, color: Color(0xFF6B4EFF)),
@@ -329,36 +332,7 @@ class _AuthPasswordPageState extends State<AuthPasswordPage> {
                         ),
                       ),
                       const SizedBox(
-                        height: 17,
-                      ),
-                      SizedBox(
-                        width: 335,
                         height: 50,
-                        child: InkWell(
-                          child: const Text(
-                            'Забыли пароль?',
-                            textAlign: TextAlign.center,
-                            style: TextStyle(
-                              color: Color(0xFF505050),
-                              fontSize: 16,
-                              fontFamily: 'SF Pro Text',
-                              fontWeight: FontWeight.w300,
-                              decoration: TextDecoration.underline,
-                              letterSpacing: 0.80,
-                            ),
-                          ),
-                          onTap: () {
-                            Navigator.of(context).push(
-                              MaterialPageRoute(
-                                  builder: (context) => const PasswordRecoveryPhonePage(
-                                      //args: listOrdersModels[index].id,
-                                      )),
-                            );
-                          },
-                        ),
-                      ),
-                      const SizedBox(
-                        height: 5,
                       ),
                       Container(
                         width: 285,
@@ -370,13 +344,13 @@ class _AuthPasswordPageState extends State<AuthPasswordPage> {
                           ),
                         ),
                         child: ElevatedButton(
-                            onPressed: () => context.read<AuthPasswordBloc>().add(AuthPasswordSendLogin()),
+                            onPressed: () => context.read<RecoveryFinalBloc>().add(RecoveryFinalSend()),
                             style: ElevatedButton.styleFrom(
                               backgroundColor: Color(0xFFF5F5F5),
                               shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(18)),
                             ),
                             child: const Text(
-                              'Войти',
+                              'Изменить',
                               textAlign: TextAlign.center,
                               style: TextStyle(
                                 color: Colors.black,
