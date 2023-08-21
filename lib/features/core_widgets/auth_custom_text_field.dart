@@ -4,9 +4,13 @@ class AuthCustomTextFieldWidget extends StatefulWidget {
   const AuthCustomTextFieldWidget({
     super.key,
     required this.textFieldTitle,
+    required this.onChanged,
+    this.keyboardType,
   });
 
   final String textFieldTitle;
+  final Function(String) onChanged;
+  final TextInputType? keyboardType;
 
   @override
   State<AuthCustomTextFieldWidget> createState() =>
@@ -44,6 +48,8 @@ class _AuthCustomTextFieldWidgetState extends State<AuthCustomTextFieldWidget> {
             width: MediaQuery.of(context).size.width,
             height: 50,
             child: TextField(
+              keyboardType: widget.keyboardType,
+              onChanged: widget.onChanged,
               decoration: InputDecoration(
                 enabledBorder: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(18),
