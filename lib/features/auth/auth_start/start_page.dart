@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:quick_meet/features/core_widgets/auth_custom_button.dart';
-import 'package:quick_meet/features/core_widgets/auth_logo_area.dart';
+import 'package:quick_meet/features/core_widgets/custom_button_widget.dart';
+import 'package:quick_meet/features/core_widgets/auth_logo_area_widget.dart';
 import 'package:quick_meet/features/registration/step_one_phone/ui/reg_phone_page.dart';
 
 class StartPage extends StatefulWidget {
@@ -39,7 +39,7 @@ class _StartPageState extends State<StartPage> {
                 const SizedBox(
                   height: 30,
                 ),
-                AuthCustomButtonWidget(
+                CustomButtonWidget(
                   title: 'по смс',
                   backgroundColor: Colors.white,
                   widthPadding: 90,
@@ -50,7 +50,7 @@ class _StartPageState extends State<StartPage> {
                 const SizedBox(
                   height: 20,
                 ),
-                AuthCustomButtonWidget(
+                CustomButtonWidget(
                   title: 'с паролем',
                   backgroundColor: Colors.white,
                   widthPadding: 90,

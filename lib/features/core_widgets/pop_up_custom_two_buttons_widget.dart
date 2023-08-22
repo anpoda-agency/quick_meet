@@ -22,7 +22,7 @@ class PopUpCustomTwoButtonsWidget {
 
 // Попов в телегу скинул пример как на работе у них делают, можно stateless выкинуть и все
 
-  Future<void> popUpCustomWidgetTwoButtons(BuildContext context) {
+  Future<void> showPopUpCustomWTwoButtonsWidget(BuildContext context) {
     return showDialog(
       context: context,
       builder: (context) => AlertDialog(

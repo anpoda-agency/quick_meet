@@ -3,10 +3,10 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get_it/get_it.dart';
 import 'package:quick_meet/data/repository/auth_repository.dart';
 import 'package:quick_meet/features/auth/auth_with_password/bloc/auth_password_bloc.dart';
-import 'package:quick_meet/features/core_widgets/auth_custom_button.dart';
-import 'package:quick_meet/features/core_widgets/auth_custom_text_field.dart';
-import 'package:quick_meet/features/core_widgets/auth_logo_area.dart';
-import 'package:quick_meet/features/core_widgets/auth_main_custom_label.dart';
+import 'package:quick_meet/features/core_widgets/custom_button_widget.dart';
+import 'package:quick_meet/features/core_widgets/custom_text_field_widget.dart';
+import 'package:quick_meet/features/core_widgets/auth_logo_area_widget.dart';
+import 'package:quick_meet/features/core_widgets/auth_main_custom_label_widget.dart';
 import 'package:quick_meet/features/core_widgets/pop_up_custom_one_button_widget.dart';
 
 import 'package:quick_meet/features/reset_password/step_one/ui/password_recovery_phone_page.dart';
@@ -36,7 +36,7 @@ class _AuthPasswordPageState extends State<AuthPasswordPage> {
               onPressed: () {
                 Navigator.of(context).pop();
               },
-            );
+            ).showPopUpCustomOneButtonWidget(context);
           }
           if (state is AuthPasswordError) {
             PopUpCustomOneButtonWidget(
@@ -45,7 +45,7 @@ class _AuthPasswordPageState extends State<AuthPasswordPage> {
               onPressed: () {
                 Navigator.of(context).pop();
               },
-            );
+            ).showPopUpCustomOneButtonWidget(context);
           }
         },
         builder: (context, state) {
@@ -63,7 +63,10 @@ class _AuthPasswordPageState extends State<AuthPasswordPage> {
                       AuthLogoAreaWidget(
                         heightRatioRelativeScreen: 0.35,
                       ),
-                      AuthMainCustomLabelWidget(topLabel: 'Войти в'),
+                      AuthMainCustomLabelWidget(
+                        topLabel: 'Войти в',
+                        widthLabelContainer: 200,
+                      ),
                     ],
                   ),
                   const SizedBox(
@@ -71,7 +74,7 @@ class _AuthPasswordPageState extends State<AuthPasswordPage> {
                   ),
                   Column(
                     children: [
-                      AuthCustomTextFieldWidget(
+                      CustomTextFieldWidget(
                         textFieldTitle: 'Номер телефона',
                         onChanged: (value) => context
                             .read<AuthPasswordBloc>()
@@ -81,7 +84,7 @@ class _AuthPasswordPageState extends State<AuthPasswordPage> {
                       const SizedBox(
                         height: 12,
                       ),
-                      AuthCustomTextFieldWidget(
+                      CustomTextFieldWidget(
                         textFieldTitle: 'Пароль',
                         onChanged: (value) => context
                             .read<AuthPasswordBloc>()
@@ -119,7 +122,7 @@ class _AuthPasswordPageState extends State<AuthPasswordPage> {
                       const SizedBox(
                         height: 5,
                       ),
-                      AuthCustomButtonWidget(
+                      CustomButtonWidget(
                           onPressed: () => context
                               .read<AuthPasswordBloc>()
                               .add(AuthPasswordSendLogin()),

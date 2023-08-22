@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:quick_meet/features/core_widgets/auth_logo_area_widget.dart';
+import 'package:quick_meet/features/core_widgets/auth_main_custom_label_widget.dart';
 
 class RegPasswordPage extends StatefulWidget {
   const RegPasswordPage({super.key});
@@ -9,7 +11,8 @@ class RegPasswordPage extends StatefulWidget {
 
 class _RegPasswordPageState extends State<RegPasswordPage> {
   final TextEditingController _passwordController = TextEditingController();
-  final TextEditingController _confirmPasswordController = TextEditingController();
+  final TextEditingController _confirmPasswordController =
+      TextEditingController();
   bool _confirmPasswordError = false;
   bool _passwordIsShort = false;
 
@@ -23,82 +26,18 @@ class _RegPasswordPageState extends State<RegPasswordPage> {
       ),
       body: SingleChildScrollView(
         child: Column(
-          //mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            Stack(
+            const Stack(
               alignment: AlignmentDirectional.bottomCenter,
-              //textDirection: TextDirection.ltr,
               children: <Widget>[
-                Container(
-                  width: MediaQuery.of(context).size.width,
-                  height: 351,
-                  decoration: const ShapeDecoration(
-                    color: Color(0xFF6B4EFF),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.only(bottomRight: Radius.circular(30)),
-                    ),
-                    shadows: [
-                      BoxShadow(
-                        color: Color(0x19000000),
-                        blurRadius: 15,
-                        offset: Offset(0, 4),
-                        spreadRadius: 0,
-                      )
-                    ],
-                  ),
-                ),
-                // Надписи на фиолетовом фоне
+                AuthLogoAreaWidget(heightRatioRelativeScreen: 0.35),
                 Column(
                   children: [
-                    const SizedBox(
-                      width: 334,
-                      height: 90,
-                      child: Text.rich(
-                        TextSpan(
-                          children: [
-                            TextSpan(
-                              text: 'Регистрация в\n',
-                              style: TextStyle(
-                                color: Color(0xFFD9D9D9),
-                                fontSize: 30,
-                                fontFamily: 'SF Pro Text',
-                                fontWeight: FontWeight.w500,
-                                letterSpacing: 1.50,
-                              ),
-                            ),
-                            TextSpan(
-                              text: 'QuickMeet',
-                              style: TextStyle(
-                                color: Colors.white,
-                                fontSize: 36,
-                                fontFamily: 'SF Pro Text',
-                                fontWeight: FontWeight.w600,
-                                letterSpacing: 5.76,
-                              ),
-                            ),
-                          ],
-                        ),
-                        textAlign: TextAlign.center,
-                      ),
-                    ),
-                    Align(
-                      alignment: Alignment.bottomRight,
-                      child: Container(
-                        width: 282,
-                        decoration: const ShapeDecoration(
-                          shape: RoundedRectangleBorder(
-                            side: BorderSide(
-                              width: 0.20,
-                              strokeAlign: BorderSide.strokeAlignCenter,
-                              color: Colors.white,
-                            ),
-                          ),
-                        ),
-                      ),
-                    ),
-                    const SizedBox(
-                      height: 27,
-                    ),
+                    AuthMainCustomLabelWidget(
+                      topLabel: 'Регистрация в',
+                      widthLabelContainer: 250,
+                    )
                   ],
                 ),
               ],
@@ -130,14 +69,30 @@ class _RegPasswordPageState extends State<RegPasswordPage> {
                   child: TextField(
                     controller: _passwordController,
                     decoration: InputDecoration(
-                      errorText: _passwordIsShort ? 'Не менее 6 символов' : null,
+                      /* //isDense: true,
+                      //contentPadding: EdgeInsets.fromLTRB(0, 0, 0, 10),
+                      // новый бордер
+                      focusedErrorBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(18),
+                        borderSide: const BorderSide(
+                            width: 0.50, color: Color(0xFF6B4EFF)),
+                      ),
+                      errorBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(18),
+                        borderSide: const BorderSide(
+                            width: 0.50, color: Color(0xFF6B4EFF)),
+                      ), */
+                      errorText: // 'Не менее 6 символов'
+                          _passwordIsShort ? 'Не менее 6 символов' : null,
                       enabledBorder: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(18),
-                        borderSide: const BorderSide(width: 0.50, color: Color(0xFF6B4EFF)),
+                        borderSide: const BorderSide(
+                            width: 0.50, color: Color(0xFF6B4EFF)),
                       ),
                       focusedBorder: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(18),
-                        borderSide: const BorderSide(width: 0.50, color: Color(0xFF6B4EFF)),
+                        borderSide: const BorderSide(
+                            width: 0.50, color: Color(0xFF6B4EFF)),
                       ),
                     ),
                   ),
@@ -167,14 +122,17 @@ class _RegPasswordPageState extends State<RegPasswordPage> {
                   child: TextField(
                     controller: _confirmPasswordController,
                     decoration: InputDecoration(
-                      errorText: _confirmPasswordError ? 'Пароли не совпадают' : null,
+                      errorText:
+                          _confirmPasswordError ? 'Пароли не совпадают' : null,
                       enabledBorder: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(18),
-                        borderSide: const BorderSide(width: 0.50, color: Color(0xFF6B4EFF)),
+                        borderSide: const BorderSide(
+                            width: 0.50, color: Color(0xFF6B4EFF)),
                       ),
                       focusedBorder: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(18),
-                        borderSide: const BorderSide(width: 0.50, color: Color(0xFF6B4EFF)),
+                        borderSide: const BorderSide(
+                            width: 0.50, color: Color(0xFF6B4EFF)),
                       ),
                     ),
                   ),
@@ -197,13 +155,17 @@ class _RegPasswordPageState extends State<RegPasswordPage> {
                           setState(() {
                             _passwordIsShort = false;
                           });
-                          if (_passwordController.text == _confirmPasswordController.text) {
+                          if (_passwordController.text ==
+                              _confirmPasswordController.text) {
                             setState(() {
                               _confirmPasswordError = false;
                               _passwordIsShort = false;
                             });
                             Navigator.pushNamed(context, '/reg_final_page',
-                                arguments: {'phone': args, 'password': _confirmPasswordController.text});
+                                arguments: {
+                                  'phone': args,
+                                  'password': _confirmPasswordController.text
+                                });
                           } else {
                             setState(() {
                               _confirmPasswordError = true;
@@ -217,7 +179,8 @@ class _RegPasswordPageState extends State<RegPasswordPage> {
                       },
                       style: ElevatedButton.styleFrom(
                         backgroundColor: Color(0xFFF5F5F5),
-                        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(18)),
+                        shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(18)),
                       ),
                       child: const Text(
                         'Продолжить',
@@ -236,6 +199,7 @@ class _RegPasswordPageState extends State<RegPasswordPage> {
                 ),
               ],
             ),
+            const SizedBox.shrink(),
           ],
         ),
       ),

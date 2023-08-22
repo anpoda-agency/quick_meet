@@ -4,9 +4,11 @@ class AuthMainCustomLabelWidget extends StatelessWidget {
   const AuthMainCustomLabelWidget({
     super.key,
     required this.topLabel,
+    required this.widthLabelContainer,
   });
 
   final String topLabel;
+  final double widthLabelContainer;
 
   @override
   Widget build(BuildContext context) {
@@ -25,7 +27,7 @@ class AuthMainCustomLabelWidget extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               SizedBox(
-                width: 200,
+                width: widthLabelContainer,
                 height: 100,
                 child: Text.rich(
                   TextSpan(
@@ -57,7 +59,7 @@ class AuthMainCustomLabelWidget extends StatelessWidget {
               ),
               // Дивайдер сломал мне мозг сука
               SizedBox(
-                width: 200,
+                width: widthLabelContainer,
                 child: Align(
                   alignment: Alignment.bottomCenter, //Alignment.bottomRight,
                   child: Padding(

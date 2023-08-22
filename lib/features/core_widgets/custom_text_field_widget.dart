@@ -1,23 +1,24 @@
 import 'package:flutter/material.dart';
 
-class AuthCustomTextFieldWidget extends StatefulWidget {
-  const AuthCustomTextFieldWidget({
+class CustomTextFieldWidget extends StatefulWidget {
+  const CustomTextFieldWidget({
     super.key,
     required this.textFieldTitle,
     required this.onChanged,
     this.keyboardType,
+    this.controller,
   });
 
   final String textFieldTitle;
   final Function(String) onChanged;
   final TextInputType? keyboardType;
+  final TextEditingController? controller;
 
   @override
-  State<AuthCustomTextFieldWidget> createState() =>
-      _AuthCustomTextFieldWidgetState();
+  State<CustomTextFieldWidget> createState() => _CustomTextFieldWidgetState();
 }
 
-class _AuthCustomTextFieldWidgetState extends State<AuthCustomTextFieldWidget> {
+class _CustomTextFieldWidgetState extends State<CustomTextFieldWidget> {
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -50,6 +51,7 @@ class _AuthCustomTextFieldWidgetState extends State<AuthCustomTextFieldWidget> {
             child: TextField(
               keyboardType: widget.keyboardType,
               onChanged: widget.onChanged,
+              controller: widget.controller,
               decoration: InputDecoration(
                 enabledBorder: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(18),

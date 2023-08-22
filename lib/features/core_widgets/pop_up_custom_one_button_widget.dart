@@ -16,7 +16,7 @@ class PopUpCustomOneButtonWidget {
 
 // Попов в телегу скинул пример как на работе у них делают, можно stateless выкинуть и все
 
-  Future<void> popUpCustomWidgetOneButton(BuildContext context) {
+  Future<void> showPopUpCustomOneButtonWidget(BuildContext context) {
     return showDialog(
       context: context,
       builder: (context) => AlertDialog(

@@ -3,10 +3,10 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get_it/get_it.dart';
 import 'package:quick_meet/data/repository/activation_code_repository.dart';
 import 'package:quick_meet/features/auth/auth_with_sms/step_one_phone/bloc/auth_with_sms_bloc.dart';
-import 'package:quick_meet/features/core_widgets/auth_custom_button.dart';
-import 'package:quick_meet/features/core_widgets/auth_custom_text_field.dart';
-import 'package:quick_meet/features/core_widgets/auth_logo_area.dart';
-import 'package:quick_meet/features/core_widgets/auth_main_custom_label.dart';
+import 'package:quick_meet/features/core_widgets/custom_button_widget.dart';
+import 'package:quick_meet/features/core_widgets/custom_text_field_widget.dart';
+import 'package:quick_meet/features/core_widgets/auth_logo_area_widget.dart';
+import 'package:quick_meet/features/core_widgets/auth_main_custom_label_widget.dart';
 import 'package:quick_meet/features/core_widgets/pop_up_custom_one_button_widget.dart';
 
 class AuthSmsPage extends StatefulWidget {
@@ -33,7 +33,7 @@ class _AuthSmsPageState extends State<AuthSmsPage> {
                 buttonTitle: 'Закрыть',
                 onPressed: () {
                   Navigator.of(context).pop();
-                }).popUpCustomWidgetOneButton(context);
+                }).showPopUpCustomOneButtonWidget(context);
           }
           if (state is AuthWithSmsAllowedToPush) {
             Navigator.pushNamed(context, '/auth_sms_code_page',
@@ -45,6 +45,14 @@ class _AuthSmsPageState extends State<AuthSmsPage> {
             appBar: AppBar(
               backgroundColor: const Color(0xFF6B4EFF),
               elevation: 0,
+              actions: [
+                IconButton(
+                    onPressed: () {
+                      Navigator.pushNamed(context, '/auth_sms_code_page',
+                          arguments: state.pageState.request.source);
+                    },
+                    icon: const Icon(Icons.backup)),
+              ],
             ),
             body: SingleChildScrollView(
               child: Column(
@@ -55,7 +63,10 @@ class _AuthSmsPageState extends State<AuthSmsPage> {
                       AuthLogoAreaWidget(
                         heightRatioRelativeScreen: 0.35,
                       ),
-                      AuthMainCustomLabelWidget(topLabel: 'Войти в')
+                      AuthMainCustomLabelWidget(
+                        topLabel: 'Войти в',
+                        widthLabelContainer: 200,
+                      )
                     ],
                   ),
                   const SizedBox(
@@ -63,7 +74,7 @@ class _AuthSmsPageState extends State<AuthSmsPage> {
                   ),
                   Column(
                     children: [
-                      AuthCustomTextFieldWidget(
+                      CustomTextFieldWidget(
                         textFieldTitle: 'Номер телефона',
                         onChanged: (value) => context
                             .read<AuthWithSmsBloc>()
@@ -73,7 +84,7 @@ class _AuthSmsPageState extends State<AuthSmsPage> {
                       const SizedBox(
                         height: 29,
                       ),
-                      AuthCustomButtonWidget(
+                      CustomButtonWidget(
                           onPressed: () {
                             // Navigator.pushNamed(context, '/auth_sms_code_page');
                             context
