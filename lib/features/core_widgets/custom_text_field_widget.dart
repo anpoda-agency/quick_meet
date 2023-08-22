@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
 
 class CustomTextFieldWidget extends StatefulWidget {
   const CustomTextFieldWidget({
@@ -7,12 +8,16 @@ class CustomTextFieldWidget extends StatefulWidget {
     required this.onChanged,
     this.keyboardType,
     this.controller,
+    this.errorText,
+    this.inputFormatter,
   });
 
   final String textFieldTitle;
   final Function(String) onChanged;
   final TextInputType? keyboardType;
   final TextEditingController? controller;
+  final String? errorText;
+  final List<MaskTextInputFormatter>? inputFormatter;
 
   @override
   State<CustomTextFieldWidget> createState() => _CustomTextFieldWidgetState();
@@ -49,6 +54,7 @@ class _CustomTextFieldWidgetState extends State<CustomTextFieldWidget> {
             width: MediaQuery.of(context).size.width,
             height: 50,
             child: TextField(
+              inputFormatters: widget.inputFormatter,
               keyboardType: widget.keyboardType,
               onChanged: widget.onChanged,
               controller: widget.controller,
@@ -63,6 +69,7 @@ class _CustomTextFieldWidgetState extends State<CustomTextFieldWidget> {
                   borderSide:
                       const BorderSide(width: 0.50, color: Color(0xFF6B4EFF)),
                 ),
+                errorText: widget.errorText,
               ),
             ),
           ),
