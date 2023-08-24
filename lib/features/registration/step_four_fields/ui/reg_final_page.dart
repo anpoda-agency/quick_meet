@@ -17,15 +17,12 @@ class RegFinalPage extends StatefulWidget {
 }
 
 class _RegFinalPageState extends State<RegFinalPage> {
-  MaskTextInputFormatter birthFormat = MaskTextInputFormatter(
-      mask: '##-##-####',
-      filter: {"#": RegExp(r'[0-9]')},
-      type: MaskAutoCompletionType.lazy);
+  MaskTextInputFormatter birthFormat =
+      MaskTextInputFormatter(mask: '##-##-####', filter: {"#": RegExp(r'[0-9]')}, type: MaskAutoCompletionType.lazy);
 
   @override
   Widget build(BuildContext context) {
-    final args =
-        ModalRoute.of(context)!.settings.arguments as Map<String, dynamic>;
+    final args = ModalRoute.of(context)!.settings.arguments as Map<String, dynamic>;
     return BlocProvider(
       create: (context) => RegistrationFinalBloc(
         authRepository: context.read<GetIt>().get<AuthRepository>(),
@@ -65,7 +62,7 @@ class _RegFinalPageState extends State<RegFinalPage> {
                   const Stack(
                     alignment: AlignmentDirectional.bottomCenter,
                     children: <Widget>[
-                      AuthLogoAreaWidget(heightRatioRelativeScreen: 0.35),
+                      AuthLogoAreaWidget(heightRatioRelativeScreen: 0.2),
                       Column(
                         children: [
                           AuthMainCustomLabelWidget(
@@ -83,18 +80,16 @@ class _RegFinalPageState extends State<RegFinalPage> {
                     children: [
                       CustomTextFieldWidget(
                         textFieldTitle: 'Имя*',
-                        onChanged: (value) => context
-                            .read<RegistrationFinalBloc>()
-                            .add(RegistrationFinalInputName(value)),
+                        onChanged: (value) =>
+                            context.read<RegistrationFinalBloc>().add(RegistrationFinalInputName(value)),
                       ),
                       const SizedBox(
                         height: 12,
                       ),
                       CustomTextFieldWidget(
                         textFieldTitle: 'Фамилия*',
-                        onChanged: (value) => context
-                            .read<RegistrationFinalBloc>()
-                            .add(RegistrationFinalInputSecondName(value)),
+                        onChanged: (value) =>
+                            context.read<RegistrationFinalBloc>().add(RegistrationFinalInputSecondName(value)),
                       ),
                       const SizedBox(
                         height: 12,
@@ -102,27 +97,23 @@ class _RegFinalPageState extends State<RegFinalPage> {
                       CustomTextFieldWidget(
                         textFieldTitle: 'Дата рождения*',
                         inputFormatter: [birthFormat],
-                        onChanged: (value) => context
-                            .read<RegistrationFinalBloc>()
-                            .add(RegistrationFinalInputBirthday(value)),
+                        onChanged: (value) =>
+                            context.read<RegistrationFinalBloc>().add(RegistrationFinalInputBirthday(value)),
                       ),
                       const SizedBox(
                         height: 12,
                       ),
                       CustomTextFieldWidget(
                         textFieldTitle: 'Электронная почта*',
-                        onChanged: (value) => context
-                            .read<RegistrationFinalBloc>()
-                            .add(RegistrationFinalInputMail(value)),
+                        onChanged: (value) =>
+                            context.read<RegistrationFinalBloc>().add(RegistrationFinalInputMail(value)),
                       ),
                       const SizedBox(
                         height: 40,
                       ),
                       _regButton(
                         context: context,
-                        onPressed: () => context
-                            .read<RegistrationFinalBloc>()
-                            .add(RegistrationFinalSend()),
+                        onPressed: () => context.read<RegistrationFinalBloc>().add(RegistrationFinalSend()),
                       ),
                       /*
                       CustomButtonWidget(
@@ -168,8 +159,7 @@ Widget _regButton({
           //() => context.read<RegistrationFinalBloc>().add(RegistrationFinalSend()),
           style: ElevatedButton.styleFrom(
             backgroundColor: const Color(0xFF6B4EFF),
-            shape:
-                RoundedRectangleBorder(borderRadius: BorderRadius.circular(18)),
+            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(18)),
           ),
           child: const Text(
             'Зарегистрироваться',

@@ -11,7 +11,6 @@ class AuthLogoAreaWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: MediaQuery.of(context).size.width,
       height: MediaQuery.of(context).size.height * heightRatioRelativeScreen,
       decoration: const ShapeDecoration(
         color: Color(0xFF6B4EFF),
