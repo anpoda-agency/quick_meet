@@ -1,5 +1,5 @@
 import 'package:dio/dio.dart';
-import 'package:quick_meet/core/contant.dart';
+import 'package:quick_meet/core/constants.dart';
 import 'package:quick_meet/data/models/activation_code_controller/code_confirm_number_request.dart';
 import 'package:quick_meet/data/models/activation_code_controller/code_send_activation_request.dart';
 import 'package:quick_meet/data/network/dio_client.dart';
@@ -9,7 +9,8 @@ class ActivationCodeApi {
 
   ActivationCodeApi({required this.dioClient});
 
-  Future<Response> codeSend({required CodeSendActivationRequest request}) async {
+  Future<Response> codeSend(
+      {required CodeSendActivationRequest request}) async {
     try {
       final Response response = await dioClient.post(
         AppConstants.sendUrl,
@@ -21,7 +22,8 @@ class ActivationCodeApi {
     }
   }
 
-  Future<Response> codeConfirm({required CodeConfirmNumberRequest request}) async {
+  Future<Response> codeConfirm(
+      {required CodeConfirmNumberRequest request}) async {
     try {
       final Response response = await dioClient.post(
         AppConstants.confirmUrl,

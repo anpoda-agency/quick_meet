@@ -18,8 +18,21 @@ abstract class AppConstants {
   //auth-controller urls
   static const String verificationLoginUrl = "/auth/verification-login";
   static const String loginUrl = "/auth/login";
-  static const String refreshTokenUrl = "/auth/refresh/";
+  static const String refreshTokenUrl = "/auth/refresh/"; // + {path}
   static const String regsiterUrl = "/auth/register";
   static const String resetPasswordUrl = "/auth/resetPassword";
   //static const String updatePasswordUrl = "/auth/updatePassword"; //does not exist in mvp
+
+  //user-controller urls
+  static const String userGetIdUrl = "/user-management/user/"; // + {id}
+  static const String userUpdateIdUrl = "/user-management/user/"; // + {id}
+  static const String userUploadAvatarUrl =
+      "/user-management/user/"; // + {id}/avatar
+  static const String userRemoveAvatarUrl =
+      "/user-management/user/"; // + {id}/avatar
+  static const String userGetGuestMeetListUrl =
+      "/user-management/user/"; // + {id}/meet-list/guest
+  static const String userGetOwnerMeetListUrl =
+      "/user-management/user/"; // + {id}/meet-list/owner
+  static const String userUploadUserListUrl = "/user-management/user/list";
 }
