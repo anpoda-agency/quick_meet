@@ -1,8 +1,9 @@
+import 'dart:io';
+
 import 'package:dio/dio.dart';
-import 'package:quick_meet/core/contant.dart';
-import 'package:quick_meet/data/models/auth_controller/auth_login_request.dart';
-import 'package:quick_meet/data/models/auth_controller/auth_register_request.dart';
-import 'package:quick_meet/data/models/auth_controller/auth_reset_password_request.dart';
+import 'package:quick_meet/core/constants.dart';
+import 'package:quick_meet/data/models/user_controller/user_update_id_request.dart';
+import 'package:quick_meet/data/models/user_controller/user_upload_list_request.dart';
 import 'package:quick_meet/data/network/dio_client.dart';
 
 class UserApi {
@@ -10,11 +11,11 @@ class UserApi {
 
   UserApi({required this.dioClient});
 
-  Future<Response> getId({required String path}) async {
+  Future<Response> userGetId({required String path}) async {
     // request body empty
     try {
       final Response response = await dioClient.get(
-        AppConstants.getIdUrl + path,
+        AppConstants.userGetIdUrl + path,
         //body: request.toJson(),
       );
       return response;
@@ -23,18 +24,30 @@ class UserApi {
     }
   }
 
-  Future<Response> verificationLogin({required String phone}) async {
-    String value = phone;
-    if (value.contains('+')) {
-      value.replaceAll('+', '%2B');
-    } else {
-      value = '%2B$phone';
+// НЕ ЗАБЫТЬ СПРОСИТЬ
+// здесь все залупа какая та, спросить у попова куда предавать блять реквест, если там нет боди у патча
+  Future<Response> userUpdateId({required UserUpdateIdRequest request}) async {
+    try {
+      final Response response = await dioClient.patch(
+        AppConstants.userUpdateIdUrl,
+        data: request.toJson(), // похуй пока так
+        //data:
+      );
+      return response;
+    } catch (e) {
+      rethrow;
     }
+  }
+
+  Future<Response> userUploadAvatar(
+      {required String path, required File data}) async {
+    // request body empty
+    const String endUrl = "/avatar";
     try {
       final Response response = await dioClient.post(
-          AppConstants.verificationLoginUrl,
-          queryParameters: {'phone': value}
-          // body: {},
+          AppConstants.userUploadAvatarUrl + path + endUrl,
+          queryParameters: {'file': data}
+          //body: request.toJson(),
           );
       return response;
     } catch (e) {
@@ -42,37 +55,53 @@ class UserApi {
     }
   }
 
-  Future<Response> login({required AuthLoginRequest request}) async {
+  Future<Response> userRemoveAvatar({required String path}) async {
+    // request body empty
+    const String endUrl = "/avatar";
+    try {
+      final Response response = await dioClient.delete(
+        AppConstants.userRemoveAvatarUrl + path + endUrl,
+        //body: request.toJson(),
+      );
+      return response;
+    } catch (e) {
+      rethrow;
+    }
+  }
+
+  Future<Response> userGetGuestMeetList({required String path}) async {
+    // request body empty
+    const String endUrl = "/meet-list/guest";
+    try {
+      final Response response = await dioClient.get(
+        AppConstants.userGetGuestMeetListUrl + path + endUrl,
+        //body: request.toJson(),
+      );
+      return response;
+    } catch (e) {
+      rethrow;
+    }
+  }
+
+  Future<Response> userGetOwnerMeetList({required String path}) async {
+    // request body empty
+    const String endUrl = "/meet-list/owner";
+    try {
+      final Response response = await dioClient.get(
+        AppConstants.userGetGuestMeetListUrl + path + endUrl,
+        //body: request.toJson(),
+      );
+      return response;
+    } catch (e) {
+      rethrow;
+    }
+  }
+
+  Future<Response> userUploadList(
+      {required UserUploadListRequest request}) async {
     try {
       final Response response = await dioClient.post(
         AppConstants.loginUrl,
-        body: request.toJson(),
-      );
-      return response;
-    } catch (e) {
-      rethrow;
-    }
-  }
-
-  Future<Response> register({required AuthRegisterRequest request}) async {
-    var body = request.toJson();
-    body.removeWhere((key, value) => value == null);
-    try {
-      final Response response = await dioClient.post(
-        AppConstants.regsiterUrl,
-        body: body,
-      );
-      return response;
-    } catch (e) {
-      rethrow;
-    }
-  }
-
-  Future<Response> resetPassword(
-      {required AuthResetPasswordRequest request}) async {
-    try {
-      final Response response = await dioClient.post(
-        AppConstants.resetPasswordUrl,
         body: request.toJson(),
       );
       return response;

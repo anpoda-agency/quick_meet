@@ -24,11 +24,15 @@ abstract class AppConstants {
   //static const String updatePasswordUrl = "/auth/updatePassword"; //does not exist in mvp
 
   //user-controller urls
-  static const String getIdUrl = '/user-management/user/'; // + {path}
-  /* static const String 
-  static const String 
-  static const String 
-  static const String 
-  static const String 
-  static const String  */
+  static const String userGetIdUrl = "/user-management/user/"; // + {id}
+  static const String userUpdateIdUrl = "/user-management/user/"; // + {id}
+  static const String userUploadAvatarUrl =
+      "/user-management/user/"; // + {id}/avatar
+  static const String userRemoveAvatarUrl =
+      "/user-management/user/"; // + {id}/avatar
+  static const String userGetGuestMeetListUrl =
+      "/user-management/user/"; // + {id}/meet-list/guest
+  static const String userGetOwnerMeetListUrl =
+      "/user-management/user/"; // + {id}/meet-list/owner
+  static const String userUploadUserListUrl = "/user-management/user/list";
 }

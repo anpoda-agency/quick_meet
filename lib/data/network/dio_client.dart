@@ -1,5 +1,5 @@
 import 'package:dio/dio.dart';
-import 'package:quick_meet/core/contant.dart';
+import 'package:quick_meet/core/constants.dart';
 
 class DioClient {
   final Dio _dio;
