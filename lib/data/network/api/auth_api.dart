@@ -1,5 +1,5 @@
 import 'package:dio/dio.dart';
-import 'package:quick_meet/core/contant.dart';
+import 'package:quick_meet/core/constants.dart';
 import 'package:quick_meet/data/models/auth_controller/auth_login_request.dart';
 import 'package:quick_meet/data/models/auth_controller/auth_register_request.dart';
 import 'package:quick_meet/data/models/auth_controller/auth_reset_password_request.dart';
