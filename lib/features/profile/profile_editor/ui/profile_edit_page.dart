@@ -129,43 +129,6 @@ class _ProfileEditPageState extends State<ProfileEditPage> {
                 const SizedBox(
                   width: 271,
                   child: Text(
-                    'Дата рождения',
-                    style: TextStyle(
-                      color: Color(0xFF505050),
-                      fontSize: 16,
-                      fontFamily: 'SF Pro Text',
-                      fontWeight: FontWeight.w300,
-                      letterSpacing: 0.80,
-                    ),
-                  ),
-                ),
-                const SizedBox(
-                  height: 12,
-                ),
-                Container(
-                  width: 285,
-                  height: 50,
-                  child: TextField(
-                    decoration: InputDecoration(
-                      enabledBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(18),
-                        borderSide: const BorderSide(
-                            width: 0.50, color: Color(0xFF6B4EFF)),
-                      ),
-                      focusedBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(18),
-                        borderSide: const BorderSide(
-                            width: 0.50, color: Color(0xFF6B4EFF)),
-                      ),
-                    ),
-                  ),
-                ),
-                const SizedBox(
-                  height: 12,
-                ),
-                const SizedBox(
-                  width: 271,
-                  child: Text(
                     'Электронная почта',
                     style: TextStyle(
                       color: Color(0xFF505050),

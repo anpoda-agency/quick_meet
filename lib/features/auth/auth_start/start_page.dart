@@ -25,6 +25,15 @@ class _StartPageState extends State<StartPage> {
             padding: const EdgeInsets.fromLTRB(0, 0, 0, 0),
             child: Column(
               children: [
+                // delete this button later
+                CustomButtonWidget(
+                  title: 'Test Nav But for go to Profile',
+                  backgroundColor: Colors.white,
+                  widthPadding: 90,
+                  onPressed: () {
+                    Navigator.pushNamed(context, '/profile_page');
+                  },
+                ),
                 const Text(
                   'Войти',
                   textAlign: TextAlign.center,
