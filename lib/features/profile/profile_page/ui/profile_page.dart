@@ -22,7 +22,14 @@ class _ProfilePageState extends State<ProfilePage> {
         actions: [
           IconButton(
               onPressed: () {
-                Navigator.pushNamed(context, '/profile_edit_page');
+                Navigator.pushNamed(context, '/profile_edit_page', arguments: {
+                  //пока что здесь хардкод
+                  //'phone': '+7 927 111 22 33',
+                  'firstName': 'Данила',
+                  'secondName': 'Попов',
+                  'email': 'danila.popov@mail.ru',
+                  'description': 'Я Данила, лесной кудесник',
+                });
               },
               icon: const Icon(
                 Icons.edit,
