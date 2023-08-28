@@ -9,7 +9,7 @@ abstract class AppConstants {
   static const bool makeCurlClipboard = false;
 
   // base url
-  static const String baseUrl = "http://84.252.139.69:8080/api/v1";
+  static const String baseUrl = "http://51.250.99.159:8080/api/v1";
 
   //activation-code-controller urls
   static const String sendUrl = "/auth/code/send";
@@ -26,9 +26,13 @@ abstract class AppConstants {
   //user-controller urls
   static const String userGetIdUrl = "/user-management/user/"; // + {id}
   static const String userUpdateIdUrl = "/user-management/user/"; // + {id}
-  static const String userUploadAvatarUrl = "/user-management/user/"; // + {id}/avatar
-  static const String userRemoveAvatarUrl = "/user-management/user/"; // + {id}/avatar
-  static const String userGetGuestMeetListUrl = "/user-management/user/"; // + {id}/meet-list/guest
-  static const String userGetOwnerMeetListUrl = "/user-management/user/"; // + {id}/meet-list/owner
+  static const String userUploadAvatarUrl =
+      "/user-management/user/"; // + {id}/avatar
+  static const String userRemoveAvatarUrl =
+      "/user-management/user/"; // + {id}/avatar
+  static const String userGetGuestMeetListUrl =
+      "/user-management/user/"; // + {id}/meet-list/guest
+  static const String userGetOwnerMeetListUrl =
+      "/user-management/user/"; // + {id}/meet-list/owner
   static const String userUploadUserListUrl = "/user-management/user/list";
 }

@@ -31,6 +31,7 @@ class ProfileEditBloc extends Bloc<ProfileEditEvent, ProfileEditState> {
       email: fromPreviousPage['email'],
       description: fromPreviousPage['description'],
       deleted: false,
+      role: 'USER',
     );
     emit(ProfileEditUp(state.pageState.copyWith(request: model)));
   }
