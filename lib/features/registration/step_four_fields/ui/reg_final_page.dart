@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get_it/get_it.dart';
-import 'package:quick_meet/data/repository/auth_repository.dart';
+import 'package:quick_meet/domain/repository/auth_repository.dart';
 import 'package:quick_meet/features/core_widgets/auth_logo_area_widget.dart';
 import 'package:quick_meet/features/core_widgets/auth_main_custom_label_widget.dart';
 import 'package:quick_meet/features/core_widgets/custom_text_field_widget.dart';

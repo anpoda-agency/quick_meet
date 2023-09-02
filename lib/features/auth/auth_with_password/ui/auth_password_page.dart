@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get_it/get_it.dart';
-import 'package:quick_meet/data/repository/auth_repository.dart';
+import 'package:quick_meet/domain/repository/auth_repository.dart';
 import 'package:quick_meet/features/auth/auth_with_password/bloc/auth_password_bloc.dart';
 import 'package:quick_meet/features/core_widgets/custom_button_widget.dart';
 import 'package:quick_meet/features/core_widgets/custom_text_field_widget.dart';
@@ -30,8 +30,7 @@ class _AuthPasswordPageState extends State<AuthPasswordPage> {
         listener: (context, state) {
           if (state is AuthPasswordAllowedToPush) {
             PopUpCustomOneButtonWidget(
-              popUpMessage:
-                  'Hello, ${state.pageState.response.user.firstName}!',
+              popUpMessage: 'Hello, ${state.pageState.response.user.firstName}!',
               buttonTitle: 'Закрыть',
               onPressed: () {
                 Navigator.of(context).pop();
@@ -76,9 +75,7 @@ class _AuthPasswordPageState extends State<AuthPasswordPage> {
                     children: [
                       CustomTextFieldWidget(
                         textFieldTitle: 'Номер телефона',
-                        onChanged: (value) => context
-                            .read<AuthPasswordBloc>()
-                            .add(AuthPasswordInputNumber(value)),
+                        onChanged: (value) => context.read<AuthPasswordBloc>().add(AuthPasswordInputNumber(value)),
                         keyboardType: TextInputType.phone,
                       ),
                       const SizedBox(
@@ -86,9 +83,7 @@ class _AuthPasswordPageState extends State<AuthPasswordPage> {
                       ),
                       CustomTextFieldWidget(
                         textFieldTitle: 'Пароль',
-                        onChanged: (value) => context
-                            .read<AuthPasswordBloc>()
-                            .add(AuthPasswordInputPassword(value)),
+                        onChanged: (value) => context.read<AuthPasswordBloc>().add(AuthPasswordInputPassword(value)),
                       ),
                       const SizedBox(
                         height: 17,
@@ -111,10 +106,9 @@ class _AuthPasswordPageState extends State<AuthPasswordPage> {
                           onTap: () {
                             Navigator.of(context).push(
                               MaterialPageRoute(
-                                  builder: (context) =>
-                                      const PasswordRecoveryPhonePage(
-                                          //args: listOrdersModels[index].id,
-                                          )),
+                                  builder: (context) => const PasswordRecoveryPhonePage(
+                                      //args: listOrdersModels[index].id,
+                                      )),
                             );
                           },
                         ),
@@ -123,9 +117,7 @@ class _AuthPasswordPageState extends State<AuthPasswordPage> {
                         height: 5,
                       ),
                       CustomButtonWidget(
-                          onPressed: () => context
-                              .read<AuthPasswordBloc>()
-                              .add(AuthPasswordSendLogin()),
+                          onPressed: () => context.read<AuthPasswordBloc>().add(AuthPasswordSendLogin()),
                           title: 'Войти',
                           backgroundColor: const Color(0xFFF5F5F5),
                           widthPadding: 50),

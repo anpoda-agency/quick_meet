@@ -1,7 +1,7 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:quick_meet/data/models/auth_controller/auth_reset_password_request.dart';
 import 'package:quick_meet/data/models/auth_controller/auth_reset_password_response.dart';
-import 'package:quick_meet/data/repository/auth_repository.dart';
+import 'package:quick_meet/domain/repository/auth_repository.dart';
 
 part 'recovery_final_event.dart';
 part 'recovery_final_state.dart';

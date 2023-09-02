@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get_it/get_it.dart';
-import 'package:quick_meet/data/repository/auth_repository.dart';
+import 'package:quick_meet/domain/repository/auth_repository.dart';
 import 'package:quick_meet/features/core_widgets/auth_logo_area_widget.dart';
 import 'package:quick_meet/features/core_widgets/auth_main_custom_label_widget.dart';
 import 'package:quick_meet/features/core_widgets/custom_button_widget.dart';
@@ -13,8 +13,7 @@ class PasswordRecoveryEnterPage extends StatefulWidget {
   const PasswordRecoveryEnterPage({super.key});
 
   @override
-  State<PasswordRecoveryEnterPage> createState() =>
-      _PasswordRecoveryEnterPageState();
+  State<PasswordRecoveryEnterPage> createState() => _PasswordRecoveryEnterPageState();
 }
 
 class _PasswordRecoveryEnterPageState extends State<PasswordRecoveryEnterPage> {
@@ -78,32 +77,23 @@ class _PasswordRecoveryEnterPageState extends State<PasswordRecoveryEnterPage> {
                     children: [
                       CustomTextFieldWidget(
                         textFieldTitle: 'Новый пароль',
-                        errorText: state.pageState.passwordIsShort
-                            ? 'Не менее 6 символов'
-                            : null,
-                        onChanged: (value) => context
-                            .read<RecoveryFinalBloc>()
-                            .add(RecoveryFinalInputPassword(value)),
+                        errorText: state.pageState.passwordIsShort ? 'Не менее 6 символов' : null,
+                        onChanged: (value) => context.read<RecoveryFinalBloc>().add(RecoveryFinalInputPassword(value)),
                       ),
                       const SizedBox(
                         height: 12,
                       ),
                       CustomTextFieldWidget(
                         textFieldTitle: 'Повторите пароль',
-                        errorText: state.pageState.confirmPasswordError
-                            ? 'Пароли не совпадают'
-                            : null,
-                        onChanged: (value) => context
-                            .read<RecoveryFinalBloc>()
-                            .add(RecoveryFinalConfirmPassword(value)),
+                        errorText: state.pageState.confirmPasswordError ? 'Пароли не совпадают' : null,
+                        onChanged: (value) =>
+                            context.read<RecoveryFinalBloc>().add(RecoveryFinalConfirmPassword(value)),
                       ),
                       const SizedBox(
                         height: 50,
                       ),
                       CustomButtonWidget(
-                          onPressed: () => context
-                              .read<RecoveryFinalBloc>()
-                              .add(RecoveryFinalSend()),
+                          onPressed: () => context.read<RecoveryFinalBloc>().add(RecoveryFinalSend()),
                           title: 'Изменить',
                           backgroundColor: const Color(0xFFF5F5F5),
                           widthPadding: 50),

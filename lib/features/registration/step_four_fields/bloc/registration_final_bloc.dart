@@ -1,7 +1,7 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:quick_meet/data/models/auth_controller/auth_register_request.dart';
 import 'package:quick_meet/data/models/auth_controller/auth_register_response.dart';
-import 'package:quick_meet/data/repository/auth_repository.dart';
+import 'package:quick_meet/domain/repository/auth_repository.dart';
 
 part 'registration_final_event.dart';
 part 'registration_final_state.dart';

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:quick_meet/features/core_widgets/custom_button_widget.dart';
 import 'package:quick_meet/features/core_widgets/auth_logo_area_widget.dart';
 import 'package:quick_meet/features/registration/step_one_phone/ui/reg_phone_page.dart';
@@ -55,7 +56,8 @@ class _StartPageState extends State<StartPage> {
                   backgroundColor: Colors.white,
                   widthPadding: 90,
                   onPressed: () {
-                    Navigator.pushNamed(context, '/auth_password_page');
+                    // Navigator.pushNamed(context, '/auth_password_page');
+                    context.go('/b');
                   },
                 ),
                 const SizedBox(
