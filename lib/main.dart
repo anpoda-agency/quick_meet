@@ -9,23 +9,24 @@ import 'package:quick_meet/core/constants.dart';
 import 'package:quick_meet/data/enum.dart';
 import 'package:quick_meet/data/service/write_log.dart';
 import 'package:quick_meet/di/service_locator.dart';
-import 'package:quick_meet/features/auth/auth_with_sms/step_one_phone/ui/auth_sms_page.dart';
-import 'package:quick_meet/features/auth/auth_with_password/ui/auth_password_page.dart';
-import 'package:quick_meet/features/auth/auth_with_sms/step_two_code/ui/auth_sms_code_page.dart';
-import 'package:quick_meet/test_ui/ui/create_meet_pages/create_meet_page.dart';
-import 'package:quick_meet/test_ui/ui/main_pages/main_page.dart';
-import 'package:quick_meet/test_ui/ui/main_pages/map_page.dart';
-import 'package:quick_meet/test_ui/ui/main_pages/meetings_pages/meetings_page.dart';
-import 'package:quick_meet/features/profile/profile_editor/ui/profile_edit_page.dart';
-import 'package:quick_meet/features/profile/profile_page/ui/profile_page.dart';
-import 'package:quick_meet/features/reset_password/step_three/ui/password_recovery_enter_page.dart';
-import 'package:quick_meet/features/reset_password/step_one/ui/password_recovery_phone_page.dart';
-import 'package:quick_meet/features/reset_password/step_two/ui/password_recovery_sms_code_page.dart';
-import 'package:quick_meet/features/registration/step_four_fields/ui/reg_final_page.dart';
-import 'package:quick_meet/features/registration/step_three_password/reg_password_page.dart';
-import 'package:quick_meet/features/registration/step_one_phone/ui/reg_phone_page.dart';
-import 'package:quick_meet/features/registration/step_two_code/ui/reg_sms_code_page.dart';
-import 'package:quick_meet/features/auth/auth_start/start_page.dart';
+import 'package:quick_meet/domain/router/route_impl.dart';
+// import 'package:quick_meet/features/auth/auth_with_sms/step_one_phone/ui/auth_sms_page.dart';
+// import 'package:quick_meet/features/auth/auth_with_password/ui/auth_password_page.dart';
+// import 'package:quick_meet/features/auth/auth_with_sms/step_two_code/ui/auth_sms_code_page.dart';
+// import 'package:quick_meet/test_ui/ui/create_meet_pages/create_meet_page.dart';
+// import 'package:quick_meet/test_ui/ui/main_pages/main_page.dart';
+// import 'package:quick_meet/test_ui/ui/main_pages/map_page.dart';
+// import 'package:quick_meet/test_ui/ui/main_pages/meetings_pages/meetings_page.dart';
+// import 'package:quick_meet/features/profile/profile_editor/ui/profile_edit_page.dart';
+// import 'package:quick_meet/features/profile/profile_page/ui/profile_page.dart';
+// import 'package:quick_meet/features/reset_password/step_three/ui/password_recovery_enter_page.dart';
+// import 'package:quick_meet/features/reset_password/step_one/ui/password_recovery_phone_page.dart';
+// import 'package:quick_meet/features/reset_password/step_two/ui/password_recovery_sms_code_page.dart';
+// import 'package:quick_meet/features/registration/step_four_fields/ui/reg_final_page.dart';
+// import 'package:quick_meet/features/registration/step_three_password/reg_password_page.dart';
+// import 'package:quick_meet/features/registration/step_one_phone/ui/reg_phone_page.dart';
+// import 'package:quick_meet/features/registration/step_two_code/ui/reg_sms_code_page.dart';
+// import 'package:quick_meet/features/auth/auth_start/start_page.dart';
 
 void main() {
   runZonedGuarded(
@@ -59,6 +60,13 @@ class MyApp extends StatefulWidget {
 class _MyAppState extends State<MyApp> {
   final globalStream = StreamController<GlobalEvents>.broadcast();
   bool loading = true;
+  var router = RouteImpl(
+    rootNavigatorKey: GlobalKey<NavigatorState>(debugLabel: 'root'),
+    meetsNavigatorKey: GlobalKey<NavigatorState>(debugLabel: 'meets'),
+    mapNavigatorKey: GlobalKey<NavigatorState>(debugLabel: 'map'),
+    businessNavigatorKey: GlobalKey<NavigatorState>(debugLabel: 'business'),
+    profileNavigatorKey: GlobalKey<NavigatorState>(debugLabel: 'profile'),
+  );
 
   @override
   void initState() {
@@ -76,11 +84,12 @@ class _MyAppState extends State<MyApp> {
     return MultiRepositoryProvider(
       providers: [
         RepositoryProvider(create: (context) => getIt),
+        RepositoryProvider(create: (context) => router),
       ],
       child: (!loading)
           ? MaterialApp.router(
               debugShowCheckedModeBanner: false,
-              routerConfig: goRouter,
+              routerConfig: router.goRouterImplt.router,
               // theme: ThemeEx.theme(),
               // routes: {
               //   '/auth_sms_page': (context) => const AuthSmsPage(),

@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get_it/get_it.dart';
 import 'package:quick_meet/domain/repository/auth_repository.dart';
+import 'package:quick_meet/domain/router/route_constants.dart';
+import 'package:quick_meet/domain/router/route_impl.dart';
 import 'package:quick_meet/features/core_widgets/auth_logo_area_widget.dart';
 import 'package:quick_meet/features/core_widgets/auth_main_custom_label_widget.dart';
 import 'package:quick_meet/features/core_widgets/custom_text_field_widget.dart';
@@ -10,7 +12,8 @@ import 'package:quick_meet/features/registration/step_four_fields/bloc/registrat
 import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
 
 class RegFinalPage extends StatefulWidget {
-  const RegFinalPage({super.key});
+  const RegFinalPage({super.key, required this.args});
+  final Object? args;
 
   @override
   State<RegFinalPage> createState() => _RegFinalPageState();
@@ -20,25 +23,34 @@ class _RegFinalPageState extends State<RegFinalPage> {
   MaskTextInputFormatter birthFormat =
       MaskTextInputFormatter(mask: '##-##-####', filter: {"#": RegExp(r'[0-9]')}, type: MaskAutoCompletionType.lazy);
 
+  late Map<String, dynamic> phoneAndPassword;
+
+  @override
+  void initState() {
+    phoneAndPassword =
+        (widget.args is Map<String, dynamic>) ? widget.args as Map<String, dynamic> : {'phone': '', 'password': ''};
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
-    final args = ModalRoute.of(context)!.settings.arguments as Map<String, dynamic>;
     return BlocProvider(
       create: (context) => RegistrationFinalBloc(
         authRepository: context.read<GetIt>().get<AuthRepository>(),
-        fromPreviousPage: args,
+        fromPreviousPage: phoneAndPassword,
         pageState: const PageState(),
       ),
       child: BlocConsumer<RegistrationFinalBloc, RegistrationFinalState>(
         listener: (context, state) {
           if (state is RegistrationFinalAllowedToPush) {
-            PopUpCustomOneButtonWidget(
-              popUpMessage: 'Hi, ${state.pageState.response.user.firstName}!',
-              buttonTitle: 'Закрыть',
-              onPressed: () {
-                Navigator.of(context).pop();
-              },
-            ).showPopUpCustomOneButtonWidget(context);
+            // PopUpCustomOneButtonWidget(
+            //   popUpMessage: 'Hi, ${state.pageState.response.user.firstName}!',
+            //   buttonTitle: 'Закрыть',
+            //   onPressed: () {
+            //     Navigator.of(context).pop();
+            //   },
+            // ).showPopUpCustomOneButtonWidget(context);
+            context.read<RouteImpl>().go(MapRoutes.map.name);
           }
           if (state is RegistrationFinalError) {
             PopUpCustomOneButtonWidget(

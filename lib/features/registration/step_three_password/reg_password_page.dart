@@ -1,11 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:quick_meet/domain/router/route_constants.dart';
+import 'package:quick_meet/domain/router/route_impl.dart';
 import 'package:quick_meet/features/core_widgets/auth_logo_area_widget.dart';
 import 'package:quick_meet/features/core_widgets/auth_main_custom_label_widget.dart';
 import 'package:quick_meet/features/core_widgets/custom_button_widget.dart';
 import 'package:quick_meet/features/core_widgets/custom_text_field_widget.dart';
 
 class RegPasswordPage extends StatefulWidget {
-  const RegPasswordPage({super.key});
+  const RegPasswordPage({super.key, required this.args});
+  final Object? args;
 
   @override
   State<RegPasswordPage> createState() => _RegPasswordPageState();
@@ -13,14 +17,19 @@ class RegPasswordPage extends StatefulWidget {
 
 class _RegPasswordPageState extends State<RegPasswordPage> {
   final TextEditingController _passwordController = TextEditingController();
-  final TextEditingController _confirmPasswordController =
-      TextEditingController();
+  final TextEditingController _confirmPasswordController = TextEditingController();
   bool _confirmPasswordError = false;
   bool _passwordIsShort = false;
+  late String phone;
+
+  @override
+  void initState() {
+    phone = (widget.args is String) ? widget.args as String : '';
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
-    final args = ModalRoute.of(context)!.settings.arguments as String;
     return Scaffold(
       appBar: AppBar(
         backgroundColor: const Color(0xFF6B4EFF),
@@ -28,10 +37,10 @@ class _RegPasswordPageState extends State<RegPasswordPage> {
         actions: [
           IconButton(
               onPressed: () {
-                Navigator.pushNamed(context, '/reg_final_page', arguments: {
-                  'phone': args,
-                  'password': _confirmPasswordController.text
-                });
+                context.read<RouteImpl>().push('auth/${RootRoutes.registrationPersonalData.name}',
+                    args: {'phone': phone, 'password': _confirmPasswordController.text});
+                // Navigator.pushNamed(context, '/reg_final_page',
+                //     arguments: {'phone': phone, 'password': _confirmPasswordController.text});
               },
               icon: const Icon(Icons.backup)),
         ],
@@ -72,8 +81,7 @@ class _RegPasswordPageState extends State<RegPasswordPage> {
                   textFieldTitle: 'Повторите пароль',
                   onChanged: (value) {},
                   controller: _confirmPasswordController,
-                  errorText:
-                      _confirmPasswordError ? 'Пароли не совпадают' : null,
+                  errorText: _confirmPasswordError ? 'Пароли не совпадают' : null,
                 ),
                 const SizedBox(
                   height: 50,
@@ -84,17 +92,15 @@ class _RegPasswordPageState extends State<RegPasswordPage> {
                         setState(() {
                           _passwordIsShort = false;
                         });
-                        if (_passwordController.text ==
-                            _confirmPasswordController.text) {
+                        if (_passwordController.text == _confirmPasswordController.text) {
                           setState(() {
                             _confirmPasswordError = false;
                             _passwordIsShort = false;
                           });
-                          Navigator.pushNamed(context, '/reg_final_page',
-                              arguments: {
-                                'phone': args,
-                                'password': _confirmPasswordController.text
-                              });
+                          // Navigator.pushNamed(context, '/reg_final_page',
+                          //     arguments: {'phone': phone, 'password': _confirmPasswordController.text});
+                          context.read<RouteImpl>().push('auth/${RootRoutes.registrationPersonalData.name}',
+                              args: {'phone': phone, 'password': _confirmPasswordController.text});
                         } else {
                           setState(() {
                             _confirmPasswordError = true;

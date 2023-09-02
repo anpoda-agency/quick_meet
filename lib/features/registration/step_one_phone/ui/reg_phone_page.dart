@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get_it/get_it.dart';
 import 'package:quick_meet/domain/repository/activation_code_repository.dart';
+import 'package:quick_meet/domain/router/route_constants.dart';
+import 'package:quick_meet/domain/router/route_impl.dart';
 import 'package:quick_meet/features/core_widgets/auth_logo_area_widget.dart';
 import 'package:quick_meet/features/core_widgets/auth_main_custom_label_widget.dart';
 import 'package:quick_meet/features/core_widgets/custom_button_widget.dart';
@@ -38,7 +40,10 @@ class _RegPhonePageState extends State<RegPhonePage> {
             ).showPopUpCustomOneButtonWidget(context);
           }
           if (state is RegistrationPhoneAllowedToPush) {
-            Navigator.pushNamed(context, '/reg_sms_code_page', arguments: state.pageState.request.source);
+            // Navigator.pushNamed(context, '/reg_sms_code_page', arguments: state.pageState.request.source);
+            context
+                .read<RouteImpl>()
+                .push('auth/${RootRoutes.registrationCode.name}', args: state.pageState.request.source);
           }
         },
         builder: (context, state) {

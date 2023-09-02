@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
 
 class ProfileEditPage extends StatefulWidget {
   const ProfileEditPage({super.key});
@@ -243,7 +242,7 @@ class _ProfileEditPageState extends State<ProfileEditPage> {
                       onPressed: () {
                         //Navigator.pushNamed(context, '/');
                         Navigator.of(context).pop();
-                        context.go('/start');
+                        // context.go('/start');
                       },
                       style: ElevatedButton.styleFrom(
                         backgroundColor: Color(0xFF6B4EFF),

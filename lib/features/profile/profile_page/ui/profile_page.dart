@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
 
 class ProfilePage extends StatefulWidget {
   const ProfilePage({super.key});
@@ -24,7 +23,7 @@ class _ProfilePageState extends State<ProfilePage> {
           IconButton(
               onPressed: () {
                 // Navigator.pushNamed(context, '/profile_edit_page');
-                context.go('/b/details');
+                // context.go('/b/details');
               },
               icon: const Icon(
                 Icons.edit,

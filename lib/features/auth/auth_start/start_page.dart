@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:quick_meet/domain/router/route_constants.dart';
+import 'package:quick_meet/domain/router/route_impl.dart';
 import 'package:quick_meet/features/core_widgets/custom_button_widget.dart';
 import 'package:quick_meet/features/core_widgets/auth_logo_area_widget.dart';
-import 'package:quick_meet/features/registration/step_one_phone/ui/reg_phone_page.dart';
 
 class StartPage extends StatefulWidget {
   const StartPage({super.key});
@@ -45,7 +46,8 @@ class _StartPageState extends State<StartPage> {
                   backgroundColor: Colors.white,
                   widthPadding: 90,
                   onPressed: () {
-                    Navigator.pushNamed(context, '/auth_sms_page');
+                    context.read<RouteImpl>().push('auth/${RootRoutes.authWithSmsPhone.name}');
+                    // Navigator.pushNamed(context, '/auth_sms_page');
                   },
                 ),
                 const SizedBox(
@@ -56,8 +58,8 @@ class _StartPageState extends State<StartPage> {
                   backgroundColor: Colors.white,
                   widthPadding: 90,
                   onPressed: () {
+                    context.read<RouteImpl>().push('auth/${RootRoutes.authWithPassword.name}');
                     // Navigator.pushNamed(context, '/auth_password_page');
-                    context.go('/b');
                   },
                 ),
                 const SizedBox(
@@ -80,13 +82,8 @@ class _StartPageState extends State<StartPage> {
                       ),
                     ),
                     onTap: () {
+                      context.read<RouteImpl>().push('auth/${RootRoutes.registrationPhone.name}');
                       //Navigator.pushNamed(context, '/rep_phone_page');
-                      Navigator.of(context).push(
-                        MaterialPageRoute(
-                            builder: (context) => const RegPhonePage(
-                                // args: listOrdersModels[index].id,
-                                )),
-                      );
                     },
                   ),
                 ),

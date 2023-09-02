@@ -39,7 +39,8 @@ class RecoveryFinalBloc extends Bloc<RecoveryFinalEvent, RecoveryFinalState> {
     if (state.pageState.password.length >= 6) {
       emit(RecoveryFinalUp(state.pageState.copyWith(passwordIsShort: false)));
       if (state.pageState.password == state.pageState.passwordConfirm) {
-        var res = await authRepository.resetPassword(request: state.pageState.request);
+        var model = state.pageState.request.copyWith(password: state.pageState.passwordConfirm);
+        var res = await authRepository.resetPassword(request: model);
         emit(RecoveryFinalAllowedToPush(
             state.pageState.copyWith(passwordIsShort: false, confirmPasswordError: false, response: res)));
       } else {

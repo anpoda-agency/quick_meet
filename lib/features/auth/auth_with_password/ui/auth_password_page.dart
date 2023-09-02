@@ -2,14 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get_it/get_it.dart';
 import 'package:quick_meet/domain/repository/auth_repository.dart';
+import 'package:quick_meet/domain/router/route_constants.dart';
+import 'package:quick_meet/domain/router/route_impl.dart';
 import 'package:quick_meet/features/auth/auth_with_password/bloc/auth_password_bloc.dart';
 import 'package:quick_meet/features/core_widgets/custom_button_widget.dart';
 import 'package:quick_meet/features/core_widgets/custom_text_field_widget.dart';
 import 'package:quick_meet/features/core_widgets/auth_logo_area_widget.dart';
 import 'package:quick_meet/features/core_widgets/auth_main_custom_label_widget.dart';
 import 'package:quick_meet/features/core_widgets/pop_up_custom_one_button_widget.dart';
-
-import 'package:quick_meet/features/reset_password/step_one/ui/password_recovery_phone_page.dart';
 
 class AuthPasswordPage extends StatefulWidget {
   const AuthPasswordPage({super.key});
@@ -29,13 +29,14 @@ class _AuthPasswordPageState extends State<AuthPasswordPage> {
       child: BlocConsumer<AuthPasswordBloc, AuthPasswordState>(
         listener: (context, state) {
           if (state is AuthPasswordAllowedToPush) {
-            PopUpCustomOneButtonWidget(
-              popUpMessage: 'Hello, ${state.pageState.response.user.firstName}!',
-              buttonTitle: 'Закрыть',
-              onPressed: () {
-                Navigator.of(context).pop();
-              },
-            ).showPopUpCustomOneButtonWidget(context);
+            // PopUpCustomOneButtonWidget(
+            //   popUpMessage: 'Hello, ${state.pageState.response.user.firstName}!',
+            //   buttonTitle: 'Закрыть',
+            //   onPressed: () {
+            //     Navigator.of(context).pop();
+            //   },
+            // ).showPopUpCustomOneButtonWidget(context);
+            context.read<RouteImpl>().go(MapRoutes.map.name);
           }
           if (state is AuthPasswordError) {
             PopUpCustomOneButtonWidget(
@@ -104,12 +105,13 @@ class _AuthPasswordPageState extends State<AuthPasswordPage> {
                             ),
                           ),
                           onTap: () {
-                            Navigator.of(context).push(
-                              MaterialPageRoute(
-                                  builder: (context) => const PasswordRecoveryPhonePage(
-                                      //args: listOrdersModels[index].id,
-                                      )),
-                            );
+                            context.read<RouteImpl>().push('auth/${RootRoutes.resetPasswordPhone.name}');
+                            // Navigator.of(context).push(
+                            //   MaterialPageRoute(
+                            //       builder: (context) => const PasswordRecoveryPhonePage(
+                            //           //args: listOrdersModels[index].id,
+                            //           )),
+                            // );
                           },
                         ),
                       ),

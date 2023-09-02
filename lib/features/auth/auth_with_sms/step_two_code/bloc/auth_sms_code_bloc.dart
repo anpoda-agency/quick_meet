@@ -1,18 +1,22 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:quick_meet/data/models/activation_code_controller/code_confirm_number_request.dart';
 import 'package:quick_meet/data/models/activation_code_controller/code_confirm_number_response.dart';
+import 'package:quick_meet/data/models/auth_controller/auth_verification_login_response.dart';
 import 'package:quick_meet/domain/repository/activation_code_repository.dart';
+import 'package:quick_meet/domain/repository/auth_repository.dart';
 
 part 'auth_sms_code_event.dart';
 part 'auth_sms_code_state.dart';
 
 class AuthSmsCodeBloc extends Bloc<AuthSmsCodeEvent, AuthSmsCodeState> {
   final ActivationCodeRepository activationCodeRepository;
+  final AuthRepository authRepository;
   final String phoneNumber;
 
   AuthSmsCodeBloc({
     required this.phoneNumber,
     required PageState pageState,
+    required this.authRepository,
     required this.activationCodeRepository,
   }) : super(AuthSmsCodeInitial(pageState)) {
     on<AuthSmsCodeInit>(authSmsCodeInit);
@@ -47,7 +51,8 @@ class AuthSmsCodeBloc extends Bloc<AuthSmsCodeEvent, AuthSmsCodeState> {
         errMsg: res.message,
       )));
     } else {
-      emit(AuthSmsCodeAllowedToPush(state.pageState.copyWith(response: res)));
+      var resAuth = await authRepository.verificationLogin(phone: state.pageState.request.source);
+      emit(AuthSmsCodeAllowedToPush(state.pageState.copyWith(responseAuth: resAuth)));
     }
   }
 
