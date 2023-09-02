@@ -1,7 +1,7 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:quick_meet/data/models/auth_controller/auth_login_request.dart';
 import 'package:quick_meet/data/models/auth_controller/auth_login_response.dart';
-import 'package:quick_meet/data/repository/auth_repository.dart';
+import 'package:quick_meet/domain/repository/auth_repository.dart';
 
 part 'auth_password_event.dart';
 part 'auth_password_state.dart';

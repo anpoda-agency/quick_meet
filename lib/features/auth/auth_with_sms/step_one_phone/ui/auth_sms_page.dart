@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get_it/get_it.dart';
-import 'package:quick_meet/data/repository/activation_code_repository.dart';
+import 'package:quick_meet/domain/repository/activation_code_repository.dart';
+import 'package:quick_meet/domain/router/route_constants.dart';
+import 'package:quick_meet/domain/router/route_impl.dart';
 import 'package:quick_meet/features/auth/auth_with_sms/step_one_phone/bloc/auth_with_sms_bloc.dart';
 import 'package:quick_meet/features/core_widgets/custom_button_widget.dart';
 import 'package:quick_meet/features/core_widgets/custom_text_field_widget.dart';
@@ -21,8 +23,7 @@ class _AuthSmsPageState extends State<AuthSmsPage> {
   Widget build(BuildContext context) {
     return BlocProvider(
       create: (context) => AuthWithSmsBloc(
-        activationCodeRepository:
-            context.read<GetIt>().get<ActivationCodeRepository>(),
+        activationCodeRepository: context.read<GetIt>().get<ActivationCodeRepository>(),
         pageState: const PageState(),
       ),
       child: BlocConsumer<AuthWithSmsBloc, AuthWithSmsState>(
@@ -36,8 +37,10 @@ class _AuthSmsPageState extends State<AuthSmsPage> {
                 }).showPopUpCustomOneButtonWidget(context);
           }
           if (state is AuthWithSmsAllowedToPush) {
-            Navigator.pushNamed(context, '/auth_sms_code_page',
-                arguments: state.pageState.request.source);
+            context
+                .read<RouteImpl>()
+                .push('auth/${RootRoutes.authWithSmsCode.name}', args: state.pageState.request.source);
+            // Navigator.pushNamed(context, '/auth_sms_code_page', arguments: state.pageState.request.source);
           }
         },
         builder: (context, state) {
@@ -48,8 +51,7 @@ class _AuthSmsPageState extends State<AuthSmsPage> {
               actions: [
                 IconButton(
                     onPressed: () {
-                      Navigator.pushNamed(context, '/auth_sms_code_page',
-                          arguments: state.pageState.request.source);
+                      Navigator.pushNamed(context, '/auth_sms_code_page', arguments: state.pageState.request.source);
                     },
                     icon: const Icon(Icons.backup)),
               ],
@@ -76,9 +78,7 @@ class _AuthSmsPageState extends State<AuthSmsPage> {
                     children: [
                       CustomTextFieldWidget(
                         textFieldTitle: 'Номер телефона',
-                        onChanged: (value) => context
-                            .read<AuthWithSmsBloc>()
-                            .add(AuthWithSmsEnterPhone(value)),
+                        onChanged: (value) => context.read<AuthWithSmsBloc>().add(AuthWithSmsEnterPhone(value)),
                         keyboardType: TextInputType.phone,
                       ),
                       const SizedBox(
@@ -86,10 +86,7 @@ class _AuthSmsPageState extends State<AuthSmsPage> {
                       ),
                       CustomButtonWidget(
                           onPressed: () {
-                            // Navigator.pushNamed(context, '/auth_sms_code_page');
-                            context
-                                .read<AuthWithSmsBloc>()
-                                .add(AuthWithSmsSendPhone());
+                            context.read<AuthWithSmsBloc>().add(AuthWithSmsSendPhone());
                           },
                           title: 'Получить код',
                           backgroundColor: const Color(0xFFF5F5F5),

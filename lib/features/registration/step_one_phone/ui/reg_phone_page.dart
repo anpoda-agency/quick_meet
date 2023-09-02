@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get_it/get_it.dart';
-import 'package:quick_meet/data/repository/activation_code_repository.dart';
+import 'package:quick_meet/domain/repository/activation_code_repository.dart';
+import 'package:quick_meet/domain/router/route_constants.dart';
+import 'package:quick_meet/domain/router/route_impl.dart';
 import 'package:quick_meet/features/core_widgets/auth_logo_area_widget.dart';
 import 'package:quick_meet/features/core_widgets/auth_main_custom_label_widget.dart';
 import 'package:quick_meet/features/core_widgets/custom_button_widget.dart';
@@ -23,8 +25,7 @@ class _RegPhonePageState extends State<RegPhonePage> {
   Widget build(BuildContext context) {
     return BlocProvider(
       create: (context) => RegistrationPhoneBloc(
-        activationCodeRepository:
-            context.read<GetIt>().get<ActivationCodeRepository>(),
+        activationCodeRepository: context.read<GetIt>().get<ActivationCodeRepository>(),
         pageState: const PageState(),
       ),
       child: BlocConsumer<RegistrationPhoneBloc, RegistrationPhoneState>(
@@ -39,8 +40,10 @@ class _RegPhonePageState extends State<RegPhonePage> {
             ).showPopUpCustomOneButtonWidget(context);
           }
           if (state is RegistrationPhoneAllowedToPush) {
-            Navigator.pushNamed(context, '/reg_sms_code_page',
-                arguments: state.pageState.request.source);
+            // Navigator.pushNamed(context, '/reg_sms_code_page', arguments: state.pageState.request.source);
+            context
+                .read<RouteImpl>()
+                .push('auth/${RootRoutes.registrationCode.name}', args: state.pageState.request.source);
           }
         },
         builder: (context, state) {
@@ -51,8 +54,7 @@ class _RegPhonePageState extends State<RegPhonePage> {
               actions: [
                 IconButton(
                     onPressed: () {
-                      Navigator.pushNamed(context, '/reg_sms_code_page',
-                          arguments: state.pageState.request.source);
+                      Navigator.pushNamed(context, '/reg_sms_code_page', arguments: state.pageState.request.source);
                     },
                     icon: const Icon(Icons.backup)),
               ],
@@ -81,9 +83,8 @@ class _RegPhonePageState extends State<RegPhonePage> {
                     children: [
                       CustomTextFieldWidget(
                         textFieldTitle: 'Номер телефона',
-                        onChanged: (value) => context
-                            .read<RegistrationPhoneBloc>()
-                            .add(RegistrationPhoneInputNumber(value)),
+                        onChanged: (value) =>
+                            context.read<RegistrationPhoneBloc>().add(RegistrationPhoneInputNumber(value)),
                         controller: _phoneTextController,
                       ),
                       const SizedBox(
@@ -91,9 +92,7 @@ class _RegPhonePageState extends State<RegPhonePage> {
                       ),
                       CustomButtonWidget(
                           onPressed: () {
-                            context
-                                .read<RegistrationPhoneBloc>()
-                                .add(RegistrationPhoneSend());
+                            context.read<RegistrationPhoneBloc>().add(RegistrationPhoneSend());
                           },
                           title: 'Получить код',
                           backgroundColor: const Color(0xFFF5F5F5),

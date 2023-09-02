@@ -27,8 +27,10 @@ class PageState {
   final String errMsg;
   final CodeConfirmNumberRequest request;
   final CodeConfirmNumberResponse response;
+  final AuthVerificationLoginResponse responseAuth;
 
   const PageState({
+    this.responseAuth = const AuthVerificationLoginResponse(),
     this.onAwait = false,
     this.errMsg = '',
     this.request = const CodeConfirmNumberRequest(),
@@ -40,12 +42,14 @@ class PageState {
     String? errMsg,
     CodeConfirmNumberRequest? request,
     CodeConfirmNumberResponse? response,
+    AuthVerificationLoginResponse? responseAuth,
   }) {
     return PageState(
       onAwait: onAwait ?? this.onAwait,
       errMsg: errMsg ?? this.errMsg,
       request: request ?? this.request,
       response: response ?? this.response,
+      responseAuth: responseAuth ?? this.responseAuth,
     );
   }
 }

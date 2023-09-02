@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get_it/get_it.dart';
-import 'package:quick_meet/data/repository/auth_repository.dart';
+import 'package:quick_meet/domain/repository/auth_repository.dart';
+import 'package:quick_meet/domain/router/route_constants.dart';
+import 'package:quick_meet/domain/router/route_impl.dart';
 import 'package:quick_meet/features/core_widgets/auth_logo_area_widget.dart';
 import 'package:quick_meet/features/core_widgets/auth_main_custom_label_widget.dart';
 import 'package:quick_meet/features/core_widgets/custom_button_widget.dart';
@@ -10,33 +12,41 @@ import 'package:quick_meet/features/core_widgets/pop_up_custom_one_button_widget
 import 'package:quick_meet/features/reset_password/step_three/bloc/recovery_final_bloc.dart';
 
 class PasswordRecoveryEnterPage extends StatefulWidget {
-  const PasswordRecoveryEnterPage({super.key});
+  const PasswordRecoveryEnterPage({super.key, required this.args});
+  final Object? args;
 
   @override
-  State<PasswordRecoveryEnterPage> createState() =>
-      _PasswordRecoveryEnterPageState();
+  State<PasswordRecoveryEnterPage> createState() => _PasswordRecoveryEnterPageState();
 }
 
 class _PasswordRecoveryEnterPageState extends State<PasswordRecoveryEnterPage> {
+  late String phone;
+
+  @override
+  void initState() {
+    phone = (widget.args is String) ? widget.args as String : '';
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
-    final args = ModalRoute.of(context)!.settings.arguments as String;
     return BlocProvider(
       create: (context) => RecoveryFinalBloc(
         authRepository: context.read<GetIt>().get<AuthRepository>(),
-        phone: args,
+        phone: phone,
         pageState: const PageState(),
       ),
       child: BlocConsumer<RecoveryFinalBloc, RecoveryFinalState>(
         listener: (context, state) {
           if (state is RecoveryFinalAllowedToPush) {
             PopUpCustomOneButtonWidget(
-              popUpMessage: 'Hi, ${state.pageState.response.user.firstName}!',
+              popUpMessage: 'Пароль успешно изменён!',
               buttonTitle: 'Закрыть',
               onPressed: () {
                 Navigator.of(context).pop();
               },
-            ).showPopUpCustomOneButtonWidget(context);
+            ).showPopUpCustomOneButtonWidget(context).then((value) =>
+                context.read<RouteImpl>().newRoutesPath(['start', 'auth/${RootRoutes.authWithPassword.name}']));
           }
           if (state is RecoveryFinalError) {
             PopUpCustomOneButtonWidget(
@@ -78,32 +88,23 @@ class _PasswordRecoveryEnterPageState extends State<PasswordRecoveryEnterPage> {
                     children: [
                       CustomTextFieldWidget(
                         textFieldTitle: 'Новый пароль',
-                        errorText: state.pageState.passwordIsShort
-                            ? 'Не менее 6 символов'
-                            : null,
-                        onChanged: (value) => context
-                            .read<RecoveryFinalBloc>()
-                            .add(RecoveryFinalInputPassword(value)),
+                        errorText: state.pageState.passwordIsShort ? 'Не менее 6 символов' : null,
+                        onChanged: (value) => context.read<RecoveryFinalBloc>().add(RecoveryFinalInputPassword(value)),
                       ),
                       const SizedBox(
                         height: 12,
                       ),
                       CustomTextFieldWidget(
                         textFieldTitle: 'Повторите пароль',
-                        errorText: state.pageState.confirmPasswordError
-                            ? 'Пароли не совпадают'
-                            : null,
-                        onChanged: (value) => context
-                            .read<RecoveryFinalBloc>()
-                            .add(RecoveryFinalConfirmPassword(value)),
+                        errorText: state.pageState.confirmPasswordError ? 'Пароли не совпадают' : null,
+                        onChanged: (value) =>
+                            context.read<RecoveryFinalBloc>().add(RecoveryFinalConfirmPassword(value)),
                       ),
                       const SizedBox(
                         height: 50,
                       ),
                       CustomButtonWidget(
-                          onPressed: () => context
-                              .read<RecoveryFinalBloc>()
-                              .add(RecoveryFinalSend()),
+                          onPressed: () => context.read<RecoveryFinalBloc>().add(RecoveryFinalSend()),
                           title: 'Изменить',
                           backgroundColor: const Color(0xFFF5F5F5),
                           widthPadding: 50),

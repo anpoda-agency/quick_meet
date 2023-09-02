@@ -1,7 +1,7 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:quick_meet/data/models/auth_controller/auth_register_request.dart';
 import 'package:quick_meet/data/models/auth_controller/auth_register_response.dart';
-import 'package:quick_meet/data/repository/auth_repository.dart';
+import 'package:quick_meet/domain/repository/auth_repository.dart';
 
 part 'registration_final_event.dart';
 part 'registration_final_state.dart';
@@ -54,9 +54,19 @@ class RegistrationFinalBloc extends Bloc<RegistrationFinalEvent, RegistrationFin
   }
 
   registrationFinalSend(RegistrationFinalSend event, emit) async {
-    print(state.pageState.request.toJson());
-    var res = await authRepository.register(request: state.pageState.request);
-    emit(RegistrationFinalAllowedToPush(state.pageState.copyWith(response: res)));
+    if (state.pageState.request.birthDate.isNotEmpty &&
+        state.pageState.request.cityId.isNotEmpty &&
+        state.pageState.request.cityName.isNotEmpty &&
+        state.pageState.request.email.isNotEmpty &&
+        state.pageState.request.firstName.isNotEmpty &&
+        state.pageState.request.password.isNotEmpty &&
+        state.pageState.request.phoneNumber.isNotEmpty &&
+        state.pageState.request.secondName.isNotEmpty) {
+      var res = await authRepository.register(request: state.pageState.request);
+      emit(RegistrationFinalAllowedToPush(state.pageState.copyWith(response: res)));
+    } else {
+      emit(RegistrationFinalError(state.pageState.copyWith(errMsg: 'Some fields are empty...')));
+    }
   }
 
   registrationFinalMsgErr(RegistrationFinalMsgErr event, emit) async {

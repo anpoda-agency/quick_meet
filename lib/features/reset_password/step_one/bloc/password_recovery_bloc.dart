@@ -1,7 +1,7 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:quick_meet/data/models/activation_code_controller/code_send_activation_request.dart';
 import 'package:quick_meet/data/models/activation_code_controller/code_send_activation_response.dart';
-import 'package:quick_meet/data/repository/activation_code_repository.dart';
+import 'package:quick_meet/domain/repository/activation_code_repository.dart';
 
 part 'password_recovery_event.dart';
 part 'password_recovery_state.dart';

@@ -1,7 +1,7 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:quick_meet/data/models/auth_controller/auth_reset_password_request.dart';
 import 'package:quick_meet/data/models/auth_controller/auth_reset_password_response.dart';
-import 'package:quick_meet/data/repository/auth_repository.dart';
+import 'package:quick_meet/domain/repository/auth_repository.dart';
 
 part 'recovery_final_event.dart';
 part 'recovery_final_state.dart';
@@ -39,7 +39,8 @@ class RecoveryFinalBloc extends Bloc<RecoveryFinalEvent, RecoveryFinalState> {
     if (state.pageState.password.length >= 6) {
       emit(RecoveryFinalUp(state.pageState.copyWith(passwordIsShort: false)));
       if (state.pageState.password == state.pageState.passwordConfirm) {
-        var res = await authRepository.resetPassword(request: state.pageState.request);
+        var model = state.pageState.request.copyWith(password: state.pageState.passwordConfirm);
+        var res = await authRepository.resetPassword(request: model);
         emit(RecoveryFinalAllowedToPush(
             state.pageState.copyWith(passwordIsShort: false, confirmPasswordError: false, response: res)));
       } else {

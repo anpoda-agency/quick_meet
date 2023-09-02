@@ -31,8 +31,7 @@ class _ProfileEditPageState extends State<ProfileEditPage> {
                   decoration: const ShapeDecoration(
                     color: Color(0xFF6B4EFF),
                     shape: RoundedRectangleBorder(
-                      borderRadius:
-                          BorderRadius.only(bottomRight: Radius.circular(30)),
+                      borderRadius: BorderRadius.only(bottomRight: Radius.circular(30)),
                     ),
                     shadows: [
                       BoxShadow(
@@ -74,13 +73,11 @@ class _ProfileEditPageState extends State<ProfileEditPage> {
                     decoration: InputDecoration(
                       enabledBorder: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(18),
-                        borderSide: const BorderSide(
-                            width: 0.50, color: Color(0xFF6B4EFF)),
+                        borderSide: const BorderSide(width: 0.50, color: Color(0xFF6B4EFF)),
                       ),
                       focusedBorder: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(18),
-                        borderSide: const BorderSide(
-                            width: 0.50, color: Color(0xFF6B4EFF)),
+                        borderSide: const BorderSide(width: 0.50, color: Color(0xFF6B4EFF)),
                       ),
                     ),
                   ),
@@ -111,13 +108,11 @@ class _ProfileEditPageState extends State<ProfileEditPage> {
                     decoration: InputDecoration(
                       enabledBorder: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(18),
-                        borderSide: const BorderSide(
-                            width: 0.50, color: Color(0xFF6B4EFF)),
+                        borderSide: const BorderSide(width: 0.50, color: Color(0xFF6B4EFF)),
                       ),
                       focusedBorder: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(18),
-                        borderSide: const BorderSide(
-                            width: 0.50, color: Color(0xFF6B4EFF)),
+                        borderSide: const BorderSide(width: 0.50, color: Color(0xFF6B4EFF)),
                       ),
                     ),
                   ),
@@ -149,13 +144,11 @@ class _ProfileEditPageState extends State<ProfileEditPage> {
                     decoration: InputDecoration(
                       enabledBorder: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(18),
-                        borderSide: const BorderSide(
-                            width: 0.50, color: Color(0xFF6B4EFF)),
+                        borderSide: const BorderSide(width: 0.50, color: Color(0xFF6B4EFF)),
                       ),
                       focusedBorder: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(18),
-                        borderSide: const BorderSide(
-                            width: 0.50, color: Color(0xFF6B4EFF)),
+                        borderSide: const BorderSide(width: 0.50, color: Color(0xFF6B4EFF)),
                       ),
                     ),
                   ),
@@ -186,13 +179,11 @@ class _ProfileEditPageState extends State<ProfileEditPage> {
                     decoration: InputDecoration(
                       enabledBorder: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(18),
-                        borderSide: const BorderSide(
-                            width: 0.50, color: Color(0xFF6B4EFF)),
+                        borderSide: const BorderSide(width: 0.50, color: Color(0xFF6B4EFF)),
                       ),
                       focusedBorder: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(18),
-                        borderSide: const BorderSide(
-                            width: 0.50, color: Color(0xFF6B4EFF)),
+                        borderSide: const BorderSide(width: 0.50, color: Color(0xFF6B4EFF)),
                       ),
                     ),
                   ),
@@ -226,13 +217,11 @@ class _ProfileEditPageState extends State<ProfileEditPage> {
                     decoration: InputDecoration(
                       enabledBorder: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(18),
-                        borderSide: const BorderSide(
-                            width: 0.50, color: Color(0xFF6B4EFF)),
+                        borderSide: const BorderSide(width: 0.50, color: Color(0xFF6B4EFF)),
                       ),
                       focusedBorder: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(18),
-                        borderSide: const BorderSide(
-                            width: 0.50, color: Color(0xFF6B4EFF)),
+                        borderSide: const BorderSide(width: 0.50, color: Color(0xFF6B4EFF)),
                       ),
                     ),
                   ),
@@ -253,11 +242,11 @@ class _ProfileEditPageState extends State<ProfileEditPage> {
                       onPressed: () {
                         //Navigator.pushNamed(context, '/');
                         Navigator.of(context).pop();
+                        // context.go('/start');
                       },
                       style: ElevatedButton.styleFrom(
                         backgroundColor: Color(0xFF6B4EFF),
-                        shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(18)),
+                        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(18)),
                       ),
                       child: const Text(
                         'Сохранить изменения',
@@ -335,8 +324,7 @@ class _ProfileEditPageState extends State<ProfileEditPage> {
                                         decoration: ShapeDecoration(
                                           color: Color(0xFFF5F5F5),
                                           shape: RoundedRectangleBorder(
-                                            borderRadius:
-                                                BorderRadius.circular(18),
+                                            borderRadius: BorderRadius.circular(18),
                                           ),
                                         ),
                                         child: ElevatedButton(
@@ -344,12 +332,8 @@ class _ProfileEditPageState extends State<ProfileEditPage> {
                                               Navigator.pushNamed(context, '/');
                                             },
                                             style: ElevatedButton.styleFrom(
-                                              backgroundColor:
-                                                  Color(0xFFF5F5F5),
-                                              shape: RoundedRectangleBorder(
-                                                  borderRadius:
-                                                      BorderRadius.circular(
-                                                          18)),
+                                              backgroundColor: Color(0xFFF5F5F5),
+                                              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(18)),
                                             ),
                                             child: const Text(
                                               'Да',
@@ -372,8 +356,7 @@ class _ProfileEditPageState extends State<ProfileEditPage> {
                                         decoration: ShapeDecoration(
                                           color: Color(0xFFF5F5F5),
                                           shape: RoundedRectangleBorder(
-                                            borderRadius:
-                                                BorderRadius.circular(18),
+                                            borderRadius: BorderRadius.circular(18),
                                           ),
                                         ),
                                         child: ElevatedButton(
@@ -383,12 +366,8 @@ class _ProfileEditPageState extends State<ProfileEditPage> {
                                               Navigator.of(context).pop();
                                             },
                                             style: ElevatedButton.styleFrom(
-                                              backgroundColor:
-                                                  Color(0xFFF5F5F5),
-                                              shape: RoundedRectangleBorder(
-                                                  borderRadius:
-                                                      BorderRadius.circular(
-                                                          18)),
+                                              backgroundColor: Color(0xFFF5F5F5),
+                                              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(18)),
                                             ),
                                             child: const Text(
                                               'Нет',
@@ -417,8 +396,7 @@ class _ProfileEditPageState extends State<ProfileEditPage> {
                           color: Color(0xFFE55F5F),
                         ),
                         backgroundColor: const Color.fromRGBO(245, 245, 245, 1),
-                        shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(18)),
+                        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(18)),
                       ),
                       child: const Text(
                         'Удалить аккаунт',

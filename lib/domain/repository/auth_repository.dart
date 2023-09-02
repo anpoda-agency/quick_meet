@@ -15,6 +15,8 @@ class AuthRepository {
 
   AuthRepository({required this.authApi});
 
+  bool get isAuth => false;
+
   Future<AuthVerificationLoginResponse> verificationLogin({required String phone}) async {
     try {
       final response = await authApi.verificationLogin(phone: phone);
