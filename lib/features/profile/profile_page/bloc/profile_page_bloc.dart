@@ -1,5 +1,4 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:quick_meet/data/models/user_controller/user_get_id_response.dart';
 import 'package:quick_meet/data/repository/user_repository.dart';
 
 part 'profile_page_event.dart';
@@ -13,7 +12,6 @@ class ProfilePageBloc extends Bloc<ProfilePageEvent, ProfilePageState> {
   }) : super(ProfilePageInitial(pageState)) {
     on<ProfilePageInit>(profilePageInit);
     on<ProfilePageMsgErr>(profilePageMsgErr);
-    on<ProfilePageGetUserInfo>(profilePageGetUserInfo);
     add(ProfilePageInit());
   }
 
@@ -26,11 +24,6 @@ class ProfilePageBloc extends Bloc<ProfilePageEvent, ProfilePageState> {
       onAwait: false,
       errMsg: event.msg,
     )));
-  }
-
-  profilePageGetUserInfo(ProfilePageGetUserInfo event, emit) async {
-    //print(state.pageState.response.toJson());
-    //var result = await userRepository.userGetId(path: path)
   }
 
   @override

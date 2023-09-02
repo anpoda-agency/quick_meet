@@ -58,7 +58,7 @@ class DioClient {
 
   Future<Response> put(
     String url, {
-    data,
+    Object? body,
     Map<String, dynamic>? queryParameters,
     Options? options,
     CancelToken? cancelToken,
@@ -68,7 +68,7 @@ class DioClient {
     try {
       final Response response = await _dio.put(
         url,
-        data: data,
+        data: body,
         queryParameters: queryParameters,
         options: options,
         cancelToken: cancelToken,
@@ -83,7 +83,7 @@ class DioClient {
 
   Future<Response> patch(
     String url, {
-    data,
+    Object? body,
     Map<String, dynamic>? queryParameters,
     Options? options,
     CancelToken? cancelToken,
@@ -93,7 +93,7 @@ class DioClient {
     try {
       final Response response = await _dio.patch(
         url,
-        data: data,
+        data: body,
         queryParameters: queryParameters,
         options: options,
         cancelToken: cancelToken,

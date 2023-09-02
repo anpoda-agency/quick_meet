@@ -8,5 +8,3 @@ class ProfilePageMsgErr extends ProfilePageEvent {
   final String msg;
   ProfilePageMsgErr(this.msg);
 }
-
-class ProfilePageGetUserInfo extends ProfilePageEvent {}

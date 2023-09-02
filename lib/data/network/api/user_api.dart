@@ -30,7 +30,7 @@ class UserApi {
     try {
       final Response response = await dioClient.patch(
         AppConstants.userUpdateIdUrl,
-        data: request.toJson(), // похуй пока так
+        body: request.toJson(), // похуй пока так
         //data:
       );
       return response;
@@ -39,16 +39,14 @@ class UserApi {
     }
   }
 
-  Future<Response> userUploadAvatar(
-      {required String path, required File data}) async {
+  Future<Response> userUploadAvatar({required String path, required File data}) async {
     // request body empty
     const String endUrl = "/avatar";
     try {
-      final Response response = await dioClient.post(
-          AppConstants.userUploadAvatarUrl + path + endUrl,
-          queryParameters: {'file': data}
-          //body: request.toJson(),
-          );
+      final Response response =
+          await dioClient.post(AppConstants.userUploadAvatarUrl + path + endUrl, queryParameters: {'file': data}
+              //body: request.toJson(),
+              );
       return response;
     } catch (e) {
       rethrow;
@@ -97,8 +95,7 @@ class UserApi {
     }
   }
 
-  Future<Response> userUploadList(
-      {required UserUploadListRequest request}) async {
+  Future<Response> userUploadList({required UserUploadListRequest request}) async {
     try {
       final Response response = await dioClient.post(
         AppConstants.loginUrl,
