@@ -26,6 +26,8 @@ class AuthWithSmsBloc extends Bloc<AuthWithSmsEvent, AuthWithSmsState> {
   }
 
   authWithSmsEnterPhone(AuthWithSmsEnterPhone event, emit) async {
+    // int a = 5;
+    // int b = a;
     var model = state.pageState.request.copyWith(source: event.value);
     emit(AuthWithSmsUp(state.pageState.copyWith(request: model)));
   }
