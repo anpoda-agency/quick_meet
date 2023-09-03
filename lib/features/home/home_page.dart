@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:get_it/get_it.dart';
 import 'package:go_router/go_router.dart';
+import 'package:quick_meet/domain/repository/user_repository.dart';
 
 class ScaffoldNavBar extends StatelessWidget {
   const ScaffoldNavBar({
@@ -14,31 +17,32 @@ class ScaffoldNavBar extends StatelessWidget {
     return Scaffold(
       body: navigationShell,
       bottomNavigationBar: BottomNavigationBar(
-        items: const <BottomNavigationBarItem>[
-          BottomNavigationBarItem(
+        items: <BottomNavigationBarItem>[
+          const BottomNavigationBarItem(
               icon: Icon(
                 Icons.list,
                 color: Colors.black,
               ),
               label: 'Meets'),
-          BottomNavigationBarItem(
+          const BottomNavigationBarItem(
               icon: Icon(
                 Icons.map,
                 color: Colors.black,
               ),
               label: 'Map'),
-          BottomNavigationBarItem(
+          const BottomNavigationBarItem(
               icon: Icon(
                 Icons.person,
                 color: Colors.black,
               ),
               label: 'Profile'),
-          BottomNavigationBarItem(
-              icon: Icon(
-                Icons.work,
-                color: Colors.black,
-              ),
-              label: 'Business'),
+          if (context.read<GetIt>().get<UserRepository>().isBusiness)
+            const BottomNavigationBarItem(
+                icon: Icon(
+                  Icons.work,
+                  color: Colors.black,
+                ),
+                label: 'Business'),
         ],
         currentIndex: navigationShell.currentIndex,
         onTap: (int index) => _onTap(context, index),

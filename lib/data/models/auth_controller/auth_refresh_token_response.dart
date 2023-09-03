@@ -14,8 +14,7 @@ class AuthRefreshTokenResponse {
     this.payload = const Payload(),
   });
 
-  factory AuthRefreshTokenResponse.fromJson(Map<String, dynamic> json) =>
-      _$AuthRefreshTokenResponseFromJson(json);
+  factory AuthRefreshTokenResponse.fromJson(Map<String, dynamic> json) => _$AuthRefreshTokenResponseFromJson(json);
   Map<String, dynamic> toJson() => _$AuthRefreshTokenResponseToJson(this);
 
   AuthRefreshTokenResponse copyWith({
@@ -29,9 +28,9 @@ class AuthRefreshTokenResponse {
 
 @JsonSerializable()
 class Payload {
-  @JsonKey(name: 'accessToken', fromJson: FromJsonBase.jsonToString)
+  @JsonKey(name: 'access_token', fromJson: FromJsonBase.jsonToString)
   final String accessToken;
-  @JsonKey(name: 'refreshToken', fromJson: FromJsonBase.jsonToString)
+  @JsonKey(name: 'refresh_token', fromJson: FromJsonBase.jsonToString)
   final String refreshToken;
 
   const Payload({
@@ -39,8 +38,7 @@ class Payload {
     this.refreshToken = '',
   });
 
-  factory Payload.fromJson(Map<String, dynamic> json) =>
-      _$PayloadFromJson(json);
+  factory Payload.fromJson(Map<String, dynamic> json) => _$PayloadFromJson(json);
   Map<String, dynamic> toJson() => _$PayloadToJson(this);
 
   Payload copyWith({

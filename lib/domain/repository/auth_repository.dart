@@ -1,26 +1,37 @@
 import 'package:dio/dio.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:quick_meet/data/models/auth_controller/auth_login_request.dart';
 import 'package:quick_meet/data/models/auth_controller/auth_login_response.dart';
 import 'package:quick_meet/data/models/auth_controller/auth_refresh_token_response.dart';
 import 'package:quick_meet/data/models/auth_controller/auth_register_request.dart';
-import 'package:quick_meet/data/models/auth_controller/auth_register_response.dart';
+// import 'package:quick_meet/data/models/auth_controller/auth_register_response.dart';
 import 'package:quick_meet/data/models/auth_controller/auth_reset_password_request.dart';
-import 'package:quick_meet/data/models/auth_controller/auth_reset_password_response.dart';
-import 'package:quick_meet/data/models/auth_controller/auth_verification_login_response.dart';
+// import 'package:quick_meet/data/models/auth_controller/auth_reset_password_response.dart';
+// import 'package:quick_meet/data/models/auth_controller/auth_verification_login_response.dart';
 import 'package:quick_meet/data/network/api/auth_api.dart';
 import 'package:quick_meet/data/network/dio_exception.dart';
 
-class AuthRepository {
+class AuthRepository extends ChangeNotifier {
   final AuthApi authApi;
 
   AuthRepository({required this.authApi});
 
-  bool get isAuth => false;
+  bool _isAuth = false;
+  bool get isAuth => _isAuth;
 
-  Future<AuthVerificationLoginResponse> verificationLogin({required String phone}) async {
+  void changeAuthStatus({bool? val}) {
+    if (val != null) {
+      _isAuth = val;
+    } else {
+      _isAuth = !_isAuth;
+    }
+    notifyListeners();
+  }
+
+  Future<AuthLoginResponse> verificationLogin({required String phone}) async {
     try {
       final response = await authApi.verificationLogin(phone: phone);
-      return AuthVerificationLoginResponse.fromJson(response.data);
+      return AuthLoginResponse.fromJson(response.data);
     } on DioException catch (e) {
       final errorMessage = DioExceptions.fromDioError(e).toString();
       throw errorMessage;
@@ -47,20 +58,20 @@ class AuthRepository {
     }
   }
 
-  Future<AuthRegisterResponse> register({required AuthRegisterRequest request}) async {
+  Future<AuthLoginResponse> register({required AuthRegisterRequest request}) async {
     try {
       final response = await authApi.register(request: request);
-      return AuthRegisterResponse.fromJson(response.data);
+      return AuthLoginResponse.fromJson(response.data);
     } on DioException catch (e) {
       final errorMessage = DioExceptions.fromDioError(e).toString();
       throw errorMessage;
     }
   }
 
-  Future<AuthResetPasswordResponse> resetPassword({required AuthResetPasswordRequest request}) async {
+  Future<AuthLoginResponse> resetPassword({required AuthResetPasswordRequest request}) async {
     try {
       final response = await authApi.resetPassword(request: request);
-      return AuthResetPasswordResponse.fromJson(response.data);
+      return AuthLoginResponse.fromJson(response.data);
     } on DioException catch (e) {
       final errorMessage = DioExceptions.fromDioError(e).toString();
       throw errorMessage;

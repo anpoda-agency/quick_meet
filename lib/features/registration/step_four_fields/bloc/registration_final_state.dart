@@ -26,11 +26,11 @@ class PageState {
   final bool onAwait;
   final String errMsg;
   final AuthRegisterRequest request;
-  final AuthRegisterResponse response;
+  final AuthLoginResponse response;
 
   const PageState({
     this.request = const AuthRegisterRequest(),
-    this.response = const AuthRegisterResponse(),
+    this.response = const AuthLoginResponse(),
     this.onAwait = false,
     this.errMsg = '',
   });
@@ -39,7 +39,7 @@ class PageState {
     bool? onAwait,
     String? errMsg,
     AuthRegisterRequest? request,
-    AuthRegisterResponse? response,
+    AuthLoginResponse? response,
   }) {
     return PageState(
       onAwait: onAwait ?? this.onAwait,

@@ -16,8 +16,7 @@ class AuthResetPasswordRequest {
     this.password = '',
   });
 
-  factory AuthResetPasswordRequest.fromJson(Map<String, dynamic> json) =>
-      _$AuthResetPasswordRequestFromJson(json);
+  factory AuthResetPasswordRequest.fromJson(Map<String, dynamic> json) => _$AuthResetPasswordRequestFromJson(json);
   Map<String, dynamic> toJson() => _$AuthResetPasswordRequestToJson(this);
 
   AuthResetPasswordRequest copyWith({
@@ -30,8 +29,3 @@ class AuthResetPasswordRequest {
     );
   }
 }
-
-// StoreAddFavouriteRequest
-
-//jsns for factory...
-//lamp on hovered class and click on copyWith

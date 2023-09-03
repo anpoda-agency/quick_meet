@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get_it/get_it.dart';
 import 'package:quick_meet/domain/repository/auth_repository.dart';
+import 'package:quick_meet/domain/repository/user_repository.dart';
 import 'package:quick_meet/domain/router/route_constants.dart';
 import 'package:quick_meet/domain/router/route_impl.dart';
 import 'package:quick_meet/features/auth/auth_with_password/bloc/auth_password_bloc.dart';
@@ -24,6 +25,7 @@ class _AuthPasswordPageState extends State<AuthPasswordPage> {
     return BlocProvider(
       create: (context) => AuthPasswordBloc(
         authRepository: context.read<GetIt>().get<AuthRepository>(),
+        userRepository: context.read<GetIt>().get<UserRepository>(),
         pageState: const PageState(),
       ),
       child: BlocConsumer<AuthPasswordBloc, AuthPasswordState>(

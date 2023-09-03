@@ -17,8 +17,7 @@ class AuthRegisterResponse {
     this.user = const User(),
   });
 
-  factory AuthRegisterResponse.fromJson(Map<String, dynamic> json) =>
-      _$AuthRegisterResponseFromJson(json);
+  factory AuthRegisterResponse.fromJson(Map<String, dynamic> json) => _$AuthRegisterResponseFromJson(json);
   Map<String, dynamic> toJson() => _$AuthRegisterResponseToJson(this);
 
   AuthRegisterResponse copyWith({
@@ -34,32 +33,26 @@ class AuthRegisterResponse {
 
 @JsonSerializable()
 class Payload {
-  @JsonKey(name: 'additionalProp1', fromJson: FromJsonBase.jsonToString)
-  final String additionalProp1;
-  @JsonKey(name: 'additionalProp2', fromJson: FromJsonBase.jsonToString)
-  final String additionalProp2;
-  @JsonKey(name: 'additionalProp3', fromJson: FromJsonBase.jsonToString)
-  final String additionalProp3;
+  @JsonKey(name: 'accessToken', fromJson: FromJsonBase.jsonToString)
+  final String accessToken;
+  @JsonKey(name: 'refreshToken', fromJson: FromJsonBase.jsonToString)
+  final String refreshToken;
 
   const Payload({
-    this.additionalProp1 = '',
-    this.additionalProp2 = '',
-    this.additionalProp3 = '',
+    this.accessToken = '',
+    this.refreshToken = '',
   });
 
-  factory Payload.fromJson(Map<String, dynamic> json) =>
-      _$PayloadFromJson(json);
+  factory Payload.fromJson(Map<String, dynamic> json) => _$PayloadFromJson(json);
   Map<String, dynamic> toJson() => _$PayloadToJson(this);
 
   Payload copyWith({
-    String? additionalProp1,
-    String? additionalProp2,
-    String? additionalProp3,
+    String? accessToken,
+    String? refreshToken,
   }) {
     return Payload(
-      additionalProp1: additionalProp1 ?? this.additionalProp1,
-      additionalProp2: additionalProp2 ?? this.additionalProp2,
-      additionalProp3: additionalProp3 ?? this.additionalProp3,
+      accessToken: accessToken ?? this.accessToken,
+      refreshToken: refreshToken ?? this.refreshToken,
     );
   }
 }
@@ -190,8 +183,7 @@ class BillingAccount {
     this.nextBillDate = '',
   });
 
-  factory BillingAccount.fromJson(Map<String, dynamic> json) =>
-      _$BillingAccountFromJson(json);
+  factory BillingAccount.fromJson(Map<String, dynamic> json) => _$BillingAccountFromJson(json);
   Map<String, dynamic> toJson() => _$BillingAccountToJson(this);
 
   BillingAccount copyWith({

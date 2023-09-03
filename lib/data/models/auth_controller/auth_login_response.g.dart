@@ -33,9 +33,6 @@ User _$UserFromJson(Map<String, dynamic> json) => User(
       lastName: json['lastName'] == null
           ? ''
           : FromJsonBase.jsonToString(json['lastName']),
-      accountClass: json['accountClass'] == null
-          ? ''
-          : FromJsonBase.jsonToString(json['accountClass']),
       accountRank: json['accountRank'] == null
           ? 0
           : FromJsonBase.jsonToInt(json['accountRank']),
@@ -45,9 +42,6 @@ User _$UserFromJson(Map<String, dynamic> json) => User(
       attendSeries: json['attendSeries'] == null
           ? 0
           : FromJsonBase.jsonToInt(json['attendSeries']),
-      city: json['city'] == null
-          ? const City()
-          : City.fromJson(json['city'] as Map<String, dynamic>),
       phoneNumber: json['phoneNumber'] == null
           ? ''
           : FromJsonBase.jsonToString(json['phoneNumber']),
@@ -56,7 +50,6 @@ User _$UserFromJson(Map<String, dynamic> json) => User(
           : FromJsonBase.jsonToString(json['description']),
       email:
           json['email'] == null ? '' : FromJsonBase.jsonToString(json['email']),
-      billingAccount: FromJsonBase.jsonToString(json['billingAccount']),
       registrationDate: json['registrationDate'] == null
           ? ''
           : FromJsonBase.jsonToString(json['registrationDate']),
@@ -82,15 +75,12 @@ Map<String, dynamic> _$UserToJson(User instance) => <String, dynamic>{
       'firstName': instance.firstName,
       'secondName': instance.secondName,
       'lastName': instance.lastName,
-      'accountClass': instance.accountClass,
       'accountRank': instance.accountRank,
       'missSeries': instance.missSeries,
       'attendSeries': instance.attendSeries,
-      'city': instance.city,
       'phoneNumber': instance.phoneNumber,
       'description': instance.description,
       'email': instance.email,
-      'billingAccount': instance.billingAccount,
       'registrationDate': instance.registrationDate,
       'birthDate': instance.birthDate,
       'active': instance.active,
@@ -99,26 +89,16 @@ Map<String, dynamic> _$UserToJson(User instance) => <String, dynamic>{
       'blocked': instance.blocked,
     };
 
-City _$CityFromJson(Map<String, dynamic> json) => City(
-      id: json['id'] == null ? '' : FromJsonBase.jsonToString(json['id']),
-      name: json['name'] == null ? '' : FromJsonBase.jsonToString(json['name']),
-    );
-
-Map<String, dynamic> _$CityToJson(City instance) => <String, dynamic>{
-      'id': instance.id,
-      'name': instance.name,
-    };
-
 Payload _$PayloadFromJson(Map<String, dynamic> json) => Payload(
-      accessToken: json['accessToken'] == null
+      accessToken: json['access_token'] == null
           ? ''
-          : FromJsonBase.jsonToString(json['accessToken']),
-      refreshToken: json['refreshToken'] == null
+          : FromJsonBase.jsonToString(json['access_token']),
+      refreshToken: json['refresh_token'] == null
           ? ''
-          : FromJsonBase.jsonToString(json['refreshToken']),
+          : FromJsonBase.jsonToString(json['refresh_token']),
     );
 
 Map<String, dynamic> _$PayloadToJson(Payload instance) => <String, dynamic>{
-      'accessToken': instance.accessToken,
-      'refreshToken': instance.refreshToken,
+      'access_token': instance.accessToken,
+      'refresh_token': instance.refreshToken,
     };

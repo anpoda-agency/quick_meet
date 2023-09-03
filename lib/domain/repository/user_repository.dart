@@ -1,6 +1,7 @@
 import 'dart:io';
-
 import 'package:dio/dio.dart';
+import 'package:flutter/cupertino.dart';
+import 'package:quick_meet/data/models/auth_controller/auth_login_response.dart';
 import 'package:quick_meet/data/models/user_controller/user_get_guest_meet_list_response.dart';
 import 'package:quick_meet/data/models/user_controller/user_get_id_response.dart';
 import 'package:quick_meet/data/models/user_controller/user_get_owner_meet_list_response.dart';
@@ -11,15 +12,42 @@ import 'package:quick_meet/data/models/user_controller/user_upload_avatar_respon
 import 'package:quick_meet/data/models/user_controller/user_upload_list_request.dart';
 import 'package:quick_meet/data/network/api/user_api.dart';
 import 'package:quick_meet/data/network/dio_exception.dart';
+import 'package:quick_meet/data/storage/pref_storage.dart';
 
-class UserRepository {
+class UserRepository extends ChangeNotifier {
   final UserApi userApi;
 
   UserRepository({required this.userApi});
 
-  Future<UserGetIdResponse> userGetId({required String path}) async {
+  AuthLoginResponse? _user;
+  AuthLoginResponse? get user => _user;
+
+  bool _isBusiness = false;
+  bool get isBusiness => _isBusiness;
+
+  Future<void> setUserData({required AuthLoginResponse user, required String token}) async {
+    _user = user;
+    await PrefStorageInstance.prefStorage.setRecord(PrefName.refreshToken, token);
+    await PrefStorageInstance.prefStorage.setRecord(PrefName.userId, user.user.id);
+    print(user.toJson());
+    var q = await PrefStorageInstance.prefStorage.getRecord(PrefName.refreshToken);
+    var w = await PrefStorageInstance.prefStorage.getRecord(PrefName.userId);
+    print(q);
+    print(w);
+
+    notifyListeners();
+  }
+
+  Future<void> clearUserData() async {
+    _user = null;
+    await PrefStorageInstance.prefStorage.setRecord(PrefName.userId, '');
+    await PrefStorageInstance.prefStorage.setRecord(PrefName.refreshToken, '');
+    notifyListeners();
+  }
+
+  Future<UserGetIdResponse> userGetId({required String path, String? accessToken}) async {
     try {
-      final response = await userApi.userGetId(path: path);
+      final response = await userApi.userGetId(path: path, accessToken: accessToken);
       return UserGetIdResponse.fromJson(response.data);
     } on DioException catch (e) {
       final errorMessage = DioExceptions.fromDioError(e).toString();
@@ -27,8 +55,7 @@ class UserRepository {
     }
   }
 
-  Future<UserUpdateIdResponse> userUpdateId(
-      {required UserUpdateIdRequest request}) async {
+  Future<UserUpdateIdResponse> userUpdateId({required UserUpdateIdRequest request}) async {
     try {
       final response = await userApi.userUpdateId(request: request);
       return UserUpdateIdResponse.fromJson(response.data);
@@ -38,8 +65,7 @@ class UserRepository {
     }
   }
 
-  Future<UserUploadAvatarResponse> userUploadAvatar(
-      {required String path, required File data}) async {
+  Future<UserUploadAvatarResponse> userUploadAvatar({required String path, required File data}) async {
     try {
       final response = await userApi.userUploadAvatar(path: path, data: data);
       return UserUploadAvatarResponse.fromJson(response.data);
@@ -49,8 +75,7 @@ class UserRepository {
     }
   }
 
-  Future<UserRemoveAvatarResponse> userRemoveAvatar(
-      {required String path}) async {
+  Future<UserRemoveAvatarResponse> userRemoveAvatar({required String path}) async {
     try {
       final response = await userApi.userRemoveAvatar(path: path);
       return UserRemoveAvatarResponse.fromJson(response.data);
@@ -60,8 +85,7 @@ class UserRepository {
     }
   }
 
-  Future<UserGetGuestMeetListResponse> userGetGuestMeetList(
-      {required String path}) async {
+  Future<UserGetGuestMeetListResponse> userGetGuestMeetList({required String path}) async {
     try {
       final response = await userApi.userGetGuestMeetList(path: path);
       return UserGetGuestMeetListResponse.fromJson(response.data);
@@ -71,8 +95,7 @@ class UserRepository {
     }
   }
 
-  Future<UserGetOwnerMeetListResponse> userGetOwnerMeetList(
-      {required String path}) async {
+  Future<UserGetOwnerMeetListResponse> userGetOwnerMeetList({required String path}) async {
     try {
       final response = await userApi.userGetOwnerMeetList(path: path);
       return UserGetOwnerMeetListResponse.fromJson(response.data);
@@ -82,8 +105,7 @@ class UserRepository {
     }
   }
 
-  Future<UserUploadListRequest> userUploadList(
-      {required UserUploadListRequest request}) async {
+  Future<UserUploadListRequest> userUploadList({required UserUploadListRequest request}) async {
     try {
       final response = await userApi.userUploadList(request: request);
       return UserUploadListRequest.fromJson(response.data);

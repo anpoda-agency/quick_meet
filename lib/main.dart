@@ -9,6 +9,7 @@ import 'package:quick_meet/core/constants.dart';
 import 'package:quick_meet/data/enum.dart';
 import 'package:quick_meet/data/service/write_log.dart';
 import 'package:quick_meet/di/service_locator.dart';
+import 'package:quick_meet/domain/router/route_constants.dart';
 import 'package:quick_meet/domain/router/route_impl.dart';
 // import 'package:quick_meet/features/auth/auth_with_sms/step_one_phone/ui/auth_sms_page.dart';
 // import 'package:quick_meet/features/auth/auth_with_password/ui/auth_password_page.dart';
@@ -75,6 +76,7 @@ class _MyAppState extends State<MyApp> {
       setState(() {
         loading = false;
       });
+      auth ? router.newRoutesPath([MapRoutes.map.name]) : router.newRoutesPath([RootRoutes.start.name]);
       FlutterNativeSplash.remove();
     });
   }
@@ -118,7 +120,7 @@ class _MyAppState extends State<MyApp> {
   Future<bool> init(
     StreamController<GlobalEvents> gs,
   ) async {
-    var isAuth = await setup();
+    bool isAuth = await setup();
 
     var url = Uri.tryParse(AppConstants.baseUrl);
 

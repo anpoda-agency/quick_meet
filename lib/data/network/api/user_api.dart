@@ -11,13 +11,12 @@ class UserApi {
 
   UserApi({required this.dioClient});
 
-  Future<Response> userGetId({required String path}) async {
+  Future<Response> userGetId({required String path, String? accessToken}) async {
     // request body empty
     try {
-      final Response response = await dioClient.get(
-        AppConstants.userGetIdUrl + path,
-        //body: request.toJson(),
-      );
+      final Response response = await dioClient.get(AppConstants.userGetIdUrl + path, accessToken: accessToken
+          //body: request.toJson(),
+          );
       return response;
     } catch (e) {
       rethrow;
@@ -39,16 +38,14 @@ class UserApi {
     }
   }
 
-  Future<Response> userUploadAvatar(
-      {required String path, required File data}) async {
+  Future<Response> userUploadAvatar({required String path, required File data}) async {
     // request body empty
     const String endUrl = "/avatar";
     try {
-      final Response response = await dioClient.post(
-          AppConstants.userUploadAvatarUrl + path + endUrl,
-          queryParameters: {'file': data}
-          //body: request.toJson(),
-          );
+      final Response response =
+          await dioClient.post(AppConstants.userUploadAvatarUrl + path + endUrl, queryParameters: {'file': data}
+              //body: request.toJson(),
+              );
       return response;
     } catch (e) {
       rethrow;
@@ -97,8 +94,7 @@ class UserApi {
     }
   }
 
-  Future<Response> userUploadList(
-      {required UserUploadListRequest request}) async {
+  Future<Response> userUploadList({required UserUploadListRequest request}) async {
     try {
       final Response response = await dioClient.post(
         AppConstants.loginUrl,

@@ -39,9 +39,7 @@ class User {
   final String firstName;
   @JsonKey(name: 'secondName', fromJson: FromJsonBase.jsonToString)
   final String secondName;
-  @JsonKey(
-      name: 'lastName',
-      fromJson: FromJsonBase.jsonToString) // Спросить про null переменую
+  @JsonKey(name: 'lastName', fromJson: FromJsonBase.jsonToString) // Спросить про null переменую
   final String lastName;
   @JsonKey(name: 'accountClass', fromJson: FromJsonBase.jsonToString)
   final String accountClass;
@@ -185,8 +183,7 @@ class Payload {
     this.refreshToken = '',
   });
 
-  factory Payload.fromJson(Map<String, dynamic> json) =>
-      _$PayloadFromJson(json);
+  factory Payload.fromJson(Map<String, dynamic> json) => _$PayloadFromJson(json);
   Map<String, dynamic> toJson() => _$PayloadToJson(this);
 
   Payload copyWith({
@@ -199,15 +196,3 @@ class Payload {
     );
   }
 }
-
-// поубирать знаки вопросы, все к стрингу делать без налов
-// выписать поля где null
-
-/*
-нулы в user:
-
-  lastName
-  description
-  billingAccount
-
-*/

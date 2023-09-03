@@ -21,15 +21,15 @@ Map<String, dynamic> _$AuthRefreshTokenResponseToJson(
     };
 
 Payload _$PayloadFromJson(Map<String, dynamic> json) => Payload(
-      accessToken: json['accessToken'] == null
+      accessToken: json['access_token'] == null
           ? ''
-          : FromJsonBase.jsonToString(json['accessToken']),
-      refreshToken: json['refreshToken'] == null
+          : FromJsonBase.jsonToString(json['access_token']),
+      refreshToken: json['refresh_token'] == null
           ? ''
-          : FromJsonBase.jsonToString(json['refreshToken']),
+          : FromJsonBase.jsonToString(json['refresh_token']),
     );
 
 Map<String, dynamic> _$PayloadToJson(Payload instance) => <String, dynamic>{
-      'accessToken': instance.accessToken,
-      'refreshToken': instance.refreshToken,
+      'access_token': instance.accessToken,
+      'refresh_token': instance.refreshToken,
     };

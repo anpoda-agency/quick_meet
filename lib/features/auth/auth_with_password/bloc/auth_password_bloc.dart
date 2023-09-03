@@ -2,14 +2,17 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:quick_meet/data/models/auth_controller/auth_login_request.dart';
 import 'package:quick_meet/data/models/auth_controller/auth_login_response.dart';
 import 'package:quick_meet/domain/repository/auth_repository.dart';
+import 'package:quick_meet/domain/repository/user_repository.dart';
 
 part 'auth_password_event.dart';
 part 'auth_password_state.dart';
 
 class AuthPasswordBloc extends Bloc<AuthPasswordEvent, AuthPasswordState> {
   final AuthRepository authRepository;
+  final UserRepository userRepository;
   AuthPasswordBloc({
     required this.authRepository,
+    required this.userRepository,
     required PageState pageState,
   }) : super(AuthPasswordInitial(pageState)) {
     on<AuthPasswordInit>(authPasswordInit);
@@ -36,6 +39,8 @@ class AuthPasswordBloc extends Bloc<AuthPasswordEvent, AuthPasswordState> {
 
   authPasswordSendLogin(AuthPasswordSendLogin event, emit) async {
     var res = await authRepository.login(request: state.pageState.request);
+    await userRepository.setUserData(user: res, token: res.payload.refreshToken);
+    authRepository.changeAuthStatus(val: true);
     emit(AuthPasswordAllowedToPush(state.pageState.copyWith(response: res)));
   }
 

@@ -57,8 +57,7 @@ class GoRouterImplt {
           ],
           redirect: (BuildContext context, state) {
             bool loggingIn = context.read<GetIt>().get<AuthRepository>().isAuth;
-
-            if ((loggingIn) && (!state.uri.toString().startsWith('/auth'))) {
+            if ((!loggingIn) && (!state.uri.toString().startsWith('/auth'))) {
               return '/start';
             } else {
               return null;

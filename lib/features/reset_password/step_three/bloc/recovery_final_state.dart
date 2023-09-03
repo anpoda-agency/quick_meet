@@ -24,7 +24,7 @@ class RecoveryFinalError extends RecoveryFinalState {
 
 class PageState {
   final AuthResetPasswordRequest request;
-  final AuthResetPasswordResponse response;
+  final AuthLoginResponse response;
   final String password;
   final String passwordConfirm;
   final bool confirmPasswordError;
@@ -36,7 +36,7 @@ class PageState {
     this.password = '',
     this.passwordConfirm = '',
     this.request = const AuthResetPasswordRequest(),
-    this.response = const AuthResetPasswordResponse(),
+    this.response = const AuthLoginResponse(),
     this.onAwait = false,
     this.errMsg = '',
     this.confirmPasswordError = false,
@@ -45,7 +45,7 @@ class PageState {
 
   PageState copyWith({
     AuthResetPasswordRequest? request,
-    AuthResetPasswordResponse? response,
+    AuthLoginResponse? response,
     String? password,
     String? passwordConfirm,
     bool? confirmPasswordError,

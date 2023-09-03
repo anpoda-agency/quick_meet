@@ -25,21 +25,17 @@ Map<String, dynamic> _$AuthRegisterResponseToJson(
     };
 
 Payload _$PayloadFromJson(Map<String, dynamic> json) => Payload(
-      additionalProp1: json['additionalProp1'] == null
+      accessToken: json['accessToken'] == null
           ? ''
-          : FromJsonBase.jsonToString(json['additionalProp1']),
-      additionalProp2: json['additionalProp2'] == null
+          : FromJsonBase.jsonToString(json['accessToken']),
+      refreshToken: json['refreshToken'] == null
           ? ''
-          : FromJsonBase.jsonToString(json['additionalProp2']),
-      additionalProp3: json['additionalProp3'] == null
-          ? ''
-          : FromJsonBase.jsonToString(json['additionalProp3']),
+          : FromJsonBase.jsonToString(json['refreshToken']),
     );
 
 Map<String, dynamic> _$PayloadToJson(Payload instance) => <String, dynamic>{
-      'additionalProp1': instance.additionalProp1,
-      'additionalProp2': instance.additionalProp2,
-      'additionalProp3': instance.additionalProp3,
+      'accessToken': instance.accessToken,
+      'refreshToken': instance.refreshToken,
     };
 
 User _$UserFromJson(Map<String, dynamic> json) => User(
