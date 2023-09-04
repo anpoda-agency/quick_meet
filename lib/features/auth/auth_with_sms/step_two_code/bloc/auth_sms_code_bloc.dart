@@ -4,6 +4,7 @@ import 'package:quick_meet/data/models/activation_code_controller/code_confirm_n
 import 'package:quick_meet/data/models/auth_controller/auth_login_response.dart';
 import 'package:quick_meet/domain/repository/activation_code_repository.dart';
 import 'package:quick_meet/domain/repository/auth_repository.dart';
+import 'package:quick_meet/domain/repository/user_repository.dart';
 
 part 'auth_sms_code_event.dart';
 part 'auth_sms_code_state.dart';
@@ -11,12 +12,14 @@ part 'auth_sms_code_state.dart';
 class AuthSmsCodeBloc extends Bloc<AuthSmsCodeEvent, AuthSmsCodeState> {
   final ActivationCodeRepository activationCodeRepository;
   final AuthRepository authRepository;
+  final UserRepository userRepository;
   final String phoneNumber;
 
   AuthSmsCodeBloc({
     required this.phoneNumber,
     required PageState pageState,
     required this.authRepository,
+    required this.userRepository,
     required this.activationCodeRepository,
   }) : super(AuthSmsCodeInitial(pageState)) {
     on<AuthSmsCodeInit>(authSmsCodeInit);
@@ -52,6 +55,8 @@ class AuthSmsCodeBloc extends Bloc<AuthSmsCodeEvent, AuthSmsCodeState> {
       )));
     } else {
       var resAuth = await authRepository.verificationLogin(phone: state.pageState.request.source);
+      await userRepository.setUserData(user: resAuth, token: resAuth.payload.refreshToken);
+      authRepository.changeAuthStatus(val: true);
       emit(AuthSmsCodeAllowedToPush(state.pageState.copyWith(responseAuth: resAuth)));
     }
   }
