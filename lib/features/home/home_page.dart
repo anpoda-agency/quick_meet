@@ -15,38 +15,98 @@ class ScaffoldNavBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: navigationShell,
-      bottomNavigationBar: BottomNavigationBar(
-        items: <BottomNavigationBarItem>[
-          const BottomNavigationBarItem(
-              icon: Icon(
-                Icons.list,
-                color: Colors.black,
+      body: Stack(
+        children: [
+          navigationShell,
+          Positioned(
+            left: 0,
+            right: 0,
+            bottom: 20,
+            child: Container(
+              height: 80,
+              margin: const EdgeInsets.only(left: 20, right: 20),
+              decoration: BoxDecoration(
+                gradient: LinearGradient(colors: [
+                  const Color(0xff4779BC),
+                  const Color(0xff1B65C8).withOpacity(0.6),
+                ]),
+                color: Colors.lightBlueAccent[100],
+                borderRadius: BorderRadius.circular(15),
               ),
-              label: 'Meets'),
-          const BottomNavigationBarItem(
-              icon: Icon(
-                Icons.map,
-                color: Colors.black,
+              child: BottomNavigationBar(
+                backgroundColor: Colors.transparent,
+                showUnselectedLabels: true,
+                type: BottomNavigationBarType.fixed,
+                elevation: 0,
+                items: <BottomNavigationBarItem>[
+                  const BottomNavigationBarItem(
+                      icon: Icon(
+                        Icons.list,
+                        color: Colors.white,
+                      ),
+                      label: 'Meets'),
+                  const BottomNavigationBarItem(
+                      icon: Icon(
+                        Icons.map,
+                        color: Colors.white,
+                      ),
+                      label: 'Map'),
+                  const BottomNavigationBarItem(
+                      icon: Icon(
+                        Icons.person,
+                        color: Colors.white,
+                      ),
+                      label: 'Profile'),
+                  if (context.read<GetIt>().get<UserRepository>().isBusiness)
+                    const BottomNavigationBarItem(
+                        icon: Icon(
+                          Icons.work,
+                          color: Colors.black,
+                        ),
+                        label: 'Business'),
+                ],
+                currentIndex: navigationShell.currentIndex,
+                onTap: (int index) => _onTap(context, index),
               ),
-              label: 'Map'),
-          const BottomNavigationBarItem(
-              icon: Icon(
-                Icons.person,
-                color: Colors.black,
-              ),
-              label: 'Profile'),
-          if (context.read<GetIt>().get<UserRepository>().isBusiness)
-            const BottomNavigationBarItem(
-                icon: Icon(
-                  Icons.work,
-                  color: Colors.black,
-                ),
-                label: 'Business'),
+            ),
+          ),
         ],
-        currentIndex: navigationShell.currentIndex,
-        onTap: (int index) => _onTap(context, index),
       ),
+      // bottomNavigationBar: BottomNavigationBar(
+      //   backgroundColor: Colors.transparent,
+      //   showUnselectedLabels: true,
+      //   type: BottomNavigationBarType.fixed,
+      //   elevation: 0,
+      //   items: <BottomNavigationBarItem>[
+      //     const BottomNavigationBarItem(
+      //         icon: Icon(
+      //           Icons.list,
+      //           color: Colors.black,
+      //         ),
+      //         label: 'Meets'),
+      //     const BottomNavigationBarItem(
+      //         icon: Icon(
+      //           Icons.map,
+      //           color: Colors.black,
+      //         ),
+      //         label: 'Map'),
+      //     const BottomNavigationBarItem(
+      //         icon: Icon(
+      //           Icons.person,
+      //           color: Colors.black,
+      //         ),
+      //         label: 'Profile'),
+      //     if (context.read<GetIt>().get<UserRepository>().isBusiness)
+      //       const BottomNavigationBarItem(
+      //           icon: Icon(
+      //             Icons.work,
+      //             color: Colors.black,
+      //           ),
+      //           label: 'Business'),
+      //   ],
+      //   currentIndex: navigationShell.currentIndex,
+      //   onTap: (int index) => _onTap(context, index),
+      // ),
     );
   }
 

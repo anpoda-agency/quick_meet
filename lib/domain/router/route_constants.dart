@@ -3,6 +3,7 @@ import 'package:quick_meet/features/auth/auth_start/start_page.dart';
 import 'package:quick_meet/features/auth/auth_with_password/ui/auth_password_page.dart';
 import 'package:quick_meet/features/auth/auth_with_sms/step_one_phone/ui/auth_sms_page.dart';
 import 'package:quick_meet/features/auth/auth_with_sms/step_two_code/ui/auth_sms_code_page.dart';
+import 'package:quick_meet/features/map/map_page/ui/map_page.dart';
 import 'package:quick_meet/features/registration/step_four_fields/ui/reg_final_page.dart';
 import 'package:quick_meet/features/registration/step_one_phone/ui/reg_phone_page.dart';
 import 'package:quick_meet/features/registration/step_three_password/reg_password_page.dart';
@@ -70,10 +71,7 @@ class RouteConstants {
 
   static map(MapRoutes route, {Object? args}) {
     if (route == MapRoutes.map) {
-      return Scaffold(
-        appBar: AppBar(title: const Text('map')),
-        body: const Center(child: Text('Page not found')),
-      );
+      return const MapScreen();
     } else {
       return Scaffold(
         appBar: AppBar(title: const Text('404')),

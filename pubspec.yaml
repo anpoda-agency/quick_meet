@@ -37,6 +37,8 @@ dependencies:
   provider: ^6.0.1
   flutter_native_splash: ^2.3.2
   sqflite: ^2.2.2
+  yandex_mapkit: ^3.3.3
+  geolocator: ^10.0.0
   shared_preferences: ^2.0.15
 
   flutter_bloc: ^8.1.3
