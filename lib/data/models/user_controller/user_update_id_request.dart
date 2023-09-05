@@ -16,7 +16,7 @@ class UserUpdateIdRequest {
   @JsonKey(name: 'firstName', fromJson: FromJsonBase.jsonToString)
   final String firstName;
   @JsonKey(name: 'role', fromJson: FromJsonBase.jsonToString)
-  final String role;
+  final String? role;
   @JsonKey(name: 'secondName', fromJson: FromJsonBase.jsonToString)
   final String secondName;
 
@@ -25,12 +25,11 @@ class UserUpdateIdRequest {
     this.description = '',
     this.email = '',
     this.firstName = '',
-    this.role = '',
+    this.role,
     this.secondName = '',
   });
 
-  factory UserUpdateIdRequest.fromJson(Map<String, dynamic> json) =>
-      _$UserUpdateIdRequestFromJson(json);
+  factory UserUpdateIdRequest.fromJson(Map<String, dynamic> json) => _$UserUpdateIdRequestFromJson(json);
   Map<String, dynamic> toJson() => _$UserUpdateIdRequestToJson(this);
 
   UserUpdateIdRequest copyWith({

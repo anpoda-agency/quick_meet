@@ -10,6 +10,7 @@ class CustomTextFieldWidget extends StatefulWidget {
     this.controller,
     this.errorText,
     this.inputFormatter,
+    this.initialValue,
   });
 
   final String textFieldTitle;
@@ -17,6 +18,7 @@ class CustomTextFieldWidget extends StatefulWidget {
   final TextInputType? keyboardType;
   final TextEditingController? controller;
   final String? errorText;
+  final String? initialValue;
   final List<MaskTextInputFormatter>? inputFormatter;
 
   @override
@@ -53,7 +55,8 @@ class _CustomTextFieldWidgetState extends State<CustomTextFieldWidget> {
           child: SizedBox(
             width: MediaQuery.of(context).size.width,
             height: 50,
-            child: TextField(
+            child: TextFormField(
+              initialValue: widget.initialValue,
               inputFormatters: widget.inputFormatter,
               keyboardType: widget.keyboardType,
               onChanged: widget.onChanged,
@@ -61,13 +64,11 @@ class _CustomTextFieldWidgetState extends State<CustomTextFieldWidget> {
               decoration: InputDecoration(
                 enabledBorder: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(18),
-                  borderSide:
-                      const BorderSide(width: 0.50, color: Color(0xFF6B4EFF)),
+                  borderSide: const BorderSide(width: 0.50, color: Color(0xFF6B4EFF)),
                 ),
                 focusedBorder: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(18),
-                  borderSide:
-                      const BorderSide(width: 0.50, color: Color(0xFF6B4EFF)),
+                  borderSide: const BorderSide(width: 0.50, color: Color(0xFF6B4EFF)),
                 ),
                 errorText: widget.errorText,
               ),

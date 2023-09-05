@@ -19,7 +19,7 @@ UserUpdateIdRequest _$UserUpdateIdRequestFromJson(Map<String, dynamic> json) =>
       firstName: json['firstName'] == null
           ? ''
           : FromJsonBase.jsonToString(json['firstName']),
-      role: json['role'] == null ? '' : FromJsonBase.jsonToString(json['role']),
+      role: FromJsonBase.jsonToString(json['role']),
       secondName: json['secondName'] == null
           ? ''
           : FromJsonBase.jsonToString(json['secondName']),

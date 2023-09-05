@@ -25,16 +25,12 @@ class UserRepository extends ChangeNotifier {
   bool _isBusiness = false;
   bool get isBusiness => _isBusiness;
 
-  Future<void> setUserData({required AuthLoginResponse user, required String token}) async {
+  Future<void> setUserData({required AuthLoginResponse user, String? token}) async {
     _user = user;
-    await PrefStorageInstance.prefStorage.setRecord(PrefName.refreshToken, token);
-    await PrefStorageInstance.prefStorage.setRecord(PrefName.userId, user.user.id);
-    print(user.toJson());
-    var q = await PrefStorageInstance.prefStorage.getRecord(PrefName.refreshToken);
-    var w = await PrefStorageInstance.prefStorage.getRecord(PrefName.userId);
-    print(q);
-    print(w);
-
+    if (token != null) {
+      await PrefStorageInstance.prefStorage.setRecord(PrefName.refreshToken, token);
+      await PrefStorageInstance.prefStorage.setRecord(PrefName.userId, user.user.id);
+    }
     notifyListeners();
   }
 
@@ -55,9 +51,10 @@ class UserRepository extends ChangeNotifier {
     }
   }
 
-  Future<UserUpdateIdResponse> userUpdateId({required UserUpdateIdRequest request}) async {
+  Future<UserUpdateIdResponse> userUpdateId(
+      {required String path, required UserUpdateIdRequest request, String? accessToken}) async {
     try {
-      final response = await userApi.userUpdateId(request: request);
+      final response = await userApi.userUpdateId(path: path, request: request, accessToken: accessToken);
       return UserUpdateIdResponse.fromJson(response.data);
     } on DioException catch (e) {
       final errorMessage = DioExceptions.fromDioError(e).toString();
