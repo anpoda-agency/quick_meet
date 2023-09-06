@@ -23,6 +23,9 @@ Map<String, dynamic> _$AuthLoginResponseToJson(AuthLoginResponse instance) =>
     };
 
 User _$UserFromJson(Map<String, dynamic> json) => User(
+      avatar: json['avatar'] == null
+          ? const Avatar()
+          : Avatar.fromJson(json['avatar'] as Map<String, dynamic>),
       id: json['id'] == null ? '' : FromJsonBase.jsonToString(json['id']),
       firstName: json['firstName'] == null
           ? ''
@@ -76,6 +79,7 @@ Map<String, dynamic> _$UserToJson(User instance) => <String, dynamic>{
       'secondName': instance.secondName,
       'lastName': instance.lastName,
       'accountRank': instance.accountRank,
+      'avatar': instance.avatar,
       'missSeries': instance.missSeries,
       'attendSeries': instance.attendSeries,
       'phoneNumber': instance.phoneNumber,
@@ -87,6 +91,20 @@ Map<String, dynamic> _$UserToJson(User instance) => <String, dynamic>{
       'emailConfirmed': instance.emailConfirmed,
       'removed': instance.removed,
       'blocked': instance.blocked,
+    };
+
+Avatar _$AvatarFromJson(Map<String, dynamic> json) => Avatar(
+      fileName: json['fileName'] == null
+          ? ''
+          : FromJsonBase.jsonToString(json['fileName']),
+      href: json['href'] == null ? '' : FromJsonBase.jsonToString(json['href']),
+      id: json['id'] == null ? '' : FromJsonBase.jsonToString(json['id']),
+    );
+
+Map<String, dynamic> _$AvatarToJson(Avatar instance) => <String, dynamic>{
+      'fileName': instance.fileName,
+      'href': instance.href,
+      'id': instance.id,
     };
 
 Payload _$PayloadFromJson(Map<String, dynamic> json) => Payload(

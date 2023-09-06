@@ -36,7 +36,8 @@ Future<bool> setup() async {
   getIt.registerSingleton<DioClient>(DioClient(getIt<Dio>()));
 
   getIt.registerSingleton(ActivationCodeApi(dioClient: getIt<DioClient>()));
-  getIt.registerSingleton(ActivationCodeRepository(activationCodeApi: getIt.get<ActivationCodeApi>()));
+  getIt.registerSingleton(
+      ActivationCodeRepository(activationCodeApi: getIt.get<ActivationCodeApi>()));
 
   getIt.registerSingleton(AuthApi(dioClient: getIt<DioClient>()));
   var authRepo = getIt.registerSingleton(AuthRepository(authApi: getIt.get<AuthApi>()));
@@ -54,29 +55,34 @@ Future<bool> setup() async {
   if (token != null && token.isNotEmpty && userId != null && userId.isNotEmpty) {
     try {
       AuthRefreshTokenResponse resTokens = await authRepo.refreshToken(path: token);
-      UserGetIdResponse userModel = await userRepo.userGetId(path: userId, accessToken: resTokens.payload.accessToken);
+      UserGetIdResponse userModel =
+          await userRepo.userGetId(path: userId, accessToken: resTokens.payload.accessToken);
       await userRepo.setUserData(
           user: alr.AuthLoginResponse(
               user: alr.User(
-                id: userModel.id,
-                firstName: userModel.firstName,
-                secondName: userModel.secondName,
-                lastName: userModel.lastName,
-                accountRank: userModel.accountRank,
-                missSeries: userModel.missSeries,
-                attendSeries: userModel.attendSeries,
-                phoneNumber: userModel.phoneNumber,
-                description: userModel.description,
-                email: userModel.email,
-                registrationDate: userModel.registrationDate,
-                birthDate: userModel.birthDate,
-                active: userModel.active,
-                emailConfirmed: userModel.emailConfirmed,
-                removed: userModel.removed,
-                blocked: userModel.blocked,
-              ),
+                  id: userModel.id,
+                  firstName: userModel.firstName,
+                  secondName: userModel.secondName,
+                  lastName: userModel.lastName,
+                  accountRank: userModel.accountRank,
+                  missSeries: userModel.missSeries,
+                  attendSeries: userModel.attendSeries,
+                  phoneNumber: userModel.phoneNumber,
+                  description: userModel.description,
+                  email: userModel.email,
+                  registrationDate: userModel.registrationDate,
+                  birthDate: userModel.birthDate,
+                  active: userModel.active,
+                  emailConfirmed: userModel.emailConfirmed,
+                  removed: userModel.removed,
+                  blocked: userModel.blocked,
+                  avatar: alr.Avatar(
+                      fileName: userModel.avatar.fileName,
+                      href: userModel.avatar.href,
+                      id: userModel.avatar.id)),
               payload: alr.Payload(
-                  accessToken: resTokens.payload.accessToken, refreshToken: resTokens.payload.refreshToken)),
+                  accessToken: resTokens.payload.accessToken,
+                  refreshToken: resTokens.payload.refreshToken)),
           token: resTokens.payload.refreshToken);
       authRepo.changeAuthStatus(val: true);
     } catch (e) {

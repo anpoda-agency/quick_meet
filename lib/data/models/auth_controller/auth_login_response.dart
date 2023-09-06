@@ -1,3 +1,4 @@
+// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:json_annotation/json_annotation.dart';
 
 import 'package:quick_meet/data/models/from_json.dart';
@@ -16,7 +17,8 @@ class AuthLoginResponse {
     this.payload = const Payload(),
   });
 
-  factory AuthLoginResponse.fromJson(Map<String, dynamic> json) => _$AuthLoginResponseFromJson(json);
+  factory AuthLoginResponse.fromJson(Map<String, dynamic> json) =>
+      _$AuthLoginResponseFromJson(json);
   Map<String, dynamic> toJson() => _$AuthLoginResponseToJson(this);
 
   AuthLoginResponse copyWith({
@@ -42,6 +44,8 @@ class User {
   final String lastName;
   @JsonKey(name: 'accountRank', fromJson: FromJsonBase.jsonToInt)
   final int accountRank;
+  @JsonKey(name: 'avatar')
+  final Avatar avatar;
   @JsonKey(name: 'missSeries', fromJson: FromJsonBase.jsonToInt)
   final int missSeries;
   @JsonKey(name: 'attendSeries', fromJson: FromJsonBase.jsonToInt)
@@ -66,6 +70,7 @@ class User {
   final bool blocked;
 
   const User({
+    this.avatar = const Avatar(),
     this.id = '',
     this.firstName = '',
     this.secondName = '',
@@ -92,14 +97,13 @@ class User {
     String? firstName,
     String? secondName,
     String? lastName,
-    String? accountClass,
     int? accountRank,
+    Avatar? avatar,
     int? missSeries,
     int? attendSeries,
     String? phoneNumber,
     String? description,
     String? email,
-    String? billingAccount,
     String? registrationDate,
     String? birthDate,
     bool? active,
@@ -113,6 +117,7 @@ class User {
       secondName: secondName ?? this.secondName,
       lastName: lastName ?? this.lastName,
       accountRank: accountRank ?? this.accountRank,
+      avatar: avatar ?? this.avatar,
       missSeries: missSeries ?? this.missSeries,
       attendSeries: attendSeries ?? this.attendSeries,
       phoneNumber: phoneNumber ?? this.phoneNumber,
@@ -124,6 +129,37 @@ class User {
       emailConfirmed: emailConfirmed ?? this.emailConfirmed,
       removed: removed ?? this.removed,
       blocked: blocked ?? this.blocked,
+    );
+  }
+}
+
+@JsonSerializable()
+class Avatar {
+  @JsonKey(name: 'fileName', fromJson: FromJsonBase.jsonToString)
+  final String fileName;
+  @JsonKey(name: 'href', fromJson: FromJsonBase.jsonToString)
+  final String href;
+  @JsonKey(name: 'id', fromJson: FromJsonBase.jsonToString)
+  final String id;
+
+  const Avatar({
+    this.fileName = '',
+    this.href = '',
+    this.id = '',
+  });
+
+  factory Avatar.fromJson(Map<String, dynamic> json) => _$AvatarFromJson(json);
+  Map<String, dynamic> toJson() => _$AvatarToJson(this);
+
+  Avatar copyWith({
+    String? fileName,
+    String? href,
+    String? id,
+  }) {
+    return Avatar(
+      fileName: fileName ?? this.fileName,
+      href: href ?? this.href,
+      id: id ?? this.id,
     );
   }
 }

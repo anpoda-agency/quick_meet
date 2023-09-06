@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get_it/get_it.dart';
@@ -53,9 +55,10 @@ class _ProfileEditPageState extends State<ProfileEditPage> {
         },
         builder: (context, state) {
           return Scaffold(
+            extendBodyBehindAppBar: true,
             backgroundColor: const Color.fromRGBO(245, 245, 245, 1),
             appBar: AppBar(
-              backgroundColor: const Color(0xFF6B4EFF),
+              backgroundColor: Colors.transparent,
               elevation: 0,
             ),
             body: state.pageState.onAwait
@@ -71,23 +74,65 @@ class _ProfileEditPageState extends State<ProfileEditPage> {
                           //textDirection: TextDirection.ltr,
 
                           children: <Widget>[
-                            Container(
-                              width: MediaQuery.of(context).size.width,
-                              height: 220,
-                              decoration: const ShapeDecoration(
-                                color: Color(0xFF6B4EFF),
-                                shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.only(bottomRight: Radius.circular(30)),
+                            Stack(
+                              alignment: Alignment.center,
+                              children: [
+                                Container(
+                                  width: MediaQuery.of(context).size.width,
+                                  height: 220,
+                                  decoration: const ShapeDecoration(
+                                    color: Color(0xFF6B4EFF),
+                                    shape: RoundedRectangleBorder(
+                                      borderRadius:
+                                          BorderRadius.only(bottomRight: Radius.circular(30)),
+                                    ),
+                                    shadows: [
+                                      BoxShadow(
+                                        color: Color(0x19000000),
+                                        blurRadius: 15,
+                                        offset: Offset(0, 4),
+                                        spreadRadius: 0,
+                                      )
+                                    ],
+                                  ),
                                 ),
-                                shadows: [
-                                  BoxShadow(
-                                    color: Color(0x19000000),
-                                    blurRadius: 15,
-                                    offset: Offset(0, 4),
-                                    spreadRadius: 0,
+                                InkWell(
+                                    onTap: () => context
+                                        .read<ProfileEditBloc>()
+                                        .add(ProfileEditUploadPhoto()),
+                                    child: const Icon(
+                                      Icons.photo_camera,
+                                      size: 60,
+                                      color: Colors.white,
+                                    )),
+                                if (state.pageState.imagePath.isNotEmpty)
+                                  Padding(
+                                    padding: const EdgeInsets.only(top: 130),
+                                    child: Stack(alignment: Alignment.center, children: [
+                                      ClipRRect(
+                                        borderRadius: BorderRadius.circular(64),
+                                        child: SizedBox(
+                                          height: 64,
+                                          width: 64,
+                                          child: Image.file(
+                                            File(state.pageState.imagePath),
+                                            fit: BoxFit.cover,
+                                          ),
+                                        ),
+                                      ),
+                                      InkWell(
+                                        onTap: () => context
+                                            .read<ProfileEditBloc>()
+                                            .add(ProfileEditDeletePhoto()),
+                                        child: const Icon(
+                                          Icons.close,
+                                          size: 50,
+                                          color: Colors.grey,
+                                        ),
+                                      )
+                                    ]),
                                   )
-                                ],
-                              ),
+                              ],
                             ),
                           ],
                         ),
@@ -99,22 +144,27 @@ class _ProfileEditPageState extends State<ProfileEditPage> {
                             CustomTextFieldWidget(
                                 initialValue: state.pageState.request.firstName,
                                 textFieldTitle: 'Имя',
-                                onChanged: (value) => context.read<ProfileEditBloc>().add(ProfileEditInputName(value))),
+                                onChanged: (value) => context
+                                    .read<ProfileEditBloc>()
+                                    .add(ProfileEditInputName(value))),
                             const SizedBox(
                               height: 12,
                             ),
                             CustomTextFieldWidget(
                                 initialValue: state.pageState.request.secondName,
                                 textFieldTitle: 'Фамилия',
-                                onChanged: (value) =>
-                                    context.read<ProfileEditBloc>().add(ProfileEditInputSecondName(value))),
+                                onChanged: (value) => context
+                                    .read<ProfileEditBloc>()
+                                    .add(ProfileEditInputSecondName(value))),
                             const SizedBox(
                               height: 12,
                             ),
                             CustomTextFieldWidget(
                                 initialValue: state.pageState.request.email,
                                 textFieldTitle: 'Электронная почта',
-                                onChanged: (value) => context.read<ProfileEditBloc>().add(ProfileEditInputMail(value))),
+                                onChanged: (value) => context
+                                    .read<ProfileEditBloc>()
+                                    .add(ProfileEditInputMail(value))),
                             const SizedBox(
                               height: 12,
                             ),
@@ -124,8 +174,9 @@ class _ProfileEditPageState extends State<ProfileEditPage> {
                             CustomTextFieldWidget(
                               initialValue: state.pageState.request.description,
                               textFieldTitle: 'О себе',
-                              onChanged: (value) =>
-                                  context.read<ProfileEditBloc>().add(ProfileEditInputDescriptionAboutMe(value)),
+                              onChanged: (value) => context
+                                  .read<ProfileEditBloc>()
+                                  .add(ProfileEditInputDescriptionAboutMe(value)),
                             ),
                             const SizedBox(
                               height: 40,
@@ -140,14 +191,16 @@ class _ProfileEditPageState extends State<ProfileEditPage> {
                                 ),
                               ),
                               child: ElevatedButton(
-                                  onPressed: () => context.read<ProfileEditBloc>().add(ProfileEditSendChanges()),
+                                  onPressed: () =>
+                                      context.read<ProfileEditBloc>().add(ProfileEditSendChanges()),
 
                                   /* () {  
                               Navigator.of(context).pop();
                             }, */
                                   style: ElevatedButton.styleFrom(
                                     backgroundColor: Color(0xFF6B4EFF),
-                                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(18)),
+                                    shape: RoundedRectangleBorder(
+                                        borderRadius: BorderRadius.circular(18)),
                                   ),
                                   child: const Text(
                                     'Сохранить изменения',
@@ -176,7 +229,9 @@ class _ProfileEditPageState extends State<ProfileEditPage> {
                               ),
                               child: ElevatedButton(
                                   onPressed: () {
-                                    var func = context.read<ProfileEditBloc>().add(ProfileEditSendDeleteProfile());
+                                    var func = context
+                                        .read<ProfileEditBloc>()
+                                        .add(ProfileEditSendDeleteProfile());
                                     showDialog(
                                       context: context,
                                       builder: (context) => AlertDialog(
@@ -233,7 +288,8 @@ class _ProfileEditPageState extends State<ProfileEditPage> {
                                                         style: ElevatedButton.styleFrom(
                                                           backgroundColor: Color(0xFFF5F5F5),
                                                           shape: RoundedRectangleBorder(
-                                                              borderRadius: BorderRadius.circular(18)),
+                                                              borderRadius:
+                                                                  BorderRadius.circular(18)),
                                                         ),
                                                         child: const Text(
                                                           'Да',
@@ -268,7 +324,8 @@ class _ProfileEditPageState extends State<ProfileEditPage> {
                                                         style: ElevatedButton.styleFrom(
                                                           backgroundColor: Color(0xFFF5F5F5),
                                                           shape: RoundedRectangleBorder(
-                                                              borderRadius: BorderRadius.circular(18)),
+                                                              borderRadius:
+                                                                  BorderRadius.circular(18)),
                                                         ),
                                                         child: const Text(
                                                           'Нет',
@@ -297,7 +354,8 @@ class _ProfileEditPageState extends State<ProfileEditPage> {
                                       color: Color(0xFFE55F5F),
                                     ),
                                     backgroundColor: const Color.fromRGBO(245, 245, 245, 1),
-                                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(18)),
+                                    shape: RoundedRectangleBorder(
+                                        borderRadius: BorderRadius.circular(18)),
                                   ),
                                   child: const Text(
                                     'Удалить аккаунт',

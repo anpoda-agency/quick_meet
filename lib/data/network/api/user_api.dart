@@ -14,9 +14,10 @@ class UserApi {
   Future<Response> userGetId({required String path, String? accessToken}) async {
     // request body empty
     try {
-      final Response response = await dioClient.get(AppConstants.userGetIdUrl + path, accessToken: accessToken
-          //body: request.toJson(),
-          );
+      final Response response =
+          await dioClient.get(AppConstants.userGetIdUrl + path, accessToken: accessToken
+              //body: request.toJson(),
+              );
       return response;
     } catch (e) {
       rethrow;
@@ -42,28 +43,25 @@ class UserApi {
     }
   }
 
-  Future<Response> userUploadAvatar({required String path, required File data}) async {
-    // request body empty
+  Future<Response> userUploadAvatar(
+      {required String accessToken, required String path, required File file}) async {
     const String endUrl = "/avatar";
     try {
-      final Response response =
-          await dioClient.post(AppConstants.userUploadAvatarUrl + path + endUrl, queryParameters: {'file': data}
-              //body: request.toJson(),
-              );
+      final Response response = await dioClient.postFile(
+          AppConstants.userUploadAvatarUrl + path + endUrl,
+          file: file,
+          accessToken: accessToken);
       return response;
     } catch (e) {
       rethrow;
     }
   }
 
-  Future<Response> userRemoveAvatar({required String path}) async {
-    // request body empty
+  Future<Response> userRemoveAvatar({required String accessToken, required String path}) async {
     const String endUrl = "/avatar";
     try {
-      final Response response = await dioClient.delete(
-        AppConstants.userRemoveAvatarUrl + path + endUrl,
-        //body: request.toJson(),
-      );
+      final Response response = await dioClient
+          .delete(AppConstants.userRemoveAvatarUrl + path + endUrl, accessToken: accessToken);
       return response;
     } catch (e) {
       rethrow;

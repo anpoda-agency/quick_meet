@@ -3,12 +3,14 @@ import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get_it/get_it.dart';
 import 'package:go_router/go_router.dart';
+import 'package:quick_meet/core/constants.dart';
 import 'package:quick_meet/domain/repository/auth_repository.dart';
 import 'package:quick_meet/domain/repository/home_repository.dart';
 import 'package:quick_meet/domain/repository/user_repository.dart';
 import 'package:quick_meet/domain/router/route_constants.dart';
 import 'package:quick_meet/domain/router/route_impl.dart';
 import 'package:quick_meet/features/core_widgets/custom_button_widget.dart';
+import 'package:quick_meet/features/core_widgets/image_network.dart';
 import 'package:quick_meet/features/profile/profile_page/bloc/profile_page_bloc.dart';
 
 class ProfilePage extends StatefulWidget {
@@ -60,10 +62,19 @@ class _ProfilePageState extends State<ProfilePage> {
                         children: [
                           IconButton(
                               onPressed: () {
-                                context.read<GetIt>().get<HomeRepository>().changeVisibleNavBar(visible: false);
-                                context.read<RouteImpl>().push(ProfileRoutes.profileEdit.name).then((value) {
+                                context
+                                    .read<GetIt>()
+                                    .get<HomeRepository>()
+                                    .changeVisibleNavBar(visible: false);
+                                context
+                                    .read<RouteImpl>()
+                                    .push(ProfileRoutes.profileEdit.name)
+                                    .then((value) {
                                   context.read<ProfilePageBloc>().add(ProfilePageUpdate());
-                                  context.read<GetIt>().get<HomeRepository>().changeVisibleNavBar(visible: true);
+                                  context
+                                      .read<GetIt>()
+                                      .get<HomeRepository>()
+                                      .changeVisibleNavBar(visible: true);
                                 });
                               },
                               color: Colors.black,
@@ -98,20 +109,14 @@ class _ProfilePageState extends State<ProfilePage> {
                           Center(
                             child: Column(
                               children: [
-                                Container(
-                                  width: 112,
-                                  height: 112,
-                                  child: const Placeholder(),
-                                  // decoration:
-                                  // BoxDecoration(
-                                  //   image:
-                                  //   DecorationImage(
-                                  //     image: NetworkImage(
-                                  //         "https://via.placeholder.com/112x112"),
-                                  //     fit: BoxFit.fill,
-                                  //   ),
-                                  // ),
-                                ),
+                                if (state.pageState.user.user.avatar.href != 'deleted')
+                                  ImageNetworkWithLoader(
+                                      width: 128,
+                                      height: 128,
+                                      fit: BoxFit.cover,
+                                      radius: 128,
+                                      src:
+                                          '${AppConstants.baseImageUrl}file-storage/${state.pageState.user.user.avatar.fileName}'),
                                 const SizedBox(
                                   height: 15,
                                 ),
@@ -155,7 +160,8 @@ class _ProfilePageState extends State<ProfilePage> {
                                       },
                                       style: ElevatedButton.styleFrom(
                                         backgroundColor: Colors.black87,
-                                        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(18)),
+                                        shape: RoundedRectangleBorder(
+                                            borderRadius: BorderRadius.circular(18)),
                                       ),
                                       child: const Text(
                                         'ПРЕМИУМ-СТАТУС',
@@ -311,8 +317,10 @@ class _ProfilePageState extends State<ProfilePage> {
                                             //     context, '/auth_sms_code_page');
                                           },
                                           style: ElevatedButton.styleFrom(
-                                            backgroundColor: const Color.fromARGB(255, 202, 202, 202),
-                                            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+                                            backgroundColor:
+                                                const Color.fromARGB(255, 202, 202, 202),
+                                            shape: RoundedRectangleBorder(
+                                                borderRadius: BorderRadius.circular(10)),
                                           ),
                                           child: const Text(
                                             'Подтвердить почту',
@@ -347,11 +355,13 @@ class _ProfilePageState extends State<ProfilePage> {
                                         decoration: InputDecoration(
                                           enabledBorder: OutlineInputBorder(
                                             borderRadius: BorderRadius.circular(18),
-                                            borderSide: const BorderSide(width: 0.50, color: Color(0xFF6B4EFF)),
+                                            borderSide: const BorderSide(
+                                                width: 0.50, color: Color(0xFF6B4EFF)),
                                           ),
                                           focusedBorder: OutlineInputBorder(
                                             borderRadius: BorderRadius.circular(18),
-                                            borderSide: const BorderSide(width: 0.50, color: Color(0xFF6B4EFF)),
+                                            borderSide: const BorderSide(
+                                                width: 0.50, color: Color(0xFF6B4EFF)),
                                           ),
                                         ),
                                       ),
@@ -360,7 +370,9 @@ class _ProfilePageState extends State<ProfilePage> {
                                       height: 40,
                                     ),
                                     CustomButtonWidget(
-                                        onPressed: () => context.read<ProfilePageBloc>().add(ProfilePageLogOut()),
+                                        onPressed: () => context
+                                            .read<ProfilePageBloc>()
+                                            .add(ProfilePageLogOut()),
                                         title: 'Выйти',
                                         backgroundColor: Colors.white,
                                         widthPadding: 20)

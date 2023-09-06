@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:dio/dio.dart';
 import 'package:quick_meet/core/constants.dart';
 
@@ -22,7 +24,9 @@ class DioClient {
       final Response response = await _dio.get(
         url,
         queryParameters: queryParameters,
-        options: accessToken != null ? Options(headers: {'Authorization': 'Bearer $accessToken'}) : options,
+        options: accessToken != null
+            ? Options(headers: {'Authorization': 'Bearer $accessToken'})
+            : options,
         cancelToken: cancelToken,
         onReceiveProgress: onReceiveProgress,
       );
@@ -47,7 +51,42 @@ class DioClient {
         url,
         data: body,
         queryParameters: queryParameters,
-        options: accessToken != null ? Options(headers: {'Authorization': 'Bearer $accessToken'}) : options,
+        options: accessToken != null
+            ? Options(headers: {'Authorization': 'Bearer $accessToken'})
+            : options,
+        cancelToken: cancelToken,
+        onSendProgress: onSendProgress,
+        onReceiveProgress: onReceiveProgress,
+      );
+      return response;
+    } catch (e) {
+      rethrow;
+    }
+  }
+
+  Future<Response> postFile(
+    String url, {
+    required File file,
+    Map<String, dynamic>? queryParameters,
+    String? accessToken,
+    Options? options,
+    CancelToken? cancelToken,
+    ProgressCallback? onSendProgress,
+    ProgressCallback? onReceiveProgress,
+  }) async {
+    try {
+      final String fileName = file.path.split('/').last;
+      final FormData formData = FormData.fromMap({
+        'file': await MultipartFile.fromFile(file.path, filename: fileName),
+      });
+
+      final Response response = await _dio.post(
+        url,
+        data: formData,
+        queryParameters: queryParameters,
+        options: accessToken != null
+            ? Options(headers: {'Authorization': 'Bearer $accessToken'})
+            : options,
         cancelToken: cancelToken,
         onSendProgress: onSendProgress,
         onReceiveProgress: onReceiveProgress,
@@ -73,7 +112,9 @@ class DioClient {
         url,
         data: data,
         queryParameters: queryParameters,
-        options: accessToken != null ? Options(headers: {'Authorization': 'Bearer $accessToken'}) : options,
+        options: accessToken != null
+            ? Options(headers: {'Authorization': 'Bearer $accessToken'})
+            : options,
         cancelToken: cancelToken,
         onSendProgress: onSendProgress,
         onReceiveProgress: onReceiveProgress,
@@ -99,7 +140,9 @@ class DioClient {
         url,
         data: data,
         queryParameters: queryParameters,
-        options: accessToken != null ? Options(headers: {'Authorization': 'Bearer $accessToken'}) : options,
+        options: accessToken != null
+            ? Options(headers: {'Authorization': 'Bearer $accessToken'})
+            : options,
         cancelToken: cancelToken,
         onSendProgress: onSendProgress,
         onReceiveProgress: onReceiveProgress,
@@ -110,7 +153,7 @@ class DioClient {
     }
   }
 
-  Future<dynamic> delete(
+  Future<Response> delete(
     String url, {
     data,
     Map<String, dynamic>? queryParameters,
@@ -125,10 +168,12 @@ class DioClient {
         url,
         data: data,
         queryParameters: queryParameters,
-        options: accessToken != null ? Options(headers: {'Authorization': 'Bearer $accessToken'}) : options,
+        options: accessToken != null
+            ? Options(headers: {'Authorization': 'Bearer $accessToken'})
+            : options,
         cancelToken: cancelToken,
       );
-      return response.data;
+      return response;
     } catch (e) {
       rethrow;
     }

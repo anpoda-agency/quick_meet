@@ -168,8 +168,7 @@ class BillingAccount {
     this.nextBillDate = '',
   });
 
-  factory BillingAccount.fromJson(Map<String, dynamic> json) =>
-      _$BillingAccountFromJson(json);
+  factory BillingAccount.fromJson(Map<String, dynamic> json) => _$BillingAccountFromJson(json);
   Map<String, dynamic> toJson() => _$BillingAccountToJson(this);
 
   BillingAccount copyWith({

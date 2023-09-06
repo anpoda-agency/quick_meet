@@ -54,7 +54,8 @@ class UserRepository extends ChangeNotifier {
   Future<UserUpdateIdResponse> userUpdateId(
       {required String path, required UserUpdateIdRequest request, String? accessToken}) async {
     try {
-      final response = await userApi.userUpdateId(path: path, request: request, accessToken: accessToken);
+      final response =
+          await userApi.userUpdateId(path: path, request: request, accessToken: accessToken);
       return UserUpdateIdResponse.fromJson(response.data);
     } on DioException catch (e) {
       final errorMessage = DioExceptions.fromDioError(e).toString();
@@ -62,9 +63,11 @@ class UserRepository extends ChangeNotifier {
     }
   }
 
-  Future<UserUploadAvatarResponse> userUploadAvatar({required String path, required File data}) async {
+  Future<UserUploadAvatarResponse> userUploadAvatar(
+      {required String accessToken, required String path, required File file}) async {
     try {
-      final response = await userApi.userUploadAvatar(path: path, data: data);
+      final response =
+          await userApi.userUploadAvatar(path: path, file: file, accessToken: accessToken);
       return UserUploadAvatarResponse.fromJson(response.data);
     } on DioException catch (e) {
       final errorMessage = DioExceptions.fromDioError(e).toString();
@@ -72,9 +75,10 @@ class UserRepository extends ChangeNotifier {
     }
   }
 
-  Future<UserRemoveAvatarResponse> userRemoveAvatar({required String path}) async {
+  Future<UserRemoveAvatarResponse> userRemoveAvatar(
+      {required String accessToken, required String path}) async {
     try {
-      final response = await userApi.userRemoveAvatar(path: path);
+      final response = await userApi.userRemoveAvatar(path: path, accessToken: accessToken);
       return UserRemoveAvatarResponse.fromJson(response.data);
     } on DioException catch (e) {
       final errorMessage = DioExceptions.fromDioError(e).toString();

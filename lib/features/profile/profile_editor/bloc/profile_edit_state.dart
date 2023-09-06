@@ -31,8 +31,10 @@ class PageState {
   final String errMsg;
   final UserUpdateIdRequest request;
   final UserUpdateIdResponse response;
+  final String imagePath;
 
   const PageState({
+    this.imagePath = '',
     this.onAwait = false,
     this.errMsg = '',
     this.request = const UserUpdateIdRequest(),
@@ -44,12 +46,14 @@ class PageState {
     String? errMsg,
     UserUpdateIdRequest? request,
     UserUpdateIdResponse? response,
+    String? imagePath,
   }) {
     return PageState(
       onAwait: onAwait ?? this.onAwait,
       errMsg: errMsg ?? this.errMsg,
       request: request ?? this.request,
       response: response ?? this.response,
+      imagePath: imagePath ?? this.imagePath,
     );
   }
 }
