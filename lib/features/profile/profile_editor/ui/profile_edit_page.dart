@@ -83,8 +83,7 @@ class _ProfileEditPageState extends State<ProfileEditPage> {
                                   decoration: const ShapeDecoration(
                                     color: Color(0xFF6B4EFF),
                                     shape: RoundedRectangleBorder(
-                                      borderRadius:
-                                          BorderRadius.only(bottomRight: Radius.circular(30)),
+                                      borderRadius: BorderRadius.only(bottomRight: Radius.circular(30)),
                                     ),
                                     shadows: [
                                       BoxShadow(
@@ -97,9 +96,7 @@ class _ProfileEditPageState extends State<ProfileEditPage> {
                                   ),
                                 ),
                                 InkWell(
-                                    onTap: () => context
-                                        .read<ProfileEditBloc>()
-                                        .add(ProfileEditUploadPhoto()),
+                                    onTap: () => context.read<ProfileEditBloc>().add(ProfileEditUploadPhoto()),
                                     child: const Icon(
                                       Icons.photo_camera,
                                       size: 60,
@@ -121,9 +118,7 @@ class _ProfileEditPageState extends State<ProfileEditPage> {
                                         ),
                                       ),
                                       InkWell(
-                                        onTap: () => context
-                                            .read<ProfileEditBloc>()
-                                            .add(ProfileEditDeletePhoto()),
+                                        onTap: () => context.read<ProfileEditBloc>().add(ProfileEditDeletePhoto()),
                                         child: const Icon(
                                           Icons.close,
                                           size: 50,
@@ -144,27 +139,22 @@ class _ProfileEditPageState extends State<ProfileEditPage> {
                             CustomTextFieldWidget(
                                 initialValue: state.pageState.request.firstName,
                                 textFieldTitle: 'Имя',
-                                onChanged: (value) => context
-                                    .read<ProfileEditBloc>()
-                                    .add(ProfileEditInputName(value))),
+                                onChanged: (value) => context.read<ProfileEditBloc>().add(ProfileEditInputName(value))),
                             const SizedBox(
                               height: 12,
                             ),
                             CustomTextFieldWidget(
                                 initialValue: state.pageState.request.secondName,
                                 textFieldTitle: 'Фамилия',
-                                onChanged: (value) => context
-                                    .read<ProfileEditBloc>()
-                                    .add(ProfileEditInputSecondName(value))),
+                                onChanged: (value) =>
+                                    context.read<ProfileEditBloc>().add(ProfileEditInputSecondName(value))),
                             const SizedBox(
                               height: 12,
                             ),
                             CustomTextFieldWidget(
                                 initialValue: state.pageState.request.email,
                                 textFieldTitle: 'Электронная почта',
-                                onChanged: (value) => context
-                                    .read<ProfileEditBloc>()
-                                    .add(ProfileEditInputMail(value))),
+                                onChanged: (value) => context.read<ProfileEditBloc>().add(ProfileEditInputMail(value))),
                             const SizedBox(
                               height: 12,
                             ),
@@ -174,9 +164,8 @@ class _ProfileEditPageState extends State<ProfileEditPage> {
                             CustomTextFieldWidget(
                               initialValue: state.pageState.request.description,
                               textFieldTitle: 'О себе',
-                              onChanged: (value) => context
-                                  .read<ProfileEditBloc>()
-                                  .add(ProfileEditInputDescriptionAboutMe(value)),
+                              onChanged: (value) =>
+                                  context.read<ProfileEditBloc>().add(ProfileEditInputDescriptionAboutMe(value)),
                             ),
                             const SizedBox(
                               height: 40,
@@ -191,16 +180,14 @@ class _ProfileEditPageState extends State<ProfileEditPage> {
                                 ),
                               ),
                               child: ElevatedButton(
-                                  onPressed: () =>
-                                      context.read<ProfileEditBloc>().add(ProfileEditSendChanges()),
+                                  onPressed: () => context.read<ProfileEditBloc>().add(ProfileEditSendChanges()),
 
                                   /* () {  
                               Navigator.of(context).pop();
                             }, */
                                   style: ElevatedButton.styleFrom(
                                     backgroundColor: Color(0xFF6B4EFF),
-                                    shape: RoundedRectangleBorder(
-                                        borderRadius: BorderRadius.circular(18)),
+                                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(18)),
                                   ),
                                   child: const Text(
                                     'Сохранить изменения',
@@ -229,9 +216,10 @@ class _ProfileEditPageState extends State<ProfileEditPage> {
                               ),
                               child: ElevatedButton(
                                   onPressed: () {
-                                    var func = context
-                                        .read<ProfileEditBloc>()
-                                        .add(ProfileEditSendDeleteProfile());
+                                    removeUser() {
+                                      context.read<ProfileEditBloc>().add(ProfileEditSendDeleteProfile());
+                                    }
+
                                     showDialog(
                                       context: context,
                                       builder: (context) => AlertDialog(
@@ -243,10 +231,7 @@ class _ProfileEditPageState extends State<ProfileEditPage> {
                                         ),
                                         backgroundColor: Color(0xFF6B4EFF),
                                         contentPadding: EdgeInsets.zero,
-                                        content: //Scaffold(
-                                            //body:
-
-                                            Container(
+                                        content: Container(
                                           width: 341,
                                           height: 247,
                                           child: Column(
@@ -284,12 +269,11 @@ class _ProfileEditPageState extends State<ProfileEditPage> {
                                                       ),
                                                     ),
                                                     child: ElevatedButton(
-                                                        onPressed: () => func,
+                                                        onPressed: removeUser,
                                                         style: ElevatedButton.styleFrom(
                                                           backgroundColor: Color(0xFFF5F5F5),
                                                           shape: RoundedRectangleBorder(
-                                                              borderRadius:
-                                                                  BorderRadius.circular(18)),
+                                                              borderRadius: BorderRadius.circular(18)),
                                                         ),
                                                         child: const Text(
                                                           'Да',
@@ -324,8 +308,7 @@ class _ProfileEditPageState extends State<ProfileEditPage> {
                                                         style: ElevatedButton.styleFrom(
                                                           backgroundColor: Color(0xFFF5F5F5),
                                                           shape: RoundedRectangleBorder(
-                                                              borderRadius:
-                                                                  BorderRadius.circular(18)),
+                                                              borderRadius: BorderRadius.circular(18)),
                                                         ),
                                                         child: const Text(
                                                           'Нет',
@@ -344,7 +327,6 @@ class _ProfileEditPageState extends State<ProfileEditPage> {
                                             ],
                                           ),
                                         ),
-                                        //),
                                       ),
                                     );
                                   },
@@ -354,8 +336,7 @@ class _ProfileEditPageState extends State<ProfileEditPage> {
                                       color: Color(0xFFE55F5F),
                                     ),
                                     backgroundColor: const Color.fromRGBO(245, 245, 245, 1),
-                                    shape: RoundedRectangleBorder(
-                                        borderRadius: BorderRadius.circular(18)),
+                                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(18)),
                                   ),
                                   child: const Text(
                                     'Удалить аккаунт',
