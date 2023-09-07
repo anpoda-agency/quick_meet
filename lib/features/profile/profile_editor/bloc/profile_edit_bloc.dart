@@ -61,8 +61,7 @@ class ProfileEditBloc extends Bloc<ProfileEditEvent, ProfileEditState> {
       avatar: alr.Avatar(fileName: res.avatar.fileName, href: res.avatar.href, id: res.avatar.id),
     );
     await userRepository.setUserData(
-        user: userRepository.user?.copyWith(user: repositoryUserModel) ??
-            const alr.AuthLoginResponse());
+        user: userRepository.user?.copyWith(user: repositoryUserModel) ?? const alr.AuthLoginResponse());
     emit(ProfileEditUp(state.pageState.copyWith(imagePath: '')));
   }
 
@@ -88,7 +87,7 @@ class ProfileEditBloc extends Bloc<ProfileEditEvent, ProfileEditState> {
   }
 
   profileEditInputDescriptionAboutMe(ProfileEditInputDescriptionAboutMe event, emit) async {
-    var model = state.pageState.request.copyWith(email: event.value);
+    var model = state.pageState.request.copyWith(description: event.value);
     emit(ProfileEditUp(state.pageState.copyWith(request: model)));
   }
 
@@ -96,8 +95,7 @@ class ProfileEditBloc extends Bloc<ProfileEditEvent, ProfileEditState> {
     String token = userRepository.user?.payload.accessToken ?? '';
     String id = userRepository.user?.user.id ?? '';
 
-    var res = await userRepository.userUpdateId(
-        request: state.pageState.request, accessToken: token, path: id);
+    var res = await userRepository.userUpdateId(request: state.pageState.request, accessToken: token, path: id);
 
     if (state.pageState.imagePath.isNotEmpty) {
       var res = await userRepository.userUploadAvatar(
@@ -113,8 +111,7 @@ class ProfileEditBloc extends Bloc<ProfileEditEvent, ProfileEditState> {
         avatar: alr.Avatar(fileName: res.avatar.fileName, href: res.avatar.href, id: res.avatar.id),
       );
       await userRepository.setUserData(
-          user: userRepository.user?.copyWith(user: repositoryUserModel) ??
-              const alr.AuthLoginResponse());
+          user: userRepository.user?.copyWith(user: repositoryUserModel) ?? const alr.AuthLoginResponse());
     } else {
       alr.User? repositoryUserModel = userRepository.user?.user.copyWith(
         firstName: res.firstName,
@@ -124,8 +121,7 @@ class ProfileEditBloc extends Bloc<ProfileEditEvent, ProfileEditState> {
         avatar: const alr.Avatar(),
       );
       await userRepository.setUserData(
-          user: userRepository.user?.copyWith(user: repositoryUserModel) ??
-              const alr.AuthLoginResponse());
+          user: userRepository.user?.copyWith(user: repositoryUserModel) ?? const alr.AuthLoginResponse());
     }
 
     emit(ProfileEditAllowedToPush(state.pageState.copyWith(response: res)));
