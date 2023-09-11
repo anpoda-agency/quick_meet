@@ -12,3 +12,7 @@ class ProfilePageMsgErr extends ProfilePageEvent {
 class ProfilePageLogOut extends ProfilePageEvent {}
 
 class ProfilePageUpdate extends ProfilePageEvent {}
+
+class ProfileDeleteProfile extends ProfilePageEvent {}
+
+class ProfileUploadPhoto extends ProfilePageEvent {}

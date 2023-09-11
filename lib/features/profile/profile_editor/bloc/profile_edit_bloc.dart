@@ -1,7 +1,4 @@
-import 'dart:io';
-
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:image_picker/image_picker.dart';
 import 'package:quick_meet/data/models/auth_controller/auth_login_response.dart' as alr;
 import 'package:quick_meet/data/models/user_controller/user_update_id_request.dart';
 import 'package:quick_meet/data/models/user_controller/user_update_id_response.dart';
@@ -30,8 +27,6 @@ class ProfileEditBloc extends Bloc<ProfileEditEvent, ProfileEditState> {
     on<ProfileEditInputDescriptionAboutMe>(profileEditInputDescriptionAboutMe);
     on<ProfileEditSendChanges>(profileEditSendChanges);
     on<ProfileEditSendDeleteProfile>(profileEditSendDeleteProfile);
-    on<ProfileEditUploadPhoto>(profileEditUploadPhoto);
-    on<ProfileEditDeletePhoto>(profileEditDeletePhoto);
     add(ProfileEditInit());
   }
 
@@ -50,25 +45,6 @@ class ProfileEditBloc extends Bloc<ProfileEditEvent, ProfileEditState> {
       emit(ProfileEditUp(state.pageState.copyWith(request: model)));
     }
     emit(ProfileEditUp(state.pageState.copyWith(onAwait: false)));
-  }
-
-  profileEditDeletePhoto(ProfileEditDeletePhoto event, emit) async {
-    var res = await userRepository.userRemoveAvatar(
-      accessToken: userRepository.user?.payload.accessToken ?? '',
-      path: userRepository.user?.user.id ?? '',
-    );
-    alr.User? repositoryUserModel = userRepository.user?.user.copyWith(
-      avatar: alr.Avatar(fileName: res.avatar.fileName, href: res.avatar.href, id: res.avatar.id),
-    );
-    await userRepository.setUserData(
-        user: userRepository.user?.copyWith(user: repositoryUserModel) ?? const alr.AuthLoginResponse());
-    emit(ProfileEditUp(state.pageState.copyWith(imagePath: '')));
-  }
-
-  profileEditUploadPhoto(ProfileEditUploadPhoto event, emit) async {
-    final ImagePicker picker = ImagePicker();
-    XFile? file = await picker.pickImage(source: ImageSource.gallery);
-    emit(ProfileEditUp(state.pageState.copyWith(imagePath: file?.path ?? '')));
   }
 
   profileEditInputName(ProfileEditInputName event, emit) async {
@@ -95,34 +71,19 @@ class ProfileEditBloc extends Bloc<ProfileEditEvent, ProfileEditState> {
     String token = userRepository.user?.payload.accessToken ?? '';
     String id = userRepository.user?.user.id ?? '';
 
-    var res = await userRepository.userUpdateId(request: state.pageState.request, accessToken: token, path: id);
+    var res = await userRepository.userUpdateId(
+        request: state.pageState.request, accessToken: token, path: id);
 
-    if (state.pageState.imagePath.isNotEmpty) {
-      var res = await userRepository.userUploadAvatar(
-          accessToken: userRepository.user?.payload.accessToken ?? '',
-          path: userRepository.user?.user.id ?? '',
-          file: File(state.pageState.imagePath));
-
-      alr.User? repositoryUserModel = userRepository.user?.user.copyWith(
-        firstName: res.firstName,
-        secondName: res.secondName,
-        description: res.description,
-        email: res.email,
-        avatar: alr.Avatar(fileName: res.avatar.fileName, href: res.avatar.href, id: res.avatar.id),
-      );
-      await userRepository.setUserData(
-          user: userRepository.user?.copyWith(user: repositoryUserModel) ?? const alr.AuthLoginResponse());
-    } else {
-      alr.User? repositoryUserModel = userRepository.user?.user.copyWith(
-        firstName: res.firstName,
-        secondName: res.secondName,
-        description: res.description,
-        email: res.email,
-        avatar: const alr.Avatar(),
-      );
-      await userRepository.setUserData(
-          user: userRepository.user?.copyWith(user: repositoryUserModel) ?? const alr.AuthLoginResponse());
-    }
+    alr.User? repositoryUserModel = userRepository.user?.user.copyWith(
+      firstName: res.firstName,
+      secondName: res.secondName,
+      description: res.description,
+      email: res.email,
+      avatar: alr.Avatar(fileName: res.avatar.fileName, href: res.avatar.href, id: res.avatar.id),
+    );
+    await userRepository.setUserData(
+        user: userRepository.user?.copyWith(user: repositoryUserModel) ??
+            const alr.AuthLoginResponse());
 
     emit(ProfileEditAllowedToPush(state.pageState.copyWith(response: res)));
   }

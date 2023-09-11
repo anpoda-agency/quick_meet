@@ -36,6 +36,11 @@ class _MapScreenState extends State<MapScreen> {
         backgroundColor: Colors.transparent,
       ),
       body: YandexMap(
+        onMapLongTap: (geoObject) {
+          print(geoObject.latitude);
+          print(geoObject.longitude);
+        },
+        mapType: MapType.map,
         onMapCreated: (controller) {
           mapControllerCompleter.complete(controller);
         },

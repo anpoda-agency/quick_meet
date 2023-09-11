@@ -32,7 +32,3 @@ class ProfileEditInputDescriptionAboutMe extends ProfileEditEvent {
 class ProfileEditSendChanges extends ProfileEditEvent {}
 
 class ProfileEditSendDeleteProfile extends ProfileEditEvent {}
-
-class ProfileEditUploadPhoto extends ProfileEditEvent {}
-
-class ProfileEditDeletePhoto extends ProfileEditEvent {}

@@ -12,6 +12,8 @@ import 'package:quick_meet/domain/router/route_impl.dart';
 import 'package:quick_meet/features/core_widgets/custom_button_widget.dart';
 import 'package:quick_meet/features/core_widgets/image_network.dart';
 import 'package:quick_meet/features/profile/profile_page/bloc/profile_page_bloc.dart';
+import 'package:quick_meet/features/profile/profile_page/data/menu_items.dart';
+import 'package:quick_meet/features/profile/profile_page/models/menu_item_model.dart';
 
 class ProfilePage extends StatefulWidget {
   const ProfilePage({super.key});
@@ -60,24 +62,21 @@ class _ProfilePageState extends State<ProfilePage> {
                       Row(
                         mainAxisAlignment: MainAxisAlignment.end,
                         children: [
-                          IconButton(
-                              onPressed: () {
-                                context.read<GetIt>().get<HomeRepository>().changeVisibleNavBar(visible: false);
-                                context.read<RouteImpl>().push(ProfileRoutes.profileEdit.name).then((value) {
-                                  context.read<ProfilePageBloc>().add(ProfilePageUpdate());
-                                  context.read<GetIt>().get<HomeRepository>().changeVisibleNavBar(visible: true);
-                                });
-                              },
-                              color: Colors.black,
-                              icon: const Icon(
-                                Icons.edit,
-                              )),
+                          PopupMenuButton<MenuItemModel>(
+                            shape: const RoundedRectangleBorder(
+                              borderRadius: BorderRadius.all(
+                                Radius.circular(20.0),
+                              ),
+                            ),
+                            padding: const EdgeInsets.all(0),
+                            onSelected: (item) => onSelected(context, item),
+                            itemBuilder: (context) => [
+                              ...MenuItems.items.map((e) => buildMenuItem(e)).toList(),
+                            ],
+                          ),
                         ],
                       ),
                       Stack(
-                        //alignment: AlignmentDirectional.bottomCenter,
-                        //textDirection: TextDirection.ltr,
-
                         children: <Widget>[
                           Container(
                             width: MediaQuery.of(context).size.width,
@@ -87,27 +86,31 @@ class _ProfilePageState extends State<ProfilePage> {
                               shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.only(bottomRight: Radius.circular(30)),
                               ),
-                              // shadows: [
-                              //   BoxShadow(
-                              //     color: Color(0x19000000),
-                              //     blurRadius: 15,
-                              //     offset: Offset(0, 4),
-                              //     spreadRadius: 0,
-                              //   )
-                              // ],
                             ),
                           ),
                           Center(
                             child: Column(
                               children: [
-                                if (state.pageState.user.user.avatar.href != 'deleted')
-                                  ImageNetworkWithLoader(
-                                      width: 128,
-                                      height: 128,
-                                      fit: BoxFit.cover,
-                                      radius: 128,
-                                      src:
-                                          '${AppConstants.baseImageUrl}file-storage/${state.pageState.user.user.avatar.fileName}'),
+                                state.pageState.user.user.avatar.href != 'deleted'
+                                    ? ImageNetworkWithLoader(
+                                        width: 128,
+                                        height: 128,
+                                        fit: BoxFit.cover,
+                                        radius: 128,
+                                        src:
+                                            '${AppConstants.baseImageUrl}file-storage/${state.pageState.user.user.avatar.fileName}')
+                                    : Container(
+                                        width: 128,
+                                        height: 128,
+                                        decoration: BoxDecoration(
+                                            color: Colors.grey[400],
+                                            borderRadius: BorderRadius.circular(128)),
+                                        child: Icon(
+                                          Icons.person,
+                                          size: 64,
+                                          color: Colors.grey[700],
+                                        ),
+                                      ),
                                 const SizedBox(
                                   height: 15,
                                 ),
@@ -151,7 +154,8 @@ class _ProfilePageState extends State<ProfilePage> {
                                       },
                                       style: ElevatedButton.styleFrom(
                                         backgroundColor: Colors.black87,
-                                        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(18)),
+                                        shape: RoundedRectangleBorder(
+                                            borderRadius: BorderRadius.circular(18)),
                                       ),
                                       child: const Text(
                                         'ПРЕМИУМ-СТАТУС',
@@ -167,27 +171,12 @@ class _ProfilePageState extends State<ProfilePage> {
                               ],
                             ),
                           ),
-                          // НИХУЯ НЕ ДОБАВИЛОСЬ
-                          // Container(
-                          //   width: 112,
-                          //   height: 112,
-                          //   decoration: BoxDecoration(
-                          //     image: DecorationImage(
-                          //       image:
-                          //           NetworkImage("https://via.placeholder.com/112x112"),
-                          //       fit: BoxFit.fill,
-                          //     ),
-                          //   ),
-                          // ),
                         ],
                       ),
                       const SizedBox(
                         height: 7,
                       ),
                       Stack(
-                        //alignment: AlignmentDirectional.bottomCenter,
-                        //textDirection: TextDirection.ltr,
-
                         children: <Widget>[
                           Container(
                             width: MediaQuery.of(context).size.width,
@@ -215,8 +204,6 @@ class _ProfilePageState extends State<ProfilePage> {
                                   horizontal: 20,
                                 ),
                                 child: Column(
-                                  //crossAxisAlignment: CrossAxisAlignment.start,
-                                  //mainAxisAlignment: MainAxisAlignment.start,
                                   children: [
                                     const SizedBox(
                                       height: 21,
@@ -266,7 +253,6 @@ class _ProfilePageState extends State<ProfilePage> {
                                 ),
                                 child: Column(
                                   crossAxisAlignment: CrossAxisAlignment.start,
-                                  //mainAxisAlignment: MainAxisAlignment.start,
                                   children: [
                                     const Text(
                                       'Электронная почта',
@@ -307,8 +293,10 @@ class _ProfilePageState extends State<ProfilePage> {
                                             //     context, '/auth_sms_code_page');
                                           },
                                           style: ElevatedButton.styleFrom(
-                                            backgroundColor: const Color.fromARGB(255, 202, 202, 202),
-                                            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+                                            backgroundColor:
+                                                const Color.fromARGB(255, 202, 202, 202),
+                                            shape: RoundedRectangleBorder(
+                                                borderRadius: BorderRadius.circular(10)),
                                           ),
                                           child: const Text(
                                             'Подтвердить почту',
@@ -343,11 +331,13 @@ class _ProfilePageState extends State<ProfilePage> {
                                         decoration: InputDecoration(
                                           enabledBorder: OutlineInputBorder(
                                             borderRadius: BorderRadius.circular(18),
-                                            borderSide: const BorderSide(width: 0.50, color: Color(0xFF6B4EFF)),
+                                            borderSide: const BorderSide(
+                                                width: 0.50, color: Color(0xFF6B4EFF)),
                                           ),
                                           focusedBorder: OutlineInputBorder(
                                             borderRadius: BorderRadius.circular(18),
-                                            borderSide: const BorderSide(width: 0.50, color: Color(0xFF6B4EFF)),
+                                            borderSide: const BorderSide(
+                                                width: 0.50, color: Color(0xFF6B4EFF)),
                                           ),
                                         ),
                                       ),
@@ -356,7 +346,9 @@ class _ProfilePageState extends State<ProfilePage> {
                                       height: 40,
                                     ),
                                     CustomButtonWidget(
-                                        onPressed: () => context.read<ProfilePageBloc>().add(ProfilePageLogOut()),
+                                        onPressed: () => context
+                                            .read<ProfilePageBloc>()
+                                            .add(ProfilePageLogOut()),
                                         title: 'Выйти',
                                         backgroundColor: Colors.white,
                                         widthPadding: 20)
@@ -377,4 +369,159 @@ class _ProfilePageState extends State<ProfilePage> {
       ),
     );
   }
+
+  void onSelected(BuildContext context, MenuItemModel item) {
+    switch (item) {
+      case MenuItems.itemEditPersonalData:
+        context.read<GetIt>().get<HomeRepository>().changeVisibleNavBar(visible: false);
+        context.read<RouteImpl>().push(ProfileRoutes.profileEdit.name).then((value) {
+          context.read<ProfilePageBloc>().add(ProfilePageUpdate());
+          context.read<GetIt>().get<HomeRepository>().changeVisibleNavBar(visible: true);
+        });
+        break;
+      case MenuItems.itemChangePhoto:
+        context.read<ProfilePageBloc>().add(ProfileUploadPhoto());
+        break;
+      case MenuItems.itemDeletePhoto:
+        removePhoto() {
+          context.read<ProfilePageBloc>().add(ProfileDeleteProfile());
+        }
+        showDialog(
+          context: context,
+          builder: (context) => AlertDialog(
+            shape: const RoundedRectangleBorder(
+              borderRadius: BorderRadius.only(
+                topLeft: Radius.circular(30),
+                bottomRight: Radius.circular(30),
+              ),
+            ),
+            backgroundColor: const Color(0xFF6B4EFF),
+            contentPadding: EdgeInsets.zero,
+            content: SizedBox(
+              width: 341,
+              height: 247,
+              child: Column(
+                children: [
+                  const SizedBox(
+                    height: 61,
+                  ),
+                  const SizedBox(
+                    width: 281,
+                    child: Text(
+                      'Вы действительно\n хотите удалить\n фото?',
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 22,
+                        fontFamily: 'Comfortaa',
+                        fontWeight: FontWeight.w600,
+                        letterSpacing: 1.10,
+                      ),
+                    ),
+                  ),
+                  const SizedBox(
+                    height: 29,
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Container(
+                        width: 83,
+                        height: 35,
+                        decoration: ShapeDecoration(
+                          color: const Color(0xFFF5F5F5),
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(18),
+                          ),
+                        ),
+                        child: ElevatedButton(
+                            onPressed: () {
+                              removePhoto(); // onPressed: removePhoto ~ onPressed: () => removePhoto() !!! onPressed: removePhoto()
+                              Navigator.of(context).pop();
+                            },
+                            style: ElevatedButton.styleFrom(
+                              backgroundColor: const Color(0xFFF5F5F5),
+                              shape:
+                                  RoundedRectangleBorder(borderRadius: BorderRadius.circular(18)),
+                            ),
+                            child: const Text(
+                              'Да',
+                              textAlign: TextAlign.center,
+                              style: TextStyle(
+                                color: Color(0xFFE55F5F),
+                                fontSize: 15,
+                                fontFamily: 'Comfortaa',
+                                fontWeight: FontWeight.w400,
+                                letterSpacing: 0.75,
+                              ),
+                            )),
+                      ),
+                      const SizedBox(
+                        width: 44,
+                      ),
+                      Container(
+                        width: 83,
+                        height: 35,
+                        decoration: ShapeDecoration(
+                          color: const Color(0xFFF5F5F5),
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(18),
+                          ),
+                        ),
+                        child: ElevatedButton(
+                            onPressed: () {
+                              // Navigator.pushNamed(context,
+                              //     '/profile_edit_page');
+                              Navigator.of(context).pop();
+                            },
+                            style: ElevatedButton.styleFrom(
+                              backgroundColor: const Color(0xFFF5F5F5),
+                              shape:
+                                  RoundedRectangleBorder(borderRadius: BorderRadius.circular(18)),
+                            ),
+                            child: const Text(
+                              'Нет',
+                              textAlign: TextAlign.center,
+                              style: TextStyle(
+                                color: Color(0xFF6B4EFF),
+                                fontSize: 15,
+                                fontFamily: 'Comfortaa',
+                                fontWeight: FontWeight.w400,
+                                letterSpacing: 0.75,
+                              ),
+                            )),
+                      ),
+                    ],
+                  ),
+                ],
+              ),
+            ),
+          ),
+        );
+
+        break;
+    }
+  }
+
+  PopupMenuItem<MenuItemModel> buildMenuItem(MenuItemModel item) => PopupMenuItem<MenuItemModel>(
+      padding: const EdgeInsets.only(right: 10),
+      height: 40,
+      value: item,
+      child: Row(
+        mainAxisSize: MainAxisSize.max,
+        children: [
+          const SizedBox(
+            width: 10,
+          ),
+          Icon(
+            item.icon,
+            color: Colors.grey[800],
+            size: 20,
+          ),
+          const SizedBox(
+            width: 10,
+          ),
+          Text(item.text),
+        ],
+      ));
 }

@@ -1,4 +1,7 @@
+import 'dart:io';
+
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:quick_meet/data/models/auth_controller/auth_login_response.dart';
 import 'package:quick_meet/data/service/number_formatter.dart';
 import 'package:quick_meet/domain/repository/auth_repository.dart';
@@ -19,6 +22,8 @@ class ProfilePageBloc extends Bloc<ProfilePageEvent, ProfilePageState> {
     on<ProfilePageMsgErr>(profilePageMsgErr);
     on<ProfilePageLogOut>(profilePageLogOut);
     on<ProfilePageUpdate>(profilePageUpdate);
+    on<ProfileDeleteProfile>(profileDeleteProfile);
+    on<ProfileUploadPhoto>(profileUploadPhoto);
     add(ProfilePageInit());
   }
 
@@ -42,6 +47,42 @@ class ProfilePageBloc extends Bloc<ProfilePageEvent, ProfilePageState> {
     }
 
     emit(ProfilePageUp(state.pageState.copyWith(user: model, yearsOld: age)));
+  }
+
+  profileDeleteProfile(ProfileDeleteProfile event, emit) async {
+    if (state.pageState.user.user.avatar.href != 'deleted') {
+      var res = await userRepository.userRemoveAvatar(
+        accessToken: userRepository.user?.payload.accessToken ?? '',
+        path: userRepository.user?.user.id ?? '',
+      );
+      User? repositoryUserModel = userRepository.user?.user.copyWith(
+        avatar: Avatar(fileName: res.avatar.fileName, href: res.avatar.href, id: res.avatar.id),
+      );
+      await userRepository.setUserData(
+          user: userRepository.user?.copyWith(user: repositoryUserModel) ??
+              const AuthLoginResponse());
+      emit(ProfilePageUp(state.pageState.copyWith(user: userRepository.user)));
+    }
+  }
+
+  profileUploadPhoto(ProfileUploadPhoto event, emit) async {
+    final ImagePicker picker = ImagePicker();
+    XFile? file = await picker.pickImage(source: ImageSource.gallery);
+    if (file != null) {
+      var res = await userRepository.userUploadAvatar(
+          accessToken: userRepository.user?.payload.accessToken ?? '',
+          path: userRepository.user?.user.id ?? '',
+          file: File(file.path));
+
+      User? repositoryUserModel = userRepository.user?.user.copyWith(
+          avatar: Avatar(fileName: res.avatar.fileName, href: res.avatar.href, id: res.avatar.id));
+
+      await userRepository.setUserData(
+          user: userRepository.user?.copyWith(user: repositoryUserModel) ??
+              const AuthLoginResponse());
+
+      emit(ProfilePageUp(state.pageState.copyWith(user: userRepository.user)));
+    }
   }
 
   profilePageMsgErr(ProfilePageMsgErr event, emit) async {
