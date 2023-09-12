@@ -69,9 +69,9 @@ class _ProfilePageState extends State<ProfilePage> {
                               ),
                             ),
                             padding: const EdgeInsets.all(0),
-                            onSelected: (item) => onSelected(context, item),
+                            onSelected: (item) => onSelected(context, item, state.pageState),
                             itemBuilder: (context) => [
-                              ...MenuItems.items.map((e) => buildMenuItem(e)).toList(),
+                              ...state.pageState.menuItems.map((e) => buildMenuItem(e)).toList(),
                             ],
                           ),
                         ],
@@ -91,7 +91,8 @@ class _ProfilePageState extends State<ProfilePage> {
                           Center(
                             child: Column(
                               children: [
-                                state.pageState.user.user.avatar.href != 'deleted'
+                                state.pageState.user.user.avatar.href != 'deleted' &&
+                                        state.pageState.user.user.avatar.href.isNotEmpty
                                     ? ImageNetworkWithLoader(
                                         width: 128,
                                         height: 128,
@@ -103,8 +104,7 @@ class _ProfilePageState extends State<ProfilePage> {
                                         width: 128,
                                         height: 128,
                                         decoration: BoxDecoration(
-                                            color: Colors.grey[400],
-                                            borderRadius: BorderRadius.circular(128)),
+                                            color: Colors.grey[400], borderRadius: BorderRadius.circular(128)),
                                         child: Icon(
                                           Icons.person,
                                           size: 64,
@@ -154,8 +154,7 @@ class _ProfilePageState extends State<ProfilePage> {
                                       },
                                       style: ElevatedButton.styleFrom(
                                         backgroundColor: Colors.black87,
-                                        shape: RoundedRectangleBorder(
-                                            borderRadius: BorderRadius.circular(18)),
+                                        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(18)),
                                       ),
                                       child: const Text(
                                         'ПРЕМИУМ-СТАТУС',
@@ -293,10 +292,8 @@ class _ProfilePageState extends State<ProfilePage> {
                                             //     context, '/auth_sms_code_page');
                                           },
                                           style: ElevatedButton.styleFrom(
-                                            backgroundColor:
-                                                const Color.fromARGB(255, 202, 202, 202),
-                                            shape: RoundedRectangleBorder(
-                                                borderRadius: BorderRadius.circular(10)),
+                                            backgroundColor: const Color.fromARGB(255, 202, 202, 202),
+                                            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
                                           ),
                                           child: const Text(
                                             'Подтвердить почту',
@@ -331,13 +328,11 @@ class _ProfilePageState extends State<ProfilePage> {
                                         decoration: InputDecoration(
                                           enabledBorder: OutlineInputBorder(
                                             borderRadius: BorderRadius.circular(18),
-                                            borderSide: const BorderSide(
-                                                width: 0.50, color: Color(0xFF6B4EFF)),
+                                            borderSide: const BorderSide(width: 0.50, color: Color(0xFF6B4EFF)),
                                           ),
                                           focusedBorder: OutlineInputBorder(
                                             borderRadius: BorderRadius.circular(18),
-                                            borderSide: const BorderSide(
-                                                width: 0.50, color: Color(0xFF6B4EFF)),
+                                            borderSide: const BorderSide(width: 0.50, color: Color(0xFF6B4EFF)),
                                           ),
                                         ),
                                       ),
@@ -346,9 +341,7 @@ class _ProfilePageState extends State<ProfilePage> {
                                       height: 40,
                                     ),
                                     CustomButtonWidget(
-                                        onPressed: () => context
-                                            .read<ProfilePageBloc>()
-                                            .add(ProfilePageLogOut()),
+                                        onPressed: () => context.read<ProfilePageBloc>().add(ProfilePageLogOut()),
                                         title: 'Выйти',
                                         backgroundColor: Colors.white,
                                         widthPadding: 20)
@@ -370,7 +363,7 @@ class _ProfilePageState extends State<ProfilePage> {
     );
   }
 
-  void onSelected(BuildContext context, MenuItemModel item) {
+  void onSelected(BuildContext context, MenuItemModel item, PageState pageState) {
     switch (item) {
       case MenuItems.itemEditPersonalData:
         context.read<GetIt>().get<HomeRepository>().changeVisibleNavBar(visible: false);
@@ -386,118 +379,118 @@ class _ProfilePageState extends State<ProfilePage> {
         removePhoto() {
           context.read<ProfilePageBloc>().add(ProfileDeleteProfile());
         }
-        showDialog(
-          context: context,
-          builder: (context) => AlertDialog(
-            shape: const RoundedRectangleBorder(
-              borderRadius: BorderRadius.only(
-                topLeft: Radius.circular(30),
-                bottomRight: Radius.circular(30),
+        if (pageState.user.user.avatar.href != 'deleted' && pageState.user.user.avatar.href.isNotEmpty) {
+          showDialog(
+            context: context,
+            builder: (context) => AlertDialog(
+              shape: const RoundedRectangleBorder(
+                borderRadius: BorderRadius.only(
+                  topLeft: Radius.circular(30),
+                  bottomRight: Radius.circular(30),
+                ),
               ),
-            ),
-            backgroundColor: const Color(0xFF6B4EFF),
-            contentPadding: EdgeInsets.zero,
-            content: SizedBox(
-              width: 341,
-              height: 247,
-              child: Column(
-                children: [
-                  const SizedBox(
-                    height: 61,
-                  ),
-                  const SizedBox(
-                    width: 281,
-                    child: Text(
-                      'Вы действительно\n хотите удалить\n фото?',
-                      textAlign: TextAlign.center,
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 22,
-                        fontFamily: 'Comfortaa',
-                        fontWeight: FontWeight.w600,
-                        letterSpacing: 1.10,
+              backgroundColor: const Color(0xFF6B4EFF),
+              contentPadding: EdgeInsets.zero,
+              content: SizedBox(
+                width: 341,
+                height: 247,
+                child: Column(
+                  children: [
+                    const SizedBox(
+                      height: 61,
+                    ),
+                    const SizedBox(
+                      width: 281,
+                      child: Text(
+                        'Вы действительно\n хотите удалить\n фото?',
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 22,
+                          fontFamily: 'Comfortaa',
+                          fontWeight: FontWeight.w600,
+                          letterSpacing: 1.10,
+                        ),
                       ),
                     ),
-                  ),
-                  const SizedBox(
-                    height: 29,
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Container(
-                        width: 83,
-                        height: 35,
-                        decoration: ShapeDecoration(
-                          color: const Color(0xFFF5F5F5),
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(18),
-                          ),
-                        ),
-                        child: ElevatedButton(
-                            onPressed: () {
-                              removePhoto(); // onPressed: removePhoto ~ onPressed: () => removePhoto() !!! onPressed: removePhoto()
-                              Navigator.of(context).pop();
-                            },
-                            style: ElevatedButton.styleFrom(
-                              backgroundColor: const Color(0xFFF5F5F5),
-                              shape:
-                                  RoundedRectangleBorder(borderRadius: BorderRadius.circular(18)),
+                    const SizedBox(
+                      height: 29,
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Container(
+                          width: 83,
+                          height: 35,
+                          decoration: ShapeDecoration(
+                            color: const Color(0xFFF5F5F5),
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(18),
                             ),
-                            child: const Text(
-                              'Да',
-                              textAlign: TextAlign.center,
-                              style: TextStyle(
-                                color: Color(0xFFE55F5F),
-                                fontSize: 15,
-                                fontFamily: 'Comfortaa',
-                                fontWeight: FontWeight.w400,
-                                letterSpacing: 0.75,
-                              ),
-                            )),
-                      ),
-                      const SizedBox(
-                        width: 44,
-                      ),
-                      Container(
-                        width: 83,
-                        height: 35,
-                        decoration: ShapeDecoration(
-                          color: const Color(0xFFF5F5F5),
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(18),
                           ),
-                        ),
-                        child: ElevatedButton(
-                            onPressed: () {
-                              // Navigator.pushNamed(context,
-                              //     '/profile_edit_page');
-                              Navigator.of(context).pop();
-                            },
-                            style: ElevatedButton.styleFrom(
-                              backgroundColor: const Color(0xFFF5F5F5),
-                              shape:
-                                  RoundedRectangleBorder(borderRadius: BorderRadius.circular(18)),
-                            ),
-                            child: const Text(
-                              'Нет',
-                              textAlign: TextAlign.center,
-                              style: TextStyle(
-                                color: Color(0xFF6B4EFF),
-                                fontSize: 15,
-                                fontFamily: 'Comfortaa',
-                                fontWeight: FontWeight.w400,
-                                letterSpacing: 0.75,
+                          child: ElevatedButton(
+                              onPressed: () {
+                                removePhoto(); // onPressed: removePhoto ~ onPressed: () => removePhoto() !!! onPressed: removePhoto()
+                                Navigator.of(context).pop();
+                              },
+                              style: ElevatedButton.styleFrom(
+                                backgroundColor: const Color(0xFFF5F5F5),
+                                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(18)),
                               ),
-                            )),
-                      ),
-                    ],
-                  ),
-                ],
+                              child: const Text(
+                                'Да',
+                                textAlign: TextAlign.center,
+                                style: TextStyle(
+                                  color: Color(0xFFE55F5F),
+                                  fontSize: 15,
+                                  fontFamily: 'Comfortaa',
+                                  fontWeight: FontWeight.w400,
+                                  letterSpacing: 0.75,
+                                ),
+                              )),
+                        ),
+                        const SizedBox(
+                          width: 44,
+                        ),
+                        Container(
+                          width: 83,
+                          height: 35,
+                          decoration: ShapeDecoration(
+                            color: const Color(0xFFF5F5F5),
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(18),
+                            ),
+                          ),
+                          child: ElevatedButton(
+                              onPressed: () {
+                                // Navigator.pushNamed(context,
+                                //     '/profile_edit_page');
+                                Navigator.of(context).pop();
+                              },
+                              style: ElevatedButton.styleFrom(
+                                backgroundColor: const Color(0xFFF5F5F5),
+                                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(18)),
+                              ),
+                              child: const Text(
+                                'Нет',
+                                textAlign: TextAlign.center,
+                                style: TextStyle(
+                                  color: Color(0xFF6B4EFF),
+                                  fontSize: 15,
+                                  fontFamily: 'Comfortaa',
+                                  fontWeight: FontWeight.w400,
+                                  letterSpacing: 0.75,
+                                ),
+                              )),
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
               ),
             ),
-          ),
-        );
+          );
+        }
 
         break;
     }

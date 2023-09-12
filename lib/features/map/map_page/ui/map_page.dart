@@ -40,6 +40,9 @@ class _MapScreenState extends State<MapScreen> {
           print(geoObject.latitude);
           print(geoObject.longitude);
         },
+        onCameraPositionChanged: (cameraPosition, reason, finished) {
+          // cameraPosition
+        },
         mapType: MapType.map,
         onMapCreated: (controller) {
           mapControllerCompleter.complete(controller);

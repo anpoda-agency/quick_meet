@@ -27,25 +27,28 @@ class PageState {
   final String errMsg;
   final AuthLoginResponse user;
   final String yearsOld;
+  final List<MenuItemModel> menuItems;
 
-  const PageState({
-    this.user = const AuthLoginResponse(),
-    this.onAwait = false,
-    this.errMsg = '',
-    this.yearsOld = '',
-  });
+  const PageState(
+      {this.user = const AuthLoginResponse(),
+      this.onAwait = false,
+      this.errMsg = '',
+      this.yearsOld = '',
+      this.menuItems = const []});
 
   PageState copyWith({
     bool? onAwait,
     String? errMsg,
     AuthLoginResponse? user,
     String? yearsOld,
+    List<MenuItemModel>? menuItems,
   }) {
     return PageState(
       onAwait: onAwait ?? this.onAwait,
       errMsg: errMsg ?? this.errMsg,
       user: user ?? this.user,
       yearsOld: yearsOld ?? this.yearsOld,
+      menuItems: menuItems ?? this.menuItems,
     );
   }
 }

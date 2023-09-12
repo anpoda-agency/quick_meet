@@ -6,6 +6,8 @@ import 'package:quick_meet/data/models/auth_controller/auth_login_response.dart'
 import 'package:quick_meet/data/service/number_formatter.dart';
 import 'package:quick_meet/domain/repository/auth_repository.dart';
 import 'package:quick_meet/domain/repository/user_repository.dart';
+import 'package:quick_meet/features/profile/profile_page/data/menu_items.dart';
+import 'package:quick_meet/features/profile/profile_page/models/menu_item_model.dart';
 
 part 'profile_page_event.dart';
 part 'profile_page_state.dart';
@@ -27,26 +29,46 @@ class ProfilePageBloc extends Bloc<ProfilePageEvent, ProfilePageState> {
     add(ProfilePageInit());
   }
 
+  update() {
+    add(ProfilePageUpdate());
+  }
+
   profilePageInit(ProfilePageInit event, emit) async {
-    var model = userRepository.user;
+    userRepository.removeListener(update);
+    userRepository.addListener(update);
+    AuthLoginResponse model = userRepository.user ?? const AuthLoginResponse();
     String age = '';
 
-    if (model != null) {
-      age = NumberFormatter.ageFormat(model.user.birthDate);
+    age = NumberFormatter.ageFormat(model.user.birthDate);
+
+    List<MenuItemModel> listItems = [];
+    if (model.user.avatar.href != 'deleted' && model.user.avatar.href.isNotEmpty) {
+      listItems.addAll(MenuItems.items);
+    } else {
+      listItems.add(MenuItems.itemEditPersonalData);
+      listItems.add(MenuItems.itemChangePhoto);
     }
 
-    emit(ProfilePageUp(state.pageState.copyWith(user: model, yearsOld: age)));
+    emit(ProfilePageUp(state.pageState.copyWith(user: model, yearsOld: age, menuItems: listItems)));
   }
 
   profilePageUpdate(ProfilePageUpdate event, emit) async {
-    var model = userRepository.user;
+    userRepository.removeListener(update);
+    userRepository.addListener(update);
+    AuthLoginResponse model = userRepository.user ?? const AuthLoginResponse();
     String age = '';
 
-    if (model != null) {
-      age = NumberFormatter.ageFormat(model.user.birthDate);
+    age = NumberFormatter.ageFormat(model.user.birthDate);
+
+    List<MenuItemModel> listItems = [];
+    if (model.user.avatar.href != 'deleted' && model.user.avatar.href.isNotEmpty) {
+      listItems.addAll(MenuItems.items);
+    } else {
+      listItems.add(MenuItems.itemEditPersonalData);
+      listItems.add(MenuItems.itemChangePhoto);
     }
 
-    emit(ProfilePageUp(state.pageState.copyWith(user: model, yearsOld: age)));
+    emit(ProfilePageUp(state.pageState.copyWith(user: model, yearsOld: age, menuItems: listItems)));
   }
 
   profileDeleteProfile(ProfileDeleteProfile event, emit) async {
@@ -59,8 +81,7 @@ class ProfilePageBloc extends Bloc<ProfilePageEvent, ProfilePageState> {
         avatar: Avatar(fileName: res.avatar.fileName, href: res.avatar.href, id: res.avatar.id),
       );
       await userRepository.setUserData(
-          user: userRepository.user?.copyWith(user: repositoryUserModel) ??
-              const AuthLoginResponse());
+          user: userRepository.user?.copyWith(user: repositoryUserModel) ?? const AuthLoginResponse());
       emit(ProfilePageUp(state.pageState.copyWith(user: userRepository.user)));
     }
   }
@@ -74,12 +95,11 @@ class ProfilePageBloc extends Bloc<ProfilePageEvent, ProfilePageState> {
           path: userRepository.user?.user.id ?? '',
           file: File(file.path));
 
-      User? repositoryUserModel = userRepository.user?.user.copyWith(
-          avatar: Avatar(fileName: res.avatar.fileName, href: res.avatar.href, id: res.avatar.id));
+      User? repositoryUserModel = userRepository.user?.user
+          .copyWith(avatar: Avatar(fileName: res.avatar.fileName, href: res.avatar.href, id: res.avatar.id));
 
       await userRepository.setUserData(
-          user: userRepository.user?.copyWith(user: repositoryUserModel) ??
-              const AuthLoginResponse());
+          user: userRepository.user?.copyWith(user: repositoryUserModel) ?? const AuthLoginResponse());
 
       emit(ProfilePageUp(state.pageState.copyWith(user: userRepository.user)));
     }
@@ -96,6 +116,12 @@ class ProfilePageBloc extends Bloc<ProfilePageEvent, ProfilePageState> {
     await userRepository.clearUserData();
     authRepository.changeAuthStatus(val: false);
     emit(ProfilePageLogOutState(state.pageState.copyWith()));
+  }
+
+  @override
+  Future<void> close() {
+    userRepository.removeListener(update);
+    return super.close();
   }
 
   @override
