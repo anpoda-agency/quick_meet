@@ -36,14 +36,18 @@ class ProfilePageBloc extends Bloc<ProfilePageEvent, ProfilePageState> {
   profilePageInit(ProfilePageInit event, emit) async {
     userRepository.removeListener(update);
     userRepository.addListener(update);
-    AuthLoginResponse model = userRepository.user ?? const AuthLoginResponse();
+    var model = userRepository.user;
     String age = '';
-
-    age = NumberFormatter.ageFormat(model.user.birthDate);
-
     List<MenuItemModel> listItems = [];
-    if (model.user.avatar.href != 'deleted' && model.user.avatar.href.isNotEmpty) {
-      listItems.addAll(MenuItems.items);
+
+    if (model != null) {
+      age = NumberFormatter.ageFormat(model.user.birthDate);
+      if (model.user.avatar.href != 'deleted' && model.user.avatar.href.isNotEmpty) {
+        listItems.addAll(MenuItems.items);
+      } else {
+        listItems.add(MenuItems.itemEditPersonalData);
+        listItems.add(MenuItems.itemChangePhoto);
+      }
     } else {
       listItems.add(MenuItems.itemEditPersonalData);
       listItems.add(MenuItems.itemChangePhoto);
@@ -55,14 +59,18 @@ class ProfilePageBloc extends Bloc<ProfilePageEvent, ProfilePageState> {
   profilePageUpdate(ProfilePageUpdate event, emit) async {
     userRepository.removeListener(update);
     userRepository.addListener(update);
-    AuthLoginResponse model = userRepository.user ?? const AuthLoginResponse();
+    var model = userRepository.user;
     String age = '';
-
-    age = NumberFormatter.ageFormat(model.user.birthDate);
-
     List<MenuItemModel> listItems = [];
-    if (model.user.avatar.href != 'deleted' && model.user.avatar.href.isNotEmpty) {
-      listItems.addAll(MenuItems.items);
+
+    if (model != null) {
+      age = NumberFormatter.ageFormat(model.user.birthDate);
+      if (model.user.avatar.href != 'deleted' && model.user.avatar.href.isNotEmpty) {
+        listItems.addAll(MenuItems.items);
+      } else {
+        listItems.add(MenuItems.itemEditPersonalData);
+        listItems.add(MenuItems.itemChangePhoto);
+      }
     } else {
       listItems.add(MenuItems.itemEditPersonalData);
       listItems.add(MenuItems.itemChangePhoto);
