@@ -25,7 +25,7 @@ class ScaffoldNavBar extends StatelessWidget {
                   right: 0,
                   bottom: 20,
                   child: Container(
-                    height: 80,
+                    height: 89,
                     margin: const EdgeInsets.only(left: 20, right: 20),
                     decoration: BoxDecoration(
                       gradient: LinearGradient(colors: [
