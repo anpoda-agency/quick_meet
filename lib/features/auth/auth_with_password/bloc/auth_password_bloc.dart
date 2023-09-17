@@ -42,21 +42,34 @@ class AuthPasswordBloc extends Bloc<AuthPasswordEvent, AuthPasswordState> {
 
   authPasswordInputPassword(AuthPasswordInputPassword event, emit) async {
     var model = state.pageState.request.copyWith(password: event.value);
-    emit(AuthPasswordUp(state.pageState.copyWith(request: model, passwordError: false)));
+
+    bool removeErr = false;
+    if (state.pageState.passwordError &&
+        state.pageState.passwordErrorText == 'Не менее 6 символов' &&
+        event.value.length < 6) {
+      removeErr = true;
+    }
+
+    emit(AuthPasswordUp(state.pageState.copyWith(request: model, passwordError: removeErr)));
   }
 
   authPasswordSendLogin(AuthPasswordSendLogin event, emit) async {
-    if (state.pageState.request.phoneNumber.length == 11) {
+    if (state.pageState.request.phoneNumber.length == 11 && state.pageState.request.password.length >= 6) {
       emit(AuthPasswordUp(state.pageState.copyWith(phoneError: false, passwordError: false)));
       var res = await authRepository.login(request: state.pageState.request);
       await userRepository.setUserData(user: res, token: res.payload.refreshToken);
       authRepository.changeAuthStatus(val: true);
       emit(AuthPasswordAllowedToPush(state.pageState.copyWith(response: res)));
     } else {
-      emit(AuthPasswordError(state.pageState.copyWith(
-        onAwait: false,
-        phoneError: true,
-      )));
+      if (state.pageState.request.phoneNumber.length != 11) {
+        emit(AuthPasswordError(state.pageState.copyWith(
+          onAwait: false,
+          phoneError: true,
+        )));
+      } else if (state.pageState.request.password.length < 6) {
+        emit(AuthPasswordError(
+            state.pageState.copyWith(onAwait: false, passwordError: true, passwordErrorText: 'Не менее 6 символов')));
+      }
     }
   }
 
