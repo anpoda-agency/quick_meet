@@ -28,20 +28,36 @@ class AuthPasswordBloc extends Bloc<AuthPasswordEvent, AuthPasswordState> {
   }
 
   authPasswordInputNumber(AuthPasswordInputNumber event, emit) async {
-    var model = state.pageState.request.copyWith(phoneNumber: event.value);
-    emit(AuthPasswordUp(state.pageState.copyWith(request: model)));
+    String formattedNumber =
+        event.value.replaceAll(' ', '').replaceAll('(', '').replaceAll(')', '').replaceAll('-', '').replaceAll('+', '');
+    var model = state.pageState.request.copyWith(phoneNumber: formattedNumber);
+
+    bool removeErr = false;
+    if (state.pageState.phoneError && formattedNumber.length != 11) {
+      removeErr = true;
+    }
+
+    emit(AuthPasswordUp(state.pageState.copyWith(request: model, phoneError: removeErr, passwordError: false)));
   }
 
   authPasswordInputPassword(AuthPasswordInputPassword event, emit) async {
     var model = state.pageState.request.copyWith(password: event.value);
-    emit(AuthPasswordUp(state.pageState.copyWith(request: model)));
+    emit(AuthPasswordUp(state.pageState.copyWith(request: model, passwordError: false)));
   }
 
   authPasswordSendLogin(AuthPasswordSendLogin event, emit) async {
-    var res = await authRepository.login(request: state.pageState.request);
-    await userRepository.setUserData(user: res, token: res.payload.refreshToken);
-    authRepository.changeAuthStatus(val: true);
-    emit(AuthPasswordAllowedToPush(state.pageState.copyWith(response: res)));
+    if (state.pageState.request.phoneNumber.length == 11) {
+      emit(AuthPasswordUp(state.pageState.copyWith(phoneError: false, passwordError: false)));
+      var res = await authRepository.login(request: state.pageState.request);
+      await userRepository.setUserData(user: res, token: res.payload.refreshToken);
+      authRepository.changeAuthStatus(val: true);
+      emit(AuthPasswordAllowedToPush(state.pageState.copyWith(response: res)));
+    } else {
+      emit(AuthPasswordError(state.pageState.copyWith(
+        onAwait: false,
+        phoneError: true,
+      )));
+    }
   }
 
   authPasswordMsgErr(AuthPasswordMsgErr event, emit) async {
@@ -49,6 +65,13 @@ class AuthPasswordBloc extends Bloc<AuthPasswordEvent, AuthPasswordState> {
       onAwait: false,
       errMsg: event.msg,
     )));
+    if (state.pageState.errMsg == 'User not found') {
+      emit(AuthPasswordUp(
+          state.pageState.copyWith(passwordError: true, passwordErrorText: 'Неверный логин или пароль')));
+    } else if (state.pageState.errMsg == 'User removed') {
+      emit(AuthPasswordUp(
+          state.pageState.copyWith(passwordError: true, passwordErrorText: 'Аккаунт пользователя удален')));
+    }
   }
 
   @override

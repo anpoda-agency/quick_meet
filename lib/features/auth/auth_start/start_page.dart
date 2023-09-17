@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:quick_meet/core/constants.dart';
 import 'package:quick_meet/domain/router/route_constants.dart';
 import 'package:quick_meet/domain/router/route_impl.dart';
-import 'package:quick_meet/features/core_widgets/custom_button_widget.dart';
-import 'package:quick_meet/features/core_widgets/auth_logo_area_widget.dart';
+import 'package:quick_meet/features/core_widgets/auth_widgets/auth_scaffold.dart';
+import 'package:quick_meet/features/core_widgets/auth_widgets/auth_custom_button.dart';
+import 'package:quick_meet/features/core_widgets/auth_widgets/auth_custom_button_morfy.dart';
 
 class StartPage extends StatefulWidget {
   const StartPage({super.key});
@@ -15,101 +17,60 @@ class StartPage extends StatefulWidget {
 class _StartPageState extends State<StartPage> {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: const Color.fromRGBO(245, 245, 245, 1),
+    return AuthScaffold(
       body: Column(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          const AuthLogoAreaWidget(
-            heightRatioRelativeScreen: 0.5,
+          const SizedBox.shrink(),
+          Column(
+            children: [
+              Padding(
+                padding: const EdgeInsets.only(bottom: 28),
+                child: Image.asset(
+                  '${AppConstants.icons}logo_big.png',
+                ),
+              ),
+              const Text(
+                'Find friends, collegues, lover quickly',
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 18,
+                  fontWeight: FontWeight.w500,
+                ),
+              ),
+            ],
           ),
           Padding(
-            padding: const EdgeInsets.fromLTRB(0, 0, 0, 0),
-            child: Column(
-              children: [
-                const Text(
-                  'Войти',
-                  textAlign: TextAlign.center,
-                  style: TextStyle(
-                    color: Color(0xFF6B4EFF),
-                    fontSize: 36,
-                    fontFamily: 'Comfortaa',
-                    fontWeight: FontWeight.w700,
-                    letterSpacing: 1.80,
+            padding: const EdgeInsets.only(bottom: 52),
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 20),
+              child: Column(
+                children: [
+                  CustomButtonMorfy(
+                    onTap: () => context.read<RouteImpl>().push('auth/${RootRoutes.authWithSmsPhone.name}'),
+                    text: 'Войти по смс',
                   ),
-                ),
-                const SizedBox(
-                  height: 30,
-                ),
-                CustomButtonWidget(
-                  title: 'по смс',
-                  backgroundColor: Colors.white,
-                  widthPadding: 90,
-                  onPressed: () {
-                    context.read<RouteImpl>().push('auth/${RootRoutes.authWithSmsPhone.name}');
-                    // Navigator.pushNamed(context, '/auth_sms_page');
-                  },
-                ),
-                const SizedBox(
-                  height: 20,
-                ),
-                CustomButtonWidget(
-                  title: 'с паролем',
-                  backgroundColor: Colors.white,
-                  widthPadding: 90,
-                  onPressed: () {
-                    context.read<RouteImpl>().push('auth/${RootRoutes.authWithPassword.name}');
-                    // Navigator.pushNamed(context, '/auth_password_page');
-                  },
-                ),
-                const SizedBox(
-                  height: 40,
-                ),
-                SizedBox(
-                  //width: 335,
-                  //height: 20,
-                  child: InkWell(
-                    child: const Text(
-                      'Ещё не зарегистрированы?',
-                      textAlign: TextAlign.center,
-                      style: TextStyle(
-                        color: Color(0xFF505050),
-                        fontSize: 16,
-                        fontFamily: 'SF Pro Text',
-                        fontWeight: FontWeight.w300,
-                        decoration: TextDecoration.underline,
-                        letterSpacing: 0.80,
-                      ),
-                    ),
-                    onTap: () {
-                      context.read<RouteImpl>().push('auth/${RootRoutes.registrationPhone.name}');
-                      //Navigator.pushNamed(context, '/rep_phone_page');
-                    },
+                  const SizedBox(
+                    height: 16,
                   ),
-                ),
-                const SizedBox(
-                  height: 20,
-                ),
-              ],
+                  CustomButtonMorfy(
+                    onTap: () => context.read<RouteImpl>().push('auth/${RootRoutes.authWithPassword.name}'),
+                    text: 'Войти с паролем',
+                  ),
+                  const SizedBox(
+                    height: 32,
+                  ),
+                  CustomButton(
+                    onTap: () => context.read<RouteImpl>().push('auth/${RootRoutes.registrationPhone.name}'),
+                    text: 'Зарегистрироваться',
+                  ),
+                ],
+              ),
             ),
           ),
-          const SizedBox.shrink(),
         ],
       ),
     );
   }
 }
-
-// dividers
-// Container(
-          //   width: 355,
-          //   decoration: const ShapeDecoration(
-          //     shape: RoundedRectangleBorder(
-          //       side: BorderSide(
-          //         width: 0.20,
-          //         strokeAlign: BorderSide.strokeAlignCenter,
-          //         color: Color(0xFF6B4EFF),
-          //       ),
-          //     ),
-          //   ),
-          // ),

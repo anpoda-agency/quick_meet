@@ -92,6 +92,7 @@ class _MyAppState extends State<MyApp> {
           ? MaterialApp.router(
               debugShowCheckedModeBanner: false,
               routerConfig: router.goRouterImplt.router,
+              theme: ThemeData(fontFamily: 'Inter'),
               // theme: ThemeEx.theme(),
               // routes: {
               //   '/auth_sms_page': (context) => const AuthSmsPage(),

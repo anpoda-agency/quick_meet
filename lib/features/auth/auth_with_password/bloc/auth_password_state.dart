@@ -25,10 +25,19 @@ class AuthPasswordError extends AuthPasswordState {
 class PageState {
   final bool onAwait;
   final String errMsg;
+
   final AuthLoginRequest request;
   final AuthLoginResponse response;
 
+  final bool phoneError;
+  final bool passwordError;
+
+  final String passwordErrorText;
+
   const PageState({
+    this.phoneError = false,
+    this.passwordError = false,
+    this.passwordErrorText = '',
     this.request = const AuthLoginRequest(),
     this.response = const AuthLoginResponse(),
     this.onAwait = false,
@@ -40,12 +49,19 @@ class PageState {
     String? errMsg,
     AuthLoginRequest? request,
     AuthLoginResponse? response,
+    bool? phoneError,
+    bool? passwordError,
+    String? phoneErrorText,
+    String? passwordErrorText,
   }) {
     return PageState(
       onAwait: onAwait ?? this.onAwait,
       errMsg: errMsg ?? this.errMsg,
       request: request ?? this.request,
       response: response ?? this.response,
+      phoneError: phoneError ?? this.phoneError,
+      passwordError: passwordError ?? this.passwordError,
+      passwordErrorText: passwordErrorText ?? this.passwordErrorText,
     );
   }
 }

@@ -11,17 +11,9 @@ class AuthApi {
   AuthApi({required this.dioClient});
 
   Future<Response> verificationLogin({required String phone}) async {
-    String value = phone;
-    if (value.contains('+')) {
-      value.replaceAll('+', '%2B');
-    } else {
-      value = '%2B$phone';
-    }
     try {
       final Response response =
-          await dioClient.post(AppConstants.verificationLoginUrl, queryParameters: {'phone': value}
-              // body: {},
-              );
+          await dioClient.post(AppConstants.verificationLoginUrl, queryParameters: {'phone': phone});
       return response;
     } catch (e) {
       rethrow;
@@ -41,11 +33,9 @@ class AuthApi {
   }
 
   Future<Response> refreshToken({required String path}) async {
-    // request body empty
     try {
       final Response response = await dioClient.post(
         AppConstants.refreshTokenUrl + path,
-        //body: request.toJson(),
       );
       return response;
     } catch (e) {
