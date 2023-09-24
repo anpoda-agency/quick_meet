@@ -5,7 +5,6 @@ import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:quick_meet/core/constants.dart';
-// import 'package:quick_meet/core/styles/main_theme.dart';
 import 'package:quick_meet/data/enum.dart';
 import 'package:quick_meet/data/service/write_log.dart';
 import 'package:quick_meet/di/service_locator.dart';
