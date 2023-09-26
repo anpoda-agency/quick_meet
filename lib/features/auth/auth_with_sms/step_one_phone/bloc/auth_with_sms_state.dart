@@ -27,8 +27,10 @@ class PageState {
   final String errMsg;
   final CodeSendActivationRequest request;
   final CodeSendActivationResponse response;
+  final bool phoneError;
 
   const PageState({
+    this.phoneError = false,
     this.response = const CodeSendActivationResponse(),
     this.request = const CodeSendActivationRequest(),
     this.onAwait = false,
@@ -40,12 +42,14 @@ class PageState {
     String? errMsg,
     CodeSendActivationRequest? request,
     CodeSendActivationResponse? response,
+    bool? phoneError,
   }) {
     return PageState(
       onAwait: onAwait ?? this.onAwait,
       errMsg: errMsg ?? this.errMsg,
       request: request ?? this.request,
       response: response ?? this.response,
+      phoneError: phoneError ?? this.phoneError,
     );
   }
 }

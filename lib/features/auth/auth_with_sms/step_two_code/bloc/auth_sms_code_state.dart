@@ -28,6 +28,8 @@ class PageState {
   final CodeConfirmNumberRequest request;
   final CodeConfirmNumberResponse response;
   final AuthLoginResponse responseAuth;
+  final CodeSendActivationRequest requestCode;
+  final CodeSendActivationResponse responseCode;
 
   const PageState({
     this.responseAuth = const AuthLoginResponse(),
@@ -35,6 +37,8 @@ class PageState {
     this.errMsg = '',
     this.request = const CodeConfirmNumberRequest(),
     this.response = const CodeConfirmNumberResponse(),
+    this.responseCode = const CodeSendActivationResponse(),
+    this.requestCode = const CodeSendActivationRequest(),
   });
 
   PageState copyWith({
@@ -43,6 +47,8 @@ class PageState {
     CodeConfirmNumberRequest? request,
     CodeConfirmNumberResponse? response,
     AuthLoginResponse? responseAuth,
+    CodeSendActivationRequest? requestCode,
+    CodeSendActivationResponse? responseCode,
   }) {
     return PageState(
       onAwait: onAwait ?? this.onAwait,
@@ -50,6 +56,8 @@ class PageState {
       request: request ?? this.request,
       response: response ?? this.response,
       responseAuth: responseAuth ?? this.responseAuth,
+      requestCode: requestCode ?? this.requestCode,
+      responseCode: responseCode ?? this.responseCode,
     );
   }
 }

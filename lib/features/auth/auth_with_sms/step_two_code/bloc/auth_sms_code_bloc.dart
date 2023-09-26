@@ -1,6 +1,8 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:quick_meet/data/models/activation_code_controller/code_confirm_number_request.dart';
 import 'package:quick_meet/data/models/activation_code_controller/code_confirm_number_response.dart';
+import 'package:quick_meet/data/models/activation_code_controller/code_send_activation_request.dart';
+import 'package:quick_meet/data/models/activation_code_controller/code_send_activation_response.dart';
 import 'package:quick_meet/data/models/auth_controller/auth_login_response.dart';
 import 'package:quick_meet/domain/repository/activation_code_repository.dart';
 import 'package:quick_meet/domain/repository/auth_repository.dart';
@@ -26,33 +28,38 @@ class AuthSmsCodeBloc extends Bloc<AuthSmsCodeEvent, AuthSmsCodeState> {
     on<AuthSmsCodeMsgErr>(authSmsCodeMsgErr);
     on<AuthSmsCodeInputValue>(authSmsCodeInputValue);
     on<AuthSmsCodeSend>(authSmsCodeSend);
+    on<AuthSmsGetCode>(authSmsGetCode);
     add(AuthSmsCodeInit());
   }
 
   authSmsCodeInit(AuthSmsCodeInit event, emit) async {
+    var modelCode = state.pageState.requestCode
+        .copyWith(verificationStep: "VERIFICATION", verificationType: "PHONE", source: phoneNumber);
     var model = state.pageState.request
         .copyWith(verificationStep: "VERIFICATION", verificationType: "PHONE", source: phoneNumber);
-    emit(AuthSmsCodeUp(state.pageState.copyWith(request: model)));
+    emit(AuthSmsCodeUp(state.pageState.copyWith(request: model, requestCode: modelCode)));
   }
 
   authSmsCodeInputValue(AuthSmsCodeInputValue event, emit) async {
-    late String code;
-    if (event.value.isEmpty) {
-      code = state.pageState.request.code.substring(0, state.pageState.request.code.length - 1);
-    } else {
-      code = state.pageState.request.code + event.value;
-    }
-    var model = state.pageState.request.copyWith(code: code);
-    emit(AuthSmsCodeUp(state.pageState.copyWith(request: model)));
+    var model = state.pageState.request.copyWith(code: event.value);
+    emit(AuthSmsCodeUp(state.pageState.copyWith(request: model, errMsg: '')));
+    event.completed ? add(AuthSmsCodeSend()) : null;
   }
 
   authSmsCodeSend(AuthSmsCodeSend event, emit) async {
     var res = await activationCodeRepository.codeConfirm(request: state.pageState.request);
     if (!res.success) {
-      emit(AuthSmsCodeError(state.pageState.copyWith(
-        onAwait: false,
-        errMsg: res.message,
-      )));
+      if (res.message == 'Code not verified') {
+        emit(AuthSmsCodeError(state.pageState.copyWith(
+          onAwait: false,
+          errMsg: 'Неверный код',
+        )));
+      } else {
+        emit(AuthSmsCodeError(state.pageState.copyWith(
+          onAwait: false,
+          errMsg: res.message,
+        )));
+      }
     } else {
       var resAuth = await authRepository.verificationLogin(phone: state.pageState.request.source);
       await userRepository.setUserData(user: resAuth, token: resAuth.payload.refreshToken);
@@ -61,11 +68,52 @@ class AuthSmsCodeBloc extends Bloc<AuthSmsCodeEvent, AuthSmsCodeState> {
     }
   }
 
+  authSmsGetCode(AuthSmsGetCode event, emit) async {
+    // emit(AuthWithSmsUp(state.pageState.copyWith(errMsg: '', phoneError: false)));
+    if (state.pageState.request.source.length != 11) {
+      emit(AuthSmsCodeError(state.pageState.copyWith(
+        onAwait: false,
+        // phoneError: true, errMsg: 'Некорректный номер телефона'
+      )));
+    } else {
+      var res = await activationCodeRepository.codeSend(request: state.pageState.requestCode);
+      if (!res.success) {
+        if (res.message == 'User with phone not found') {
+          emit(AuthSmsCodeError(state.pageState.copyWith(
+            onAwait: false, errMsg: 'Пользователь не найден',
+            // phoneError: true
+          )));
+        } else if (res.message.contains('Retry available after')) {
+          int index = res.message.indexOf('2');
+          DateTime timeAfter = DateTime.parse(res.message.substring(index));
+          DateTime timeNow = DateTime.now();
+          emit(AuthSmsCodeError(state.pageState.copyWith(
+            onAwait: false,
+            errMsg: 'Повторный код через ${timeAfter.difference(timeNow).inSeconds} секунд',
+            // phoneError: true
+          )));
+        } else {
+          emit(AuthSmsCodeError(state.pageState.copyWith(
+            onAwait: false, errMsg: res.message,
+            // phoneError: true
+          )));
+        }
+      }
+    }
+  }
+
   authSmsCodeMsgErr(AuthSmsCodeMsgErr event, emit) async {
-    emit(AuthSmsCodeError(state.pageState.copyWith(
-      onAwait: false,
-      errMsg: event.msg,
-    )));
+    if (event.msg == 'Code not verified') {
+      emit(AuthSmsCodeError(state.pageState.copyWith(
+        onAwait: false,
+        errMsg: 'Неверный код',
+      )));
+    } else {
+      emit(AuthSmsCodeError(state.pageState.copyWith(
+        onAwait: false,
+        errMsg: event.msg,
+      )));
+    }
   }
 
   @override

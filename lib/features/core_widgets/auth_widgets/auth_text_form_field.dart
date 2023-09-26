@@ -3,45 +3,46 @@ import 'package:flutter/services.dart';
 import 'package:quick_meet/features/core_widgets/svg_image.dart';
 
 class AuthTextFormField extends StatefulWidget {
-  const AuthTextFormField({
-    Key? key,
-    this.suffixIcon,
-    this.onTapSuffixIcon,
-    this.validator,
-    this.maxLines,
-    this.textAlign,
-    this.minLines,
-    this.textCapitalization = TextCapitalization.sentences,
-    this.controller,
-    this.onChanged,
-    this.keyboardType,
-    this.textAlignVertical,
-    this.style,
-    this.focusNode,
-    this.hintText,
-    this.hintStyle,
-    this.autofocus,
-    this.enabled = true,
-    this.inputFormatters,
-    this.contentPadding,
-    this.isErrorState = false,
-    this.onEditingComplete,
-    this.errorText,
-    this.borderRadius,
-    this.decoration,
-    this.borderColors,
-    this.readOnly,
-    this.onTap,
-    this.border,
-    this.icon,
-    this.focusBorder,
-    this.height = 55,
-    this.label,
-    this.expands = false,
-    this.onFieldSubmitted,
-    this.enableInteractiveSelection,
-    this.onTapOutside,
-  }) : super(key: key);
+  const AuthTextFormField(
+      {Key? key,
+      this.suffixIcon,
+      this.onTapSuffixIcon,
+      this.validator,
+      this.maxLines,
+      this.textAlign,
+      this.minLines,
+      this.textCapitalization = TextCapitalization.sentences,
+      this.controller,
+      this.onChanged,
+      this.keyboardType,
+      this.textAlignVertical,
+      this.style,
+      this.focusNode,
+      this.hintText,
+      this.hintStyle,
+      this.autofocus,
+      this.enabled = true,
+      this.inputFormatters,
+      this.contentPadding,
+      this.isErrorState = false,
+      this.onEditingComplete,
+      this.errorText,
+      this.borderRadius,
+      this.decoration,
+      this.borderColors,
+      this.readOnly,
+      this.onTap,
+      this.border,
+      this.icon,
+      this.focusBorder,
+      this.height = 60,
+      this.label,
+      this.expands = false,
+      this.onFieldSubmitted,
+      this.enableInteractiveSelection,
+      this.onTapOutside,
+      this.withoutBorder})
+      : super(key: key);
   final Widget? suffixIcon;
   final void Function()? onTapSuffixIcon;
   final void Function()? onEditingComplete;
@@ -78,6 +79,7 @@ class AuthTextFormField extends StatefulWidget {
   final void Function(String)? onFieldSubmitted;
   final bool? enableInteractiveSelection;
   final String? label;
+  final bool? withoutBorder;
 
   @override
   State<AuthTextFormField> createState() => _AuthTextFormFieldState();
@@ -112,7 +114,7 @@ class _AuthTextFormFieldState extends State<AuthTextFormField> {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         SizedBox(
-          height: 60,
+          height: widget.height,
           child: TextFormField(
             onTapOutside: widget.onTapOutside,
             enableInteractiveSelection: widget.enableInteractiveSelection,
@@ -141,7 +143,9 @@ class _AuthTextFormFieldState extends State<AuthTextFormField> {
         ),
         widget.errorText != null && widget.isErrorState
             ? Padding(
-                padding: const EdgeInsets.only(top: 8),
+                padding: widget.withoutBorder != null && widget.withoutBorder == true
+                    ? const EdgeInsets.all(0)
+                    : const EdgeInsets.only(top: 8),
                 child: Container(
                   padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 2),
                   decoration:
@@ -152,8 +156,8 @@ class _AuthTextFormFieldState extends State<AuthTextFormField> {
                   ),
                 ),
               )
-            : const SizedBox(
-                height: 27,
+            : SizedBox(
+                height: widget.withoutBorder != null && widget.withoutBorder == true ? 19 : 27,
               ),
       ],
     );
@@ -175,10 +179,18 @@ class _AuthTextFormFieldState extends State<AuthTextFormField> {
                   ? TextStyle(color: Colors.white.withOpacity(0.6), fontSize: 18, fontWeight: FontWeight.w400)
                   : const TextStyle(color: Colors.white, fontSize: 20, fontWeight: FontWeight.w400)
           : const TextStyle(color: Colors.white, fontSize: 20, fontWeight: FontWeight.w400),
-      focusedBorder: UnderlineInputBorder(borderSide: BorderSide(color: Colors.white.withOpacity(0.3), width: 2)),
-      border: UnderlineInputBorder(borderSide: BorderSide(color: Colors.white.withOpacity(0.3), width: 2)),
-      errorBorder: UnderlineInputBorder(borderSide: BorderSide(color: Colors.white.withOpacity(0.3), width: 2)),
-      enabledBorder: UnderlineInputBorder(borderSide: BorderSide(color: Colors.white.withOpacity(0.3), width: 2)),
+      focusedBorder: widget.withoutBorder != null && widget.withoutBorder == true
+          ? InputBorder.none
+          : UnderlineInputBorder(borderSide: BorderSide(color: Colors.white.withOpacity(0.3), width: 2)),
+      border: widget.withoutBorder != null && widget.withoutBorder == true
+          ? InputBorder.none
+          : UnderlineInputBorder(borderSide: BorderSide(color: Colors.white.withOpacity(0.3), width: 2)),
+      errorBorder: widget.withoutBorder != null && widget.withoutBorder == true
+          ? InputBorder.none
+          : UnderlineInputBorder(borderSide: BorderSide(color: Colors.white.withOpacity(0.3), width: 2)),
+      enabledBorder: widget.withoutBorder != null && widget.withoutBorder == true
+          ? InputBorder.none
+          : UnderlineInputBorder(borderSide: BorderSide(color: Colors.white.withOpacity(0.3), width: 2)),
       contentPadding: const EdgeInsets.symmetric(vertical: 12),
     );
   }

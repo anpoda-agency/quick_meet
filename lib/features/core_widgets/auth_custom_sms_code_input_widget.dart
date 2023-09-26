@@ -9,12 +9,10 @@ class AuthCustomSmsCodeInputWidget extends StatefulWidget {
   final Function(String) onChanged;
 
   @override
-  State<AuthCustomSmsCodeInputWidget> createState() =>
-      _AuthCustomSmsCodeInputWidgetState();
+  State<AuthCustomSmsCodeInputWidget> createState() => _AuthCustomSmsCodeInputWidgetState();
 }
 
-class _AuthCustomSmsCodeInputWidgetState
-    extends State<AuthCustomSmsCodeInputWidget> {
+class _AuthCustomSmsCodeInputWidgetState extends State<AuthCustomSmsCodeInputWidget> {
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -33,9 +31,6 @@ class _AuthCustomSmsCodeInputWidgetState
             ),
           ),
         ),
-        const SizedBox(
-          height: 14,
-        ),
         Center(
           child: Wrap(
             alignment: WrapAlignment.start,
@@ -43,27 +38,12 @@ class _AuthCustomSmsCodeInputWidgetState
             direction: Axis.horizontal,
             runSpacing: 10,
             children: [
-              _otpTextField(
-                  context: context,
-                  autoFocus: true,
-                  onChange: widget.onChanged),
-              _otpTextField(
-                  context: context,
-                  autoFocus: true,
-                  onChange: widget.onChanged),
-              _otpTextField(
-                  context: context,
-                  autoFocus: true,
-                  onChange: widget.onChanged),
-              _otpTextField(
-                  context: context,
-                  autoFocus: true,
-                  onChange: widget.onChanged),
+              _otpTextField(context: context, autoFocus: true, onChange: widget.onChanged),
+              _otpTextField(context: context, autoFocus: true, onChange: widget.onChanged),
+              _otpTextField(context: context, autoFocus: true, onChange: widget.onChanged),
+              _otpTextField(context: context, autoFocus: true, onChange: widget.onChanged),
             ],
           ),
-        ),
-        const SizedBox(
-          height: 37,
         ),
       ],
     );

@@ -6,10 +6,13 @@ class AuthSmsCodeInit extends AuthSmsCodeEvent {}
 
 class AuthSmsCodeInputValue extends AuthSmsCodeEvent {
   final String value;
-  AuthSmsCodeInputValue(this.value);
+  final bool completed;
+  AuthSmsCodeInputValue(this.value, this.completed);
 }
 
 class AuthSmsCodeSend extends AuthSmsCodeEvent {}
+
+class AuthSmsGetCode extends AuthSmsCodeEvent {}
 
 class AuthSmsCodeMsgErr extends AuthSmsCodeEvent {
   final String msg;
