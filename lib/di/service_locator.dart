@@ -1,6 +1,9 @@
+import 'dart:async';
+
 import 'package:dio/dio.dart';
 import 'package:get_it/get_it.dart';
 import 'package:pretty_dio_logger/pretty_dio_logger.dart';
+import 'package:quick_meet/data/enum.dart';
 import 'package:quick_meet/data/models/auth_controller/auth_login_response.dart' as alr;
 import 'package:quick_meet/data/models/auth_controller/auth_refresh_token_response.dart';
 import 'package:quick_meet/data/models/user_controller/user_get_id_response.dart';
@@ -16,7 +19,7 @@ import 'package:quick_meet/domain/repository/user_repository.dart';
 
 final getIt = GetIt.instance;
 
-Future<bool> setup() async {
+Future<bool> setup(StreamController<GlobalEvents> gs) async {
   await PrefStorageInstance.load();
 
   final storage = PrefStorage();
@@ -86,8 +89,55 @@ Future<bool> setup() async {
           token: resTokens.payload.refreshToken);
       authRepo.changeAuthStatus(val: true);
     } catch (e) {
-      print(e.toString());
+      userRepo.clearUserData();
+      authRepo.changeAuthStatus(val: false);
     }
   }
+
+  getIt<Dio>().interceptors.add(InterceptorsWrapper(onError: (error, handler) async {
+    if (error.response?.statusCode == 401) {
+      if (error.response!.data.toString().isEmpty) {
+        String? token = await storage.getRecord(PrefName.refreshToken);
+        String? userId = await storage.getRecord(PrefName.userId);
+        if (token != null && token.isNotEmpty && userId != null && userId.isNotEmpty) {
+          AuthRefreshTokenResponse? resTokens = await authRepo.refreshToken(path: token);
+          alr.User userModel = userRepo.user!.user;
+          await userRepo.setUserData(
+              user: alr.AuthLoginResponse(
+                  user: alr.User(
+                      id: userModel.id,
+                      firstName: userModel.firstName,
+                      secondName: userModel.secondName,
+                      lastName: userModel.lastName,
+                      accountRank: userModel.accountRank,
+                      missSeries: userModel.missSeries,
+                      attendSeries: userModel.attendSeries,
+                      phoneNumber: userModel.phoneNumber,
+                      description: userModel.description,
+                      email: userModel.email,
+                      registrationDate: userModel.registrationDate,
+                      birthDate: userModel.birthDate,
+                      active: userModel.active,
+                      emailConfirmed: userModel.emailConfirmed,
+                      removed: userModel.removed,
+                      blocked: userModel.blocked,
+                      avatar: alr.Avatar(
+                          fileName: userModel.avatar.fileName,
+                          href: userModel.avatar.href,
+                          id: userModel.avatar.id)),
+                  payload: alr.Payload(
+                      accessToken: resTokens.payload.accessToken,
+                      refreshToken: resTokens.payload.refreshToken)),
+              token: resTokens.payload.refreshToken);
+          authRepo.changeAuthStatus(val: true);
+        }
+      } else if (error.response?.data['message'] == 'Refresh tokens not same') {
+        userRepo.clearUserData();
+        authRepo.changeAuthStatus(val: false);
+        gs.add(GlobalEvents.toStart);
+      }
+    }
+  }));
+
   return authRepo.isAuth;
 }

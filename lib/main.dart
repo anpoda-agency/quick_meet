@@ -9,6 +9,7 @@ import 'package:quick_meet/core/constants.dart';
 import 'package:quick_meet/data/enum.dart';
 import 'package:quick_meet/data/service/write_log.dart';
 import 'package:quick_meet/di/service_locator.dart';
+import 'package:quick_meet/domain/repository/home_repository.dart';
 import 'package:quick_meet/domain/router/route_constants.dart';
 import 'package:quick_meet/domain/router/route_impl.dart';
 // import 'package:quick_meet/features/auth/auth_with_sms/step_one_phone/ui/auth_sms_page.dart';
@@ -72,12 +73,22 @@ class _MyAppState extends State<MyApp> {
   @override
   void initState() {
     super.initState();
+
     init(globalStream).then((auth) {
       setState(() {
         loading = false;
       });
-      auth ? router.newRoutesPath([MapRoutes.map.name]) : router.newRoutesPath([RootRoutes.start.name]);
+      auth
+          ? router.newRoutesPath([MapRoutes.map.name])
+          : router.newRoutesPath([RootRoutes.start.name]);
       FlutterNativeSplash.remove();
+    });
+
+    globalStream.stream.listen((event) {
+      if (event == GlobalEvents.toStart) {
+        router.go(RootRoutes.start.name);
+        getIt.get<HomeRepository>().changeVisibleNavBar(visible: true);
+      }
     });
   }
 
@@ -118,10 +129,8 @@ class _MyAppState extends State<MyApp> {
     );
   }
 
-  Future<bool> init(
-    StreamController<GlobalEvents> gs,
-  ) async {
-    bool isAuth = await setup();
+  Future<bool> init(StreamController<GlobalEvents> gs) async {
+    bool isAuth = await setup(gs);
 
     var url = Uri.tryParse(AppConstants.baseUrl);
 

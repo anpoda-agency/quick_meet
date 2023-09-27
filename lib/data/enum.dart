@@ -1,1 +1,1 @@
-enum GlobalEvents { none }
+enum GlobalEvents { toStart }

@@ -28,7 +28,8 @@ class GoRouterImplt {
             ...auth,
             ...root,
             StatefulShellRoute.indexedStack(
-              builder: (BuildContext context, GoRouterState state, StatefulNavigationShell navigationShell) {
+              builder: (BuildContext context, GoRouterState state,
+                  StatefulNavigationShell navigationShell) {
                 return ScaffoldNavBar(navigationShell: navigationShell);
               },
               branches: [
