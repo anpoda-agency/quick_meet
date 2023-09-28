@@ -129,7 +129,10 @@ Future<bool> setup(StreamController<GlobalEvents> gs) async {
                       accessToken: resTokens.payload.accessToken,
                       refreshToken: resTokens.payload.refreshToken)),
               token: resTokens.payload.refreshToken);
-          authRepo.changeAuthStatus(val: true);
+
+          RequestOptions options = error.requestOptions;
+          options.headers['Authorization'] = 'Bearer ${resTokens.payload.accessToken}';
+          handler.resolve(await _retry(options));
         }
       } else if (error.response?.data['message'] == 'Refresh tokens not same') {
         userRepo.clearUserData();
@@ -140,4 +143,13 @@ Future<bool> setup(StreamController<GlobalEvents> gs) async {
   }));
 
   return authRepo.isAuth;
+}
+
+Future<Response<dynamic>> _retry(RequestOptions requestOptions) async {
+  final options = Options(
+    method: requestOptions.method,
+    headers: requestOptions.headers,
+  );
+  return getIt<Dio>().request<dynamic>(requestOptions.path,
+      data: requestOptions.data, queryParameters: requestOptions.queryParameters, options: options);
 }
