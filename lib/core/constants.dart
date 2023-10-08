@@ -9,10 +9,10 @@ abstract class AppConstants {
   static const bool makeCurlClipboard = false;
 
   // base url
-  static const String baseUrl = "http://158.160.13.44:8080/api/v1";
+  static const String baseUrl = "http://158.160.24.14:8080/api/v1";
 
   // url for get image
-  static const String baseImageUrl = "http://158.160.13.44:9000/";
+  static const String baseImageUrl = "http://158.160.24.14:9000/";
 
   //activation-code-controller urls
   static const String sendUrl = "/auth/code/send";

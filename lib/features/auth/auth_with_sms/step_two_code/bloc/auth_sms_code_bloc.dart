@@ -80,8 +80,8 @@ class AuthSmsCodeBloc extends Bloc<AuthSmsCodeEvent, AuthSmsCodeState> {
       if (!res.success) {
         if (res.message == 'User with phone not found') {
           emit(AuthSmsCodeError(state.pageState.copyWith(
-            onAwait: false, errMsg: 'Пользователь не найден',
-            // phoneError: true
+            onAwait: false,
+            errMsg: 'Пользователь не найден',
           )));
         } else if (res.message.contains('Retry available after')) {
           int index = res.message.indexOf('2');
@@ -90,14 +90,15 @@ class AuthSmsCodeBloc extends Bloc<AuthSmsCodeEvent, AuthSmsCodeState> {
           emit(AuthSmsCodeError(state.pageState.copyWith(
             onAwait: false,
             errMsg: 'Повторный код через ${timeAfter.difference(timeNow).inSeconds} секунд',
-            // phoneError: true
           )));
         } else {
           emit(AuthSmsCodeError(state.pageState.copyWith(
-            onAwait: false, errMsg: res.message,
-            // phoneError: true
+            onAwait: false,
+            errMsg: res.message,
           )));
         }
+      } else {
+        emit(AuthSmsCodeUp(state.pageState.copyWith(onAwait: false, errMsg: '')));
       }
     }
   }
