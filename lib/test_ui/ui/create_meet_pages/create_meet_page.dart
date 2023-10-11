@@ -53,7 +53,7 @@ class _CreateMeetPageState extends State<CreateMeetPage> {
               const SizedBox(
                 height: 12,
               ),
-              Container(
+              SizedBox(
                 width: 285,
                 height: 50,
                 child: TextField(
@@ -88,7 +88,7 @@ class _CreateMeetPageState extends State<CreateMeetPage> {
               const SizedBox(
                 height: 12,
               ),
-              Container(
+              SizedBox(
                 width: 285,
                 height: 50,
                 child: TextField(
@@ -123,7 +123,7 @@ class _CreateMeetPageState extends State<CreateMeetPage> {
               const SizedBox(
                 height: 12,
               ),
-              Container(
+              SizedBox(
                 width: 285,
                 height: 50,
                 child: TextField(
@@ -237,7 +237,7 @@ class _CreateMeetPageState extends State<CreateMeetPage> {
                       const SizedBox(
                         height: 12,
                       ),
-                      Container(
+                      SizedBox(
                         width: 132,
                         height: 50,
                         child: TextField(
@@ -328,7 +328,7 @@ class _CreateMeetPageState extends State<CreateMeetPage> {
                 width: 285,
                 height: 50,
                 decoration: ShapeDecoration(
-                  color: Color(0xFFF5F5F5),
+                  color: const Color(0xFFF5F5F5),
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(18),
                   ),
@@ -344,9 +344,9 @@ class _CreateMeetPageState extends State<CreateMeetPage> {
                               bottomRight: Radius.circular(30),
                             ),
                           ),
-                          backgroundColor: Color(0xFF6B4EFF),
+                          backgroundColor: const Color(0xFF6B4EFF),
                           contentPadding: EdgeInsets.zero,
-                          content: Container(
+                          content: SizedBox(
                             width: 341,
                             height: 247,
                             child: Column(
@@ -407,7 +407,7 @@ class _CreateMeetPageState extends State<CreateMeetPage> {
                       );
                     },
                     style: ElevatedButton.styleFrom(
-                      backgroundColor: Color(0xFF6B4EFF),
+                      backgroundColor: const Color(0xFF6B4EFF),
                       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(18)),
                     ),
                     child: const Text(
