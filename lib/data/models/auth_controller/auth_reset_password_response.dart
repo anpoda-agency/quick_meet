@@ -41,7 +41,7 @@ class User {
   final String secondName;
   @JsonKey(
       name: 'lastName',
-      fromJson: FromJsonBase.jsonToString) // Спросить про null переменую
+      fromJson: FromJsonBase.jsonToString) 
   final String lastName;
   @JsonKey(name: 'accountClass', fromJson: FromJsonBase.jsonToString)
   final String accountClass;
@@ -53,8 +53,7 @@ class User {
   final int attendSeries;
   @JsonKey(name: 'city')
   final City city;
-  //@JsonKey(name: 'city', fromJson: FromJsonBase.jsonToListString) // Спросить почему здесь лист должен быть а не мапа
-  //final List<City> city;
+  
   @JsonKey(name: 'phoneNumber', fromJson: FromJsonBase.jsonToString)
   final String phoneNumber;
   @JsonKey(name: 'description', fromJson: FromJsonBase.jsonToString)
@@ -86,7 +85,7 @@ class User {
     this.missSeries = 0,
     this.attendSeries = 0,
     this.city = const City(),
-    //this.city = const [],
+    
     this.phoneNumber = '',
     this.description = '',
     this.email = '',
@@ -200,14 +199,3 @@ class Payload {
   }
 }
 
-// поубирать знаки вопросы, все к стрингу делать без налов
-// выписать поля где null
-
-/*
-нулы в user:
-
-  lastName
-  description
-  billingAccount
-
-*/

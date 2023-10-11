@@ -19,7 +19,6 @@ class AuthMainCustomLabelWidget extends StatelessWidget {
           const Expanded(
             flex: 1,
             child: SizedBox(
-              //width: 300,
               height: 100,
             ),
           ),
@@ -57,11 +56,10 @@ class AuthMainCustomLabelWidget extends StatelessWidget {
                   textAlign: TextAlign.center,
                 ),
               ),
-              // Дивайдер сломал мне мозг сука
               SizedBox(
                 width: widthLabelContainer,
                 child: Align(
-                  alignment: Alignment.bottomCenter, //Alignment.bottomRight,
+                  alignment: Alignment.bottomCenter, 
                   child: Padding(
                     padding: const EdgeInsets.fromLTRB(10, 0, 0, 0),
                     child: Container(
@@ -93,9 +91,8 @@ class AuthMainCustomLabelWidget extends StatelessWidget {
                   height: 100,
                   child: SizedBox(),
                 ),
-                // Дивайдер сломал мне мозг сука
                 Align(
-                  alignment: Alignment.bottomCenter, //Alignment.bottomRight,
+                  alignment: Alignment.bottomCenter, 
                   child: Padding(
                     padding: const EdgeInsets.fromLTRB(0, 0, 0, 0),
                     child: Container(

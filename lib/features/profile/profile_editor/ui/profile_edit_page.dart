@@ -65,11 +65,9 @@ class _ProfileEditPageState extends State<ProfileEditPage> {
                   )
                 : SingleChildScrollView(
                     child: Column(
-                      //mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Stack(
                           alignment: AlignmentDirectional.bottomCenter,
-                          //textDirection: TextDirection.ltr,
 
                           children: <Widget>[
                             Stack(
@@ -156,9 +154,7 @@ class _ProfileEditPageState extends State<ProfileEditPage> {
                                         .read<ProfileEditBloc>()
                                         .add(ProfileEditSendChanges()),
 
-                                    /* () {  
-                                Navigator.of(context).pop();
-                              }, */
+                                   
                                     style: ElevatedButton.styleFrom(
                                       backgroundColor: const Color(0xFF6B4EFF),
                                       shape: RoundedRectangleBorder(
@@ -184,7 +180,6 @@ class _ProfileEditPageState extends State<ProfileEditPage> {
                                 height: 40,
                                 decoration: ShapeDecoration(
                                   color: const Color(0xFFF5F5F5),
-                                  //backgroundColor: const Color.fromRGBO(245, 245, 245, 1),
                                   shape: RoundedRectangleBorder(
                                     borderRadius: BorderRadius.circular(18),
                                   ),
@@ -280,8 +275,7 @@ class _ProfileEditPageState extends State<ProfileEditPage> {
                                                       ),
                                                       child: ElevatedButton(
                                                           onPressed: () {
-                                                            // Navigator.pushNamed(context,
-                                                            //     '/profile_edit_page');
+                                                          
                                                             Navigator.of(context).pop();
                                                           },
                                                           style: ElevatedButton.styleFrom(

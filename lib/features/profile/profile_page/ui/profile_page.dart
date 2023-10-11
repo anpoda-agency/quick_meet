@@ -46,8 +46,8 @@ class _ProfilePageState extends State<ProfilePage> {
               centerTitle: true,
               backgroundColor: Colors.transparent,
               systemOverlayStyle: const SystemUiOverlayStyle(
-                systemNavigationBarColor: Colors.black, // Navigation bar
-                statusBarColor: Colors.black, // Status bar
+                systemNavigationBarColor: Colors.black, 
+                statusBarColor: Colors.black, 
               ),
               elevation: 0,
             ),
@@ -57,7 +57,6 @@ class _ProfilePageState extends State<ProfilePage> {
                 child: Padding(
                   padding: const EdgeInsets.only(bottom: 120, top: 50),
                   child: Column(
-                    //mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Row(
                         mainAxisAlignment: MainAxisAlignment.end,
@@ -149,8 +148,7 @@ class _ProfilePageState extends State<ProfilePage> {
                                   ),
                                   child: ElevatedButton(
                                       onPressed: () {
-                                        // Navigator.pushNamed(
-                                        //     context, '/auth_sms_code_page');
+                                        
                                       },
                                       style: ElevatedButton.styleFrom(
                                         backgroundColor: Colors.black87,
@@ -288,8 +286,7 @@ class _ProfilePageState extends State<ProfilePage> {
                                       ),
                                       child: ElevatedButton(
                                           onPressed: () {
-                                            // Navigator.pushNamed(
-                                            //     context, '/auth_sms_code_page');
+                                            
                                           },
                                           style: ElevatedButton.styleFrom(
                                             backgroundColor: const Color.fromARGB(255, 202, 202, 202),
@@ -463,8 +460,7 @@ class _ProfilePageState extends State<ProfilePage> {
                           ),
                           child: ElevatedButton(
                               onPressed: () {
-                                // Navigator.pushNamed(context,
-                                //     '/profile_edit_page');
+                                
                                 Navigator.of(context).pop();
                               },
                               style: ElevatedButton.styleFrom(

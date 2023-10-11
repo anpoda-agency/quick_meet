@@ -66,7 +66,7 @@ class _AuthSmsCodePageState extends State<AuthSmsCodePage> {
               backgroundColor: Colors.white10,
               elevation: 0,
               iconTheme: const IconThemeData(
-                color: Colors.black, //change your color here
+                color: Colors.black,
               ),
             ),
             body: Column(
@@ -83,7 +83,6 @@ class _AuthSmsCodePageState extends State<AuthSmsCodePage> {
                     widthPadding: 50),
               ],
             ),
-            //),
           );
         },
       ),

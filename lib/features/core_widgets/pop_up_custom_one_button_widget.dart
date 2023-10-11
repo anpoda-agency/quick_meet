@@ -5,16 +5,11 @@ class PopUpCustomOneButtonWidget {
     required this.popUpMessage,
     required this.buttonTitle,
     required this.onPressed,
-    //this.enabledChoiceButtonsPopUp = false,
-  }); // : secondButtonOnPressed = secondButtonOnPressed ?? (() {});
+  }); 
 
   final String popUpMessage;
   final String buttonTitle;
-  //final VoidCallback firstButtonOnPressed;
   final Function() onPressed;
-  //final bool enabledChoiceButtonsPopUp;
-
-// Попов в телегу скинул пример как на работе у них делают, можно stateless выкинуть и все
 
   Future<void> showPopUpCustomOneButtonWidget(BuildContext context) {
     return showDialog(
@@ -32,19 +27,14 @@ class PopUpCustomOneButtonWidget {
           decoration: BoxDecoration(
               color: const Color(0xFF6B4EFF),
               borderRadius: BorderRadius.circular(15)),
-          //padding: const EdgeInsets.symmetric(vertical: 50),
           child: SizedBox(
             width: MediaQuery.of(context).size.width,
             height: MediaQuery.of(context).size.height * 0.3,
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                // const SizedBox(
-                //   height: 60,
-                // ),
                 const SizedBox.shrink(),
                 SizedBox(
-                  //width: 341,
                   child: Text(
                     popUpMessage,
                     textAlign: TextAlign.center,
@@ -73,8 +63,6 @@ class PopUpCustomOneButtonWidget {
                     ),
                     child: ElevatedButton(
                         onPressed: () {
-                          //Navigator.pushNamed(context, '/auth_sms_code_page');
-                          //    context, '/auth_sms_code_page');
                           Navigator.of(context).pop();
                         },
                         style: ElevatedButton.styleFrom(
@@ -100,7 +88,6 @@ class PopUpCustomOneButtonWidget {
             ),
           ),
         ),
-        //),
       ),
     );
   }

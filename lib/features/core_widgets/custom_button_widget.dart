@@ -22,7 +22,6 @@ class CustomButtonWidget extends StatelessWidget {
         height: 50,
         child: ElevatedButton(
           onPressed: onPressed,
-          //() { Navigator.pushNamed(context, '/auth_password_page');},
           style: ElevatedButton.styleFrom(
               backgroundColor: backgroundColor, shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(18))),
           child: Text(
@@ -30,7 +29,6 @@ class CustomButtonWidget extends StatelessWidget {
             style: const TextStyle(
               color: Colors.black,
               fontSize: 20,
-              // fontFamily: 'SF Pro Text',
               fontWeight: FontWeight.w300,
               letterSpacing: 1,
             ),

@@ -8,11 +8,11 @@ part 'auth_verification_login_response.g.dart';
 class AuthVerificationLoginResponse {
   @JsonKey(name: 'user')
   final User user;
-  @JsonKey(name: 'payload') // from json снести
+  @JsonKey(name: 'payload') 
   final Payload payload;
 
   const AuthVerificationLoginResponse({
-    this.user = const User(), // вот так надо
+    this.user = const User(), 
     this.payload = const Payload(),
   });
 
@@ -39,7 +39,7 @@ class User {
   final String firstName;
   @JsonKey(name: 'secondName', fromJson: FromJsonBase.jsonToString)
   final String secondName;
-  @JsonKey(name: 'lastName', fromJson: FromJsonBase.jsonToString) // Спросить про null переменую
+  @JsonKey(name: 'lastName', fromJson: FromJsonBase.jsonToString) 
   final String lastName;
   @JsonKey(name: 'accountClass', fromJson: FromJsonBase.jsonToString)
   final String accountClass;
@@ -51,8 +51,7 @@ class User {
   final int attendSeries;
   @JsonKey(name: 'city')
   final City city;
-  //@JsonKey(name: 'city', fromJson: FromJsonBase.jsonToListString) // Спросить почему здесь лист должен быть а не мапа
-  //final List<City> city;
+  
   @JsonKey(name: 'phoneNumber', fromJson: FromJsonBase.jsonToString)
   final String phoneNumber;
   @JsonKey(name: 'description', fromJson: FromJsonBase.jsonToString)
@@ -84,7 +83,7 @@ class User {
     this.missSeries = 0,
     this.attendSeries = 0,
     this.city = const City(),
-    //this.city = const [],
+    
     this.phoneNumber = '',
     this.description = '',
     this.email = '',

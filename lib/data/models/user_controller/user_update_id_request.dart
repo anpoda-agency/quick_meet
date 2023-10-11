@@ -50,8 +50,3 @@ class UserUpdateIdRequest {
     );
   }
 }
-
-// StoreAddFavouriteRequest
-
-//jsns for factory...
-//lamp on hovered class and click on copyWith

@@ -26,8 +26,3 @@ class UserUploadListRequest {
     );
   }
 }
-
-// StoreAddFavouriteRequest
-
-//jsns for factory...
-//lamp on hovered class and click on copyWith

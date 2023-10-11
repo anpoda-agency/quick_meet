@@ -81,7 +81,6 @@ class _PasswordRecoverySmsCodePageState extends State<PasswordRecoverySmsCodePag
                     widthPadding: 50),
               ],
             ),
-            //),
           );
         },
       ),

@@ -28,8 +28,8 @@ class _MapScreenState extends State<MapScreen> {
       extendBodyBehindAppBar: true,
       appBar: AppBar(
         systemOverlayStyle: const SystemUiOverlayStyle(
-          systemNavigationBarColor: Colors.black, // Navigation bar
-          statusBarColor: Colors.black, // Status bar
+          systemNavigationBarColor: Colors.black, 
+          statusBarColor: Colors.black, 
         ),
         elevation: 0,
         centerTitle: true,
@@ -41,7 +41,7 @@ class _MapScreenState extends State<MapScreen> {
           print(geoObject.longitude);
         },
         onCameraPositionChanged: (cameraPosition, reason, finished) {
-          // cameraPosition
+          
         },
         mapType: MapType.map,
         onMapCreated: (controller) {

@@ -40,7 +40,7 @@ class User {
   final String firstName;
   @JsonKey(name: 'secondName', fromJson: FromJsonBase.jsonToString)
   final String secondName;
-  @JsonKey(name: 'lastName', fromJson: FromJsonBase.jsonToString) // Спросить про null переменую
+  @JsonKey(name: 'lastName', fromJson: FromJsonBase.jsonToString) 
   final String lastName;
   @JsonKey(name: 'accountRank', fromJson: FromJsonBase.jsonToInt)
   final int accountRank;

@@ -4,10 +4,7 @@ import 'package:quick_meet/data/models/auth_controller/auth_login_request.dart';
 import 'package:quick_meet/data/models/auth_controller/auth_login_response.dart';
 import 'package:quick_meet/data/models/auth_controller/auth_refresh_token_response.dart';
 import 'package:quick_meet/data/models/auth_controller/auth_register_request.dart';
-// import 'package:quick_meet/data/models/auth_controller/auth_register_response.dart';
 import 'package:quick_meet/data/models/auth_controller/auth_reset_password_request.dart';
-// import 'package:quick_meet/data/models/auth_controller/auth_reset_password_response.dart';
-// import 'package:quick_meet/data/models/auth_controller/auth_verification_login_response.dart';
 import 'package:quick_meet/data/network/api/auth_api.dart';
 import 'package:quick_meet/data/network/dio_exception.dart';
 

@@ -36,7 +36,6 @@ class _CustomTextFieldWidgetState extends State<CustomTextFieldWidget> {
             width: MediaQuery.of(context).size.width,
             child: Text(
               widget.textFieldTitle,
-              //'Номер телефона',
               style: const TextStyle(
                 color: Color(0xFF505050),
                 fontSize: 16,

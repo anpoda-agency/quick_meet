@@ -22,13 +22,12 @@ class _CreateMeetPageState extends State<CreateMeetPage> {
             fontSize: 20,
             fontFamily: 'Comfortaa',
             fontWeight: FontWeight.w400,
-            //height: 22,
           ),
         ),
         backgroundColor: Colors.white10,
         elevation: 0,
         iconTheme: const IconThemeData(
-          color: Colors.black, //change your color here
+          color: Colors.black, 
         ),
       ),
       body: Center(
@@ -404,7 +403,6 @@ class _CreateMeetPageState extends State<CreateMeetPage> {
                               ],
                             ),
                           ),
-                          //),
                         ),
                       );
                     },

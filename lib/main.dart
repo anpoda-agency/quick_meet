@@ -5,29 +5,11 @@ import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:quick_meet/core/constants.dart';
-// import 'package:quick_meet/core/styles/main_theme.dart';
 import 'package:quick_meet/data/enum.dart';
 import 'package:quick_meet/data/service/write_log.dart';
 import 'package:quick_meet/di/service_locator.dart';
 import 'package:quick_meet/domain/router/route_constants.dart';
 import 'package:quick_meet/domain/router/route_impl.dart';
-// import 'package:quick_meet/features/auth/auth_with_sms/step_one_phone/ui/auth_sms_page.dart';
-// import 'package:quick_meet/features/auth/auth_with_password/ui/auth_password_page.dart';
-// import 'package:quick_meet/features/auth/auth_with_sms/step_two_code/ui/auth_sms_code_page.dart';
-// import 'package:quick_meet/test_ui/ui/create_meet_pages/create_meet_page.dart';
-// import 'package:quick_meet/test_ui/ui/main_pages/main_page.dart';
-// import 'package:quick_meet/test_ui/ui/main_pages/map_page.dart';
-// import 'package:quick_meet/test_ui/ui/main_pages/meetings_pages/meetings_page.dart';
-// import 'package:quick_meet/features/profile/profile_editor/ui/profile_edit_page.dart';
-// import 'package:quick_meet/features/profile/profile_page/ui/profile_page.dart';
-// import 'package:quick_meet/features/reset_password/step_three/ui/password_recovery_enter_page.dart';
-// import 'package:quick_meet/features/reset_password/step_one/ui/password_recovery_phone_page.dart';
-// import 'package:quick_meet/features/reset_password/step_two/ui/password_recovery_sms_code_page.dart';
-// import 'package:quick_meet/features/registration/step_four_fields/ui/reg_final_page.dart';
-// import 'package:quick_meet/features/registration/step_three_password/reg_password_page.dart';
-// import 'package:quick_meet/features/registration/step_one_phone/ui/reg_phone_page.dart';
-// import 'package:quick_meet/features/registration/step_two_code/ui/reg_sms_code_page.dart';
-// import 'package:quick_meet/features/auth/auth_start/start_page.dart';
 
 void main() {
   runZonedGuarded(

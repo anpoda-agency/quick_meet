@@ -24,8 +24,7 @@ class UserApi {
     }
   }
 
-// НЕ ЗАБЫТЬ СПРОСИТЬ
-// здесь все залупа какая та, спросить у попова куда предавать блять реквест, если там нет боди у патча
+
   Future<Response> userUpdateId(
       {required String path, required UserUpdateIdRequest request, String? accessToken}) async {
     var body = request.toJson();
@@ -34,8 +33,7 @@ class UserApi {
       final Response response = await dioClient.patch(
         AppConstants.userUpdateIdUrl + path,
         accessToken: accessToken,
-        data: body, // похуй пока так
-        //data:
+        data: body, 
       );
       return response;
     } catch (e) {

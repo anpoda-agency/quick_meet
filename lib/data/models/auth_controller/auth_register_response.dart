@@ -224,16 +224,3 @@ class City {
     );
   }
 }
-
-
-// поубирать знаки вопросы, все к стрингу делать без налов
-// выписать поля где null
-
-/*
-нулы в user:
-
-  lastName
-  description
-  billingAccount
-
-*/

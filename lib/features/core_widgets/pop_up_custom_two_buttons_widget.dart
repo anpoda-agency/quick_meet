@@ -8,19 +8,14 @@ class PopUpCustomTwoButtonsWidget {
     required this.firstButtonOnPressed,
     required this.secondButtonOnPressed,
 
-    //this.enabledChoiceButtonsPopUp = false,
-  }); // : secondButtonOnPressed = secondButtonOnPressed ?? (() {});
+  }); 
 
   final String popUpMessage;
   final String firstButtonTitle;
   final String secondButtonTitle;
-  //final VoidCallback firstButtonOnPressed;
   final Function() firstButtonOnPressed;
   final Function() secondButtonOnPressed;
 
-  //final bool enabledChoiceButtonsPopUp;
-
-// Попов в телегу скинул пример как на работе у них делают, можно stateless выкинуть и все
 
   Future<void> showPopUpCustomWTwoButtonsWidget(BuildContext context) {
     return showDialog(
@@ -38,19 +33,15 @@ class PopUpCustomTwoButtonsWidget {
           decoration: BoxDecoration(
               color: const Color(0xFF6B4EFF),
               borderRadius: BorderRadius.circular(15)),
-          //padding: const EdgeInsets.symmetric(vertical: 50),
           child: SizedBox(
             width: MediaQuery.of(context).size.width,
             height: MediaQuery.of(context).size.height * 0.3,
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                // const SizedBox(
-                //   height: 60,
-                // ),
+               
                 const SizedBox.shrink(),
                 SizedBox(
-                  //width: 341,
                   child: Text(
                     popUpMessage,
                     textAlign: TextAlign.center,
@@ -80,9 +71,7 @@ class PopUpCustomTwoButtonsWidget {
                       ),
                       child: ElevatedButton(
                           onPressed: firstButtonOnPressed,
-                          // () {
-                          //   Navigator.pushNamed(context, '/');
-                          // },
+                         
                           style: ElevatedButton.styleFrom(
                             backgroundColor: const Color(0xFFF5F5F5),
                             shape: RoundedRectangleBorder(
@@ -90,7 +79,6 @@ class PopUpCustomTwoButtonsWidget {
                           ),
                           child: Text(
                             firstButtonTitle,
-                            //'Да',
                             textAlign: TextAlign.center,
                             style: const TextStyle(
                               color: Color(0xFFE55F5F),
@@ -115,11 +103,7 @@ class PopUpCustomTwoButtonsWidget {
                       ),
                       child: ElevatedButton(
                           onPressed: secondButtonOnPressed,
-                          //() {
-                          // Navigator.pushNamed(context,
-                          //     '/profile_edit_page');
-                          //Navigator.of(context).pop();
-                          //},
+                         
                           style: ElevatedButton.styleFrom(
                             backgroundColor: const Color(0xFFF5F5F5),
                             shape: RoundedRectangleBorder(
@@ -127,7 +111,6 @@ class PopUpCustomTwoButtonsWidget {
                           ),
                           child: Text(
                             secondButtonTitle,
-                            //'Нет',
                             textAlign: TextAlign.center,
                             style: const TextStyle(
                               color: Color(0xFF6B4EFF),
@@ -145,7 +128,6 @@ class PopUpCustomTwoButtonsWidget {
             ),
           ),
         ),
-        //),
       ),
     );
   }

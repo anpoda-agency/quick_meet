@@ -60,7 +60,6 @@ class _PasswordRecoveryPhonePageState extends State<PasswordRecoveryPhonePage> {
             ),
             body: SingleChildScrollView(
               child: Column(
-                //mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   const Stack(
                     alignment: AlignmentDirectional.bottomCenter,
